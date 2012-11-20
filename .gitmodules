@@ -25,4 +25,3 @@
 [submodule "main/external/ikvmfork"]
 	path = main/external/ikvmfork
 	url = git://github.com/mkrueger/ikvm.git
-
