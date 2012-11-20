@@ -87,13 +87,12 @@ namespace MonoDevelop.SourceEditor
 				
 				if (expressionRegion.IsEmpty)
 					return null;
-				
+
 				if (res is NamespaceResolveResult ||
 				    res is ConversionResolveResult ||
 				    res is ForEachResolveResult ||
 				    res is TypeIsResolveResult ||
 				    res is TypeOfResolveResult ||
-				    res is TypeResolveResult ||
 				    res is ErrorResolveResult)
 					return null;
 				
@@ -141,7 +140,10 @@ namespace MonoDevelop.SourceEditor
 						} else if (mr.Member is IField) {
 							var field = (IField) mr.Member;
 							
-							expression = field.Name;
+							if (field.IsStatic)
+								expression = field.FullName;
+							else
+								expression = field.Name;
 						} else {
 							return null;
 						}
@@ -151,6 +153,8 @@ namespace MonoDevelop.SourceEditor
 				} else if (res is ConstantResolveResult) {
 					// Fall through...
 				} else if (res is ThisResolveResult) {
+					// Fall through...
+				} else if (res is TypeResolveResult) {
 					// Fall through...
 				} else {
 					return null;

@@ -184,9 +184,83 @@ namespace Mono.TextEditor
 			int kind = critical?  NSCriticalRequest : NSInformationalRequest;
 			objc_msgSend_int_int (sharedApp, sel_requestUserAttention, kind);
 		}
+
+		// Note: we can't reuse RectangleF because the layout is different...
+		[StructLayout (LayoutKind.Sequential)]
+		struct Rect {
+			public int Left;
+			public int Top;
+			public int Right;
+			public int Bottom;
+
+			public int X { get { return Left; } }
+			public int Y { get { return Top; } }
+			public int Width { get { return Right - Left; } }
+			public int Height { get { return Bottom - Top; } }
+		}
+
+		const int MonitorInfoFlagsPrimary = 0x01;
+
+		[StructLayout (LayoutKind.Sequential)]
+		unsafe struct MonitorInfo {
+			public int Size;
+			public Rect Frame;         // Monitor
+			public Rect VisibleFrame;  // Work
+			public int Flags;
+			public fixed byte Device[32];
+		}
+
+		[UnmanagedFunctionPointer (CallingConvention.Winapi)]
+		delegate int EnumMonitorsCallback (IntPtr hmonitor, IntPtr hdc, IntPtr prect, IntPtr user_data);
+
+		[DllImport ("User32.dll")]
+		extern static int EnumDisplayMonitors (IntPtr hdc, IntPtr clip, EnumMonitorsCallback callback, IntPtr user_data);
+
+		[DllImport ("User32.dll")]
+		extern static int GetMonitorInfoA (IntPtr hmonitor, ref MonitorInfo info);
+
+		static Gdk.Rectangle WindowsGetUsableMonitorGeometry (Gdk.Screen screen, int monitor_id)
+		{
+			Gdk.Rectangle geometry = screen.GetMonitorGeometry (monitor_id);
+			List<MonitorInfo> screens = new List<MonitorInfo> ();
+
+			EnumDisplayMonitors (IntPtr.Zero, IntPtr.Zero, delegate (IntPtr hmonitor, IntPtr hdc, IntPtr prect, IntPtr user_data) {
+				var info = new MonitorInfo ();
+
+				unsafe {
+					info.Size = sizeof (MonitorInfo);
+				}
+
+				GetMonitorInfoA (hmonitor, ref info);
+
+				// In order to keep the order the same as Gtk, we need to put the primary monitor at the beginning.
+				if ((info.Flags & MonitorInfoFlagsPrimary) != 0)
+					screens.Insert (0, info);
+				else
+					screens.Add (info);
+
+				return 1;
+			}, IntPtr.Zero);
+
+			MonitorInfo monitor = screens[monitor_id];
+			Rect visible = monitor.VisibleFrame;
+			Rect frame = monitor.Frame;
+
+			// Rebase the VisibleFrame off of Gtk's idea of this monitor's geometry (since they use different coordinate systems)
+			int x = geometry.X + (visible.Left - frame.Left);
+			int width = visible.Width;
+
+			int y = geometry.Y + (visible.Top - frame.Top);
+			int height = visible.Height;
+
+			return new Gdk.Rectangle (x, y, width, height);
+		}
 		
 		public static Gdk.Rectangle GetUsableMonitorGeometry (this Gdk.Screen screen, int monitor)
 		{
+			if (Platform.IsWindows)
+				return WindowsGetUsableMonitorGeometry (screen, monitor);
+
 			if (Platform.IsMac)
 				return MacGetUsableMonitorGeometry (screen, monitor);
 			
@@ -292,7 +366,7 @@ namespace Mono.TextEditor
 			adj.Value = System.Math.Max (adj.Lower, System.Math.Min (adj.Value + value, adj.Upper - adj.PageSize));
 		}
 		
-		[DllImport (PangoUtil.LIBGTK)]
+		[DllImport (PangoUtil.LIBGTK, CallingConvention = CallingConvention.Cdecl)]
 		extern static bool gdk_event_get_scroll_deltas (IntPtr eventScroll, out double deltaX, out double deltaY);
 		static bool scrollDeltasNotSupported;
 		
@@ -412,11 +486,11 @@ namespace Mono.TextEditor
 		}
 		
 		//introduced in GTK 2.20
-		[DllImport (PangoUtil.LIBGDK)]
+		[DllImport (PangoUtil.LIBGDK, CallingConvention = CallingConvention.Cdecl)]
 		extern static bool gdk_keymap_add_virtual_modifiers (IntPtr keymap, ref Gdk.ModifierType state);
 		
 		//Custom patch in Mono Mac w/GTK+ 2.24.8+
-		[DllImport (PangoUtil.LIBGDK)]
+		[DllImport (PangoUtil.LIBGDK, CallingConvention = CallingConvention.Cdecl)]
 		extern static bool gdk_quartz_set_fix_modifiers (bool fix);
 		
 		static Gdk.Keymap keymap = Gdk.Keymap.Default;
@@ -775,7 +849,7 @@ namespace Mono.TextEditor
 			return (ForallDelegate) dm.CreateDelegate (typeof (ForallDelegate));
 		}
 		
-		[GLib.CDeclCallback]
+		[UnmanagedFunctionPointer (CallingConvention.Cdecl)]
 		delegate void ForallDelegate (IntPtr container, bool include_internals, IntPtr cb, IntPtr data);
 		
 		[DllImport("gtksharpglue-2", CallingConvention=CallingConvention.Cdecl)]

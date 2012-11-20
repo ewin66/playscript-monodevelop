@@ -1,10 +1,11 @@
 // 
 // SoftDebuggerAdaptor.cs
 //  
-// Author:
-//       Lluis Sanchez Gual <lluis@novell.com>
+// Authors: Lluis Sanchez Gual <lluis@novell.com>
+//          Jeffrey Stedfast <jeff@xamarin.com>
 // 
 // Copyright (c) 2009 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2011,2012 Xamain Inc. (http://www.xamarin.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -333,12 +334,11 @@ namespace Mono.Debugging.Soft
 			TypeMirror t = (TypeMirror) type;
 			
 			TypeMirror[] types = new TypeMirror [args.Length];
-			for (int n=0; n<args.Length; n++)
-				types [n] = ToTypeMirror (ctx, GetValueType (ctx, args [n]));
-			
 			Value[] values = new Value[args.Length];
-			for (int n=0; n<args.Length; n++)
-				values[n] = (Value) args [n];
+			for (int n = 0; n < args.Length; n++) {
+				types[n] = ToTypeMirror (ctx, GetValueType (ctx, args[n]));
+				values[n] = (Value) args[n];
+			}
 			
 			MethodMirror ctor = OverloadResolve (cx, ".ctor", t, types, true, true, true);
 			if (ctor == null)
@@ -1117,39 +1117,58 @@ namespace Mono.Debugging.Soft
 			return default(T);
 		}
 		
-		public override object ForceLoadType (EvaluationContext gctx, string typeName)
+		bool IsTypeLoaded (EvaluationContext gctx, string typeName)
 		{
-			// Shortcut to avoid a target invoke in case the type is already loaded
-			object t = GetType (gctx, typeName);
-			if (t != null)
-				return t;
-			
 			SoftEvaluationContext ctx = (SoftEvaluationContext) gctx;
+			
+			return ctx.Session.GetType (typeName) != null;
+		}
+		
+		bool IsTypeLoaded (EvaluationContext ctx, TypeMirror tm)
+		{
+			return IsTypeLoaded (ctx, tm.FullName);
+		}
+		
+		bool ForceLoadType (EvaluationContext gctx, TypeMirror tm)
+		{
+			SoftEvaluationContext ctx = (SoftEvaluationContext) gctx;
+
+			if (IsTypeLoaded (ctx, tm))
+				return true;
+
 			if (!ctx.Options.AllowTargetInvoke)
-				return null;
-			
-			TypeMirror tm = (TypeMirror) ctx.Thread.Type.GetTypeObject ().Type;
-			TypeMirror stype = ctx.Session.GetType ("System.String");
-			if (stype == null) {
-				// If the string type is not loaded, we need to get it in another way
-				StringMirror ss = ctx.Thread.Domain.CreateString ("");
-				stype = ss.Type;
-			}
-			
-			TypeMirror[] ats = new TypeMirror[] { stype };
-			MethodMirror met = OverloadResolve (ctx, "GetType", tm, ats, false, true, true);
-			
+				return false;
+
+			MethodMirror cctor = OverloadResolve (ctx, ".cctor", tm, new TypeMirror[0], false, true, false);
+			if (cctor == null)
+				return false;
+
 			try {
-				tm.InvokeMethod (ctx.Thread, met, new Value[] {(Value) CreateValue (ctx, typeName)}, InvokeOptions.DisableBreakpoints | InvokeOptions.SingleThreaded);
+				tm.InvokeMethod (ctx.Thread, cctor, new Value[0], InvokeOptions.DisableBreakpoints | InvokeOptions.SingleThreaded);
 			} catch {
-				return null;
+				return false;
 			} finally {
 				ctx.Session.StackVersion++;
 			}
-			
-			return GetType (ctx, typeName);
-		}
 
+			return true;
+		}
+		
+		public override object ForceLoadType (EvaluationContext ctx, string typeName)
+		{
+			TypeMirror tm = (TypeMirror) GetType (ctx, typeName);
+
+			if (tm == null || IsTypeLoaded (ctx, tm))
+				return tm;
+
+			if (!ctx.Options.AllowTargetInvoke)
+				return null;
+
+			if (ForceLoadType (ctx, tm))
+				return tm;
+
+			return null;
+		}
 		
 		static T BuildAttribute<T> (CustomAttributeDataMirror attr)
 		{
@@ -1392,13 +1411,38 @@ namespace Mono.Debugging.Soft
 				return ((PrimitiveValue)obj).Value;
 			} else if (obj is PointerValue) {
 				return new IntPtr (((PointerValue)obj).Address);
-			} else if ((obj is StructMirror) && ((StructMirror)obj).Type.IsPrimitive) {
-				// Boxed primitive
+			} else if (obj is StructMirror) {
 				StructMirror sm = (StructMirror) obj;
-				if (sm.Type.FullName == "System.IntPtr")
-					return new IntPtr ((long)((PrimitiveValue)sm.Fields[0]).Value);
-				if (sm.Fields.Length > 0 && (sm.Fields[0] is PrimitiveValue))
-					return ((PrimitiveValue)sm.Fields[0]).Value;
+
+				if (sm.Type.IsPrimitive) {
+					// Boxed primitive
+					if (sm.Type.FullName == "System.IntPtr")
+						return new IntPtr ((long)((PrimitiveValue)sm.Fields[0]).Value);
+					if (sm.Fields.Length > 0 && (sm.Fields[0] is PrimitiveValue))
+						return ((PrimitiveValue)sm.Fields[0]).Value;
+				} else if (sm.Type.FullName == "System.Decimal") {
+					SoftEvaluationContext ctx = (SoftEvaluationContext) gctx;
+					MethodMirror method = OverloadResolve (ctx, "GetBits", sm.Type, new TypeMirror[1] { sm.Type }, false, true, false);
+					if (method != null) {
+						ArrayMirror array;
+						
+						try {
+							array = sm.Type.InvokeMethod (ctx.Thread, method, new Value[1] { sm }, InvokeOptions.DisableBreakpoints | InvokeOptions.SingleThreaded) as ArrayMirror;
+						} catch {
+							array = null;
+						} finally {
+							ctx.Session.StackVersion++;
+						}
+						
+						if (array != null) {
+							int[] bits = new int [4];
+							for (int i = 0; i < 4; i++)
+								bits[i] = (int) TargetObjectToObject (gctx, array[i]);
+							
+							return new decimal (bits);
+						}
+					}
+				}
 			}
 			return base.TargetObjectToObject (gctx, obj);
 		}

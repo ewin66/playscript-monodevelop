@@ -19,3 +19,10 @@
 [submodule "main/external/nrefactory"]
 	path = main/external/nrefactory
 	url = git://github.com:benjcooley/NRefactory.git
+[submodule "main/external/mono-addins"]
+	path = main/external/mono-addins
+	url = git://github.com/mono/mono-addins.git
+[submodule "main/external/ikvmfork"]
+	path = main/external/ikvmfork
+	url = git://github.com/mkrueger/ikvm.git
+

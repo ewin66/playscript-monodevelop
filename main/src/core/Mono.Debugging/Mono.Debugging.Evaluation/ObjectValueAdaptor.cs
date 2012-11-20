@@ -91,6 +91,8 @@ namespace Mono.Debugging.Evaluation
 		{
 			try {
 				return CreateObjectValueImpl (ctx, source, path, obj, flags);
+			} catch (EvaluatorAbortedException ex) {
+				return ObjectValue.CreateFatalError (path.LastName, ex.Message, flags);
 			} catch (Exception ex) {
 				ctx.WriteDebuggerError (ex);
 				return ObjectValue.CreateFatalError (path.LastName, ex.Message, flags);
@@ -396,7 +398,7 @@ namespace Mono.Debugging.Evaluation
 				return oval;
 			}
 		}
-
+		
 		public ObjectValue[] GetObjectValueChildren (EvaluationContext ctx, IObjectSource objectSource, object obj, int firstItemIndex, int count)
 		{
 			return GetObjectValueChildren (ctx, objectSource, GetValueType (ctx, obj), obj, firstItemIndex, count, true);

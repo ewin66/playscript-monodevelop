@@ -36,17 +36,33 @@ namespace MonoDevelop.Debugger
 {
 	public class ImmediatePad: IPadContent
 	{
+		Pango.FontDescription customFont;
 		ConsoleView view;
+		bool disposed;
 		
 		public void Initialize (IPadWindow container)
 		{
+			customFont = Pango.FontDescription.FromString (IdeApp.Preferences.CustomOutputPadFont);
+
 			view = new ConsoleView ();
 			view.ConsoleInput += OnViewConsoleInput;
-			Pango.FontDescription font = Pango.FontDescription.FromString (DesktopService.DefaultMonospaceFont);
-			font.Size = (font.Size * 8) / 10;
-			view.SetFont (font);
+			view.SetFont (customFont);
 			view.ShadowType = Gtk.ShadowType.None;
 			view.ShowAll ();
+
+			IdeApp.Preferences.CustomOutputPadFontChanged += HandleCustomOutputPadFontChanged;
+		}
+
+		void HandleCustomOutputPadFontChanged (object sender, EventArgs e)
+		{
+			if (customFont != null) {
+				customFont.Dispose ();
+				customFont = null;
+			}
+
+			customFont = Pango.FontDescription.FromString (IdeApp.Preferences.CustomOutputPadFont);
+
+			view.SetFont (customFont);
 		}
 
 		void OnViewConsoleInput (object sender, ConsoleInputEventArgs e)
@@ -131,6 +147,12 @@ namespace MonoDevelop.Debugger
 		
 		public void Dispose ()
 		{
+			if (!disposed) {
+				IdeApp.Preferences.CustomOutputPadFontChanged -= HandleCustomOutputPadFontChanged;
+				if (customFont != null)
+					customFont.Dispose ();
+				disposed = true;
+			}
 		}
 	}
 }
