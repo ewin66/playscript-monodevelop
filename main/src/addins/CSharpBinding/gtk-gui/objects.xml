@@ -235,7 +235,8 @@
         <property name="HighlightSearchPattern" />
         <property name="IsCaseSensitive" />
         <property name="IsWholeWordOnly" />
-        </itemgroup>
+        <property name="TabsToSpaces" />
+      </itemgroup>
     </itemgroups>
     <signals>
       <itemgroup label="TextEditor Signals">

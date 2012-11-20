@@ -68,7 +68,11 @@
 		<FileFilter id = "ActionScript"
 		            insertbefore = "Assemblies"
 		            _label = "ActionScript Files"
-		            extensions = "*.as,*.asx"/>
+		            extensions = "*.as"/>
+		<FileFilter id = "ActionScriptX"
+		            insertbefore = "Assemblies"
+		            _label = "ActionScript Extended Files"
+		            extensions = "*.asx"/>		            
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/Build/General">
@@ -89,11 +93,8 @@
 
 	<Extension path = "/MonoDevelop/ProjectModel/LanguageBindings">
 		<LanguageBinding id    = "CSharp"
-		                 supportedextensions = ".cs"
+		                 supportedextensions = ".cs,.as,.asx"
 		                 class = "MonoDevelop.CSharp.CSharpLanguageBinding" />
-		<LanguageBinding id    = "ActionScript"
-		                 supportedextensions = ".asx"
-		                 class = "MonoDevelop.CSharp.CSharpLanguageBinding" />		                 
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/ReferenceFinder">
@@ -132,6 +133,7 @@
 
 	<Extension path = "/MonoDevelop/Core/StockIcons">
 		<StockIcon stockid = "md-csharp-file" resource = "C#.FileIcon" size="Menu" />
+		<StockIcon stockid = "md-actionscript-file" resource = "ActionScript.FileIcon" size="Menu" />
 		<StockIcon stockid = "md-csharp-project" resource = "csharp-project-16.png" size="Menu"/>
 	</Extension>
 
@@ -139,10 +141,10 @@
 		<MimeType id="text/x-csharp" _description="C# source code" icon="md-csharp-file" isText="true">
 			<File pattern="*.cs" />
 		</MimeType>
-		<MimeType id="text/x-actionscript" _description="ActionScript source code" icon="md-csharp-file" isText="true">
+		<MimeType id="text/x-actionscript" _description="ActionScript source code" icon="md-actionscript-file" isText="true">
 			<File pattern="*.as" />
 		</MimeType>		
-		<MimeType id="text/x-actionscriptx" _description="ActionScript extended source code" icon="md-csharp-file" isText="true">
+		<MimeType id="text/x-actionscriptx" _description="ActionScript extended source code" icon="md-actionscript-file" isText="true">
 			<File pattern="*.asx" />
 		</MimeType>		
 	</Extension>
