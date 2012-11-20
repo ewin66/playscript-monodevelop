@@ -437,6 +437,9 @@
     <EmbeddedResource Include="md1format.xml">
       <LogicalName>md1format.xml</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="frameworks\framework_NET_4_5.xml">
+      <LogicalName>framework_NET_4_5.xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
