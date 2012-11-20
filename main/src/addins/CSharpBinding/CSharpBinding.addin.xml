@@ -46,6 +46,7 @@
 	<Extension path = "/MonoDevelop/Ide/FileTemplates">
 		<FileTemplate id = "CSharpEmptyFile" resource = "EmptyCSharpFile.xft.xml"/>
 		<FileTemplate id = "CSharpAssemblyInfo" resource = "AssemblyInfo.xft.xml"/>
+		<FileTemplate id = "ActionScriptEmptyFile" resource = "EmptyActionScriptFile.xft.xml"/>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/ProjectTemplates">
@@ -53,6 +54,7 @@
 		<ProjectTemplate id = "CSharpEmptyProject" resource = "EmptyProject.xpt.xml"/>
 		<ProjectTemplate id = "CSharpGtkSharp2Project" resource = "GtkSharp2Project.xpt.xml"/>
 		<ProjectTemplate id = "CSharpLibrary" resource = "Library.xpt.xml"/>
+		<ProjectTemplate id = "ActionScriptConsoleProject" resource = "AsConsoleProject.xpt.xml"/>
 		<Condition id="MSBuildTargetIsAvailable" target="$(MSBuildExtensionsPath)\Microsoft\Portable\v4.0\Microsoft.Portable.CSharp.targets">
 			<ProjectTemplate id = "CSharpPortableLibrary" resource = "PortableLibrary.xpt.xml" />
 		</Condition>
@@ -63,6 +65,10 @@
 		            insertbefore = "Assemblies"
 		            _label = "C# Files"
 		            extensions = "*.cs"/>
+		<FileFilter id = "ActionScript"
+		            insertbefore = "Assemblies"
+		            _label = "ActionScript Files"
+		            extensions = "*.as,*.asx"/>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/Build/General">
@@ -85,10 +91,13 @@
 		<LanguageBinding id    = "CSharp"
 		                 supportedextensions = ".cs"
 		                 class = "MonoDevelop.CSharp.CSharpLanguageBinding" />
+		<LanguageBinding id    = "ActionScript"
+		                 supportedextensions = ".asx"
+		                 class = "MonoDevelop.CSharp.CSharpLanguageBinding" />		                 
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/Ide/ReferenceFinder">
-		<ReferenceFinder supportedmimetypes = "text/x-csharp"
+		<ReferenceFinder supportedmimetypes = "text/x-csharp,text/x-actionscript,text/x-actionscriptx"
 		                 class = "MonoDevelop.CSharp.Refactoring.CSharpReferenceFinder" />
 	</Extension>
 	
@@ -111,10 +120,10 @@
 		         privaet;
 		
 		-->
-		<Class fileExtensions = ".cs" class = "MonoDevelop.CSharp.Formatting.CSharpTextEditorIndentation" />
-		<Class fileExtensions = ".cs" class = "MonoDevelop.CSharp.Completion.CSharpCompletionTextEditorExtension" />
-		<Class fileExtensions = ".cs" class = "MonoDevelop.CSharp.Highlighting.HighlightUsagesExtension" />
-		<Class fileExtensions = ".cs" class = "MonoDevelop.CSharp.PathedDocumentTextEditorExtension" />
+		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.Formatting.CSharpTextEditorIndentation" />
+		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.Completion.CSharpCompletionTextEditorExtension" />
+		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.Highlighting.HighlightUsagesExtension" />
+		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.PathedDocumentTextEditorExtension" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/ProjectModel/MD1SerializationMaps">
@@ -130,30 +139,48 @@
 		<MimeType id="text/x-csharp" _description="C# source code" icon="md-csharp-file" isText="true">
 			<File pattern="*.cs" />
 		</MimeType>
+		<MimeType id="text/x-actionscript" _description="ActionScript source code" icon="md-csharp-file" isText="true">
+			<File pattern="*.as" />
+		</MimeType>		
+		<MimeType id="text/x-actionscriptx" _description="ActionScript extended source code" icon="md-csharp-file" isText="true">
+			<File pattern="*.asx" />
+		</MimeType>		
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/Ide/CodeFormatters">
 		<Formatter mimeType="text/x-csharp" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
+		<Formatter mimeType="text/x-actionscript" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
+		<Formatter mimeType="text/x-actionscriptx" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/TypeSystem/Ambiences">
 		<Ambience mimeType="text/x-csharp" class = "MonoDevelop.CSharp.CSharpAmbience" />
+		<Ambience mimeType="text/x-actionscript" class = "MonoDevelop.CSharp.CSharpAmbience" />
+		<Ambience mimeType="text/x-actionscriptx" class = "MonoDevelop.CSharp.CSharpAmbience" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/TypeSystem/Parser">
 		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-csharp" />
+		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-actionscript" />
+		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-actionscriptx" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/TypeSystem/FoldingParser">
 		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-csharp" />
+		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-actionscript" />
+		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-actionscriptx" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/TypeSystem/CodeGenerators">
 		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-csharp" />
+		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-actionscript" />
+		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-actionscriptx" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/SourceEditor2/CustomModes">
 		<SyntaxMode mimeTypes="text/x-csharp" class="MonoDevelop.CSharp.Highlighting.CSharpSyntaxMode"/>
+		<SyntaxMode mimeTypes="text/x-actionscript" class="MonoDevelop.CSharp.Highlighting.CSharpSyntaxMode"/>
+		<SyntaxMode mimeTypes="text/x-actionscriptx" class="MonoDevelop.CSharp.Highlighting.CSharpSyntaxMode"/>
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets/Mono" >
@@ -195,6 +222,8 @@
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/MimeTypePolicyPanels">
 		<Panel id = "CSharpFormatting" _label = "C# Format" mimeType="text/x-csharp" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
+		<Panel id = "CSharpFormatting" _label = "C# Format" mimeType="text/x-actionscript" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
+		<Panel id = "CSharpFormatting" _label = "C# Format" mimeType="text/x-actionscriptx" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Refactoring/CodeActions">
@@ -206,6 +235,8 @@
 	
 	<Extension path = "/MonoDevelop/Ide/TextEditorResolver">
 		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-csharp" />
+		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-actionscript" />
+		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-actionscriptx" />
 	</Extension>
 	
 	<Extension path = "/MonoDevelop/Ide/Commands/TextEditor">

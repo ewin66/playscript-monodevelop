@@ -54,6 +54,10 @@ namespace ICSharpCode.OldNRefactory
 			string ext = Path.GetExtension(fileName);
 			if (ext.Equals(".cs", StringComparison.OrdinalIgnoreCase))
 				return CreateParser(SupportedLanguage.CSharp, new StreamReader(fileName, encoding));
+			if (ext.Equals(".as", StringComparison.OrdinalIgnoreCase))
+				return CreateParser(SupportedLanguage.CSharp, new StreamReader(fileName, encoding));
+			if (ext.Equals(".asx", StringComparison.OrdinalIgnoreCase))
+				return CreateParser(SupportedLanguage.CSharp, new StreamReader(fileName, encoding));
 			if (ext.Equals(".vb", StringComparison.OrdinalIgnoreCase))
 				return CreateParser(SupportedLanguage.VBNet, new StreamReader(fileName, encoding));
 			return null;

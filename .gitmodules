@@ -18,4 +18,4 @@
 	url = git://github.com/mono/mdtestharness.git
 [submodule "main/external/nrefactory"]
 	path = main/external/nrefactory
-	url = git://github.com/icsharpcode/NRefactory.git
+	url = git://github.com:benjcooley/NRefactory.git
