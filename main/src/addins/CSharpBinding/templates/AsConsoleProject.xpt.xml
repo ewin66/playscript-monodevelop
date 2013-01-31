@@ -35,7 +35,7 @@
 
 	class MainClass
 	{
-		public function void Main(args:String[]):void
+		public static function Main(args:String[]):void
 		{
 			Console.WriteLine("Hello World!");
 		}
