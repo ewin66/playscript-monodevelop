@@ -42,7 +42,8 @@ namespace MonoDevelop.Projects
 		Exe,
 		Library,
 		WinExe, 
-		Module
+		Module,
+		JavaScript
 	};
 	
 	public class DotNetProjectConfiguration: ProjectConfiguration
@@ -163,10 +164,10 @@ namespace MonoDevelop.Projects
 		public FilePath CompiledOutputName {
 			get {
 				FilePath fullPath = OutputDirectory.Combine (OutputAssembly);
-				if (OutputAssembly.EndsWith (".dll") || OutputAssembly.EndsWith (".exe"))
+				if (OutputAssembly.EndsWith (".dll") || OutputAssembly.EndsWith (".exe") || OutputAssembly.EndsWith (".js"))
 					return fullPath;
 				else
-					return fullPath + (CompileTarget == CompileTarget.Library ? ".dll" : ".exe");
+					return fullPath + (CompileTarget == CompileTarget.Library ? ".dll" : (CompileTarget == CompileTarget.JavaScript ? ".js" : ".exe"));
 			}
 		}
 		

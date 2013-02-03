@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<Template originator   = "Mike Krueger"
-          created      = "06/10/2001"
-          lastModified = "02/01/2003">
+<Template originator   = "Ben Cooley"
+          created      = "01/21/2013"
+          lastModified = "01/21/2013">
 	
 	<!-- Template Header -->
 	<TemplateConfiguration>
@@ -14,7 +14,7 @@
 	
 	<!-- Actions -->
 	<Actions>
-		<Open filename = "Main.asx"/>
+		<Open filename = "Main.as"/>
 	</Actions>
 	
 	<!-- Template Content -->
@@ -26,18 +26,18 @@
 		<Project name = "${ProjectName}" directory = ".">
 			<Options ExternalConsole="True"/>
 			<References>
-				<Reference type="Package" refto="System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+				<Reference type="Package" refto="System" />
+				<Reference type="Package" refto="ascorlib" />
+				<Reference type="Package" refto="ActionScript.Dynamic" />
 			</References>
 			<Files>
-				<File name="Main.asx" AddStandardHeader="True"><![CDATA[package
+				<File name="Main.as" AddStandardHeader="True"><![CDATA[package
 {
-	import System.*;
-
 	class MainClass
 	{
-		public static function Main(args:String[]):void
+		public static function Main():void
 		{
-			Console.WriteLine("Hello World!");
+			trace("Hello World!");
 		}
 	}
 }]]></File>

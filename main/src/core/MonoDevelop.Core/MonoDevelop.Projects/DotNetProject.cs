@@ -856,7 +856,7 @@ namespace MonoDevelop.Projects
 				return false;
 			ExecutionCommand cmd = CreateExecutionCommand (configuration, config);
 
-			return (compileTarget == CompileTarget.Exe || compileTarget == CompileTarget.WinExe) && context.ExecutionHandler.CanExecute (cmd);
+			return (compileTarget == CompileTarget.Exe || compileTarget == CompileTarget.WinExe || compileTarget == CompileTarget.JavaScript) && context.ExecutionHandler.CanExecute (cmd);
 		}
 
 		protected internal override List<FilePath> OnGetItemFiles (bool includeReferencedFiles)
