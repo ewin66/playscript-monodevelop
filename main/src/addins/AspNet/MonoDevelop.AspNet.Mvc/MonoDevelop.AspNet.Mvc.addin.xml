@@ -6,8 +6,8 @@
        url         = "http://monodevelop.com/"
        description = "Support for ASP.NET MVC projects."
        category    = "Web Development"
-       version     = "3.0.5">
-
+       version     = "4.0">
+	
 	<Runtime>
 		<Import file = "Templates/Controller.xft.xml"/>
 		<Import file = "Templates/ViewPage.xft.xml"/>
@@ -31,6 +31,7 @@
 		<Import file = "Templates/LayoutPage.xft.xml" />
 		<Import file = "Templates/ViewPageRazor.xft.xml" />
 		<Import file = "Templates/PartialViewPageRazor.xft.xml" />
+		<Import file = "Templates/PreprocessedRazorTemplate.xft.xml" />
 		<Import file = "CodeTemplates/CSharp/AddView/Aspx/Empty.tt" />
 		<Import file = "CodeTemplates/CSharp/AddView/Razor/Empty.tt" />
 		<Import file = "CodeTemplates/CSharp/AddController/Empty.tt" />
@@ -38,12 +39,12 @@
 	</Runtime>
 
 	<Dependencies>
-		<Addin id="Core" version="3.0.5"/>
-		<Addin id="Ide" version="3.0.5"/>
-		<Addin id="XmlEditor" version="3.0.5" />
-		<Addin id="AspNet" version="3.0.5" />
-		<Addin id="SourceEditor2" version="3.0.5" />
-		<Addin id="TextTemplating" version="3.0.5" />
+		<Addin id="Core" version="4.0"/>
+		<Addin id="Ide" version="4.0"/>
+		<Addin id="XmlEditor" version="4.0" />
+		<Addin id="AspNet" version="4.0" />
+		<Addin id="SourceEditor2" version="4.0" />
+		<Addin id="TextTemplating" version="4.0" />
 	</Dependencies>
 
 	<Extension path = "/MonoDevelop/ProjectModel/MSBuildItemTypes">
@@ -98,6 +99,8 @@
 		              file     = "Templates/LayoutPage.xft.xml" />
 		<FileTemplate id       = "AspMvcPartialViewPageRazor"
 		              file     = "Templates/PartialViewPageRazor.xft.xml" />
+		<FileTemplate id       = "PreprocessedRazorTemplate"
+		              file     = "Templates/PreprocessedRazorTemplate.xft.xml" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/ProjectTemplates">
@@ -137,15 +140,15 @@
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/Commands/TextEditor">
-		<Command id = "MonoDevelop.AspNet.Mvc.AspCommands.GoToView"
+		<Command id = "MonoDevelop.AspNet.Mvc.AspMvcCommands.GoToView"
 				_label = "Go To View"
 				defaultHandler = "MonoDevelop.AspNet.Mvc.GoToViewCommandHandler"
 				description = "Go to the corresponding view file" />
-		<Command id = "MonoDevelop.AspNet.Mvc.AspCommands.AddViewFromController"
+		<Command id = "MonoDevelop.AspNet.Mvc.AspMvcCommands.AddViewFromController"
 				_label = "Add View..."
 				defaultHandler = "MonoDevelop.AspNet.Mvc.AddViewFromControllerCommandHandler"
 				description = "Add an ASP.NET MVC view" />
-		<Command id = "MonoDevelop.AspNet.Mvc.AspCommands.GoToController"
+		<Command id = "MonoDevelop.AspNet.Mvc.AspMvcCommands.GoToController"
 				_label = "Go To Controller"
 				defaultHandler = "MonoDevelop.AspNet.Mvc.GoToControllerCommandHandler"
 				description = "Go to the corresponding controller file" />
@@ -161,12 +164,12 @@
 
 	<Extension path = "/MonoDevelop/SourceEditor2/ContextMenu/Editor">
 		<Condition id="FileType" fileExtensions=".cs">
-			<CommandItem id = "MonoDevelop.AspNet.Mvc.AspCommands.GoToView" insertbefore="MonoDevelop.Ide.Commands.EditCommands.Cut" />
-			<CommandItem id = "MonoDevelop.AspNet.Mvc.AspCommands.AddViewFromController" />
+			<CommandItem id = "MonoDevelop.AspNet.Mvc.AspMvcCommands.GoToView" insertbefore="MonoDevelop.Ide.Commands.EditCommands.Cut" />
+			<CommandItem id = "MonoDevelop.AspNet.Mvc.AspMvcCommands.AddViewFromController" />
 			<SeparatorItem id = "MvcSeparator1" />
 		</Condition>
 		<Condition id="FileType" fileExtensions=".cshtml,.aspx">
-			<CommandItem id = "MonoDevelop.AspNet.Mvc.AspCommands.GoToController" insertbefore="MonoDevelop.Ide.Commands.EditCommands.Cut" />
+			<CommandItem id = "MonoDevelop.AspNet.Mvc.AspMvcCommands.GoToController" insertbefore="MonoDevelop.Ide.Commands.EditCommands.Cut" />
 			<SeparatorItem id = "MvcSeparator2" />
 		</Condition>
 	</Extension>
@@ -193,10 +196,6 @@
 		</MimeType>
 	</Extension>
 
-	<Extension path = "/MonoDevelop/SourceEditor2/CustomModes">
-		<SyntaxMode mimeTypes="text/x-cshtml" class="MonoDevelop.AspNet.Mvc.RazorSyntaxMode"/>
-	</Extension>
-
 	<Extension path = "/MonoDevelop/Ide/TextEditorExtensions">
 		<Class fileExtensions=".cshtml" class = "MonoDevelop.AspNet.Mvc.Gui.RazorCSharpEditorExtension" />
 	</Extension>
@@ -207,5 +206,10 @@
 
 	<Extension path = "/MonoDevelop/Ide/CodeFormatters">
 		<Formatter mimeType="text/x-cshtml" class="MonoDevelop.AspNet.Mvc.Formatting.RazorCSharpFormatter" />
+	</Extension>
+
+	<Extension path = "/MonoDevelop/Ide/CustomTools">
+		<!-- NOTE: we explicitly do no call this "RazorGenerator" to avoid conflicts with http://razorgenerator.codeplex.com/ -->
+		<Tool name="RazorTemplatePreprocessor" type="MonoDevelop.RazorGenerator.RazorTemplatePreprocessor"/>
 	</Extension>
 </Addin>

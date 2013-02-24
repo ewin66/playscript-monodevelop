@@ -76,17 +76,12 @@
       <Name>MonoDevelop.Refactoring</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\contrib\NRefactory\Project\NRefactory.csproj">
-      <Project>{3A9AE6AA-BC07-4A2F-972C-581E3AE2F195}</Project>
-      <Name>NRefactory</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\contrib\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj">
       <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
       <Name>ICSharpCode.Decompiler</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\Mono.Cecil\Mono.Cecil.csproj">
+    <ProjectReference Include="..\..\..\external\cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
       <Private>False</Private>
@@ -162,9 +157,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="icons\csharp-icon-32.png">
       <LogicalName>csharp-icon-32.png</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="gtk-gui\objects.xml">
-      <LogicalName>objects.xml</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="templates\AssemblyInfo.xft.xml">
       <LogicalName>AssemblyInfo.xft.xml</LogicalName>
@@ -256,7 +248,9 @@
     <Compile Include="MonoDevelop.CSharp\CSharpAmbience.cs" />
     <Compile Include="MonoDevelop.CSharp\PathedDocumentTextEditorExtension.cs" />
     <Compile Include="MonoDevelop.CSharp.Completion\CSharpCompletionTextEditorExtension.cs" />
-    <Compile Include="MonoDevelop.CSharp.Completion\MemberCompletionData.cs" />
+    <Compile Include="MonoDevelop.CSharp.Completion\MemberCompletionData.cs">
+      <DependentUpon>IndexerParameterDataProvider.cs</DependentUpon>
+    </Compile>
     <Compile Include="MonoDevelop.CSharp.Completion\DelegateDataProvider.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring\CSharpReferenceFinder.cs" />
     <Compile Include="MonoDevelop.CSharp.Completion\ConstructorParameterDataProvider.cs" />
@@ -304,6 +298,10 @@
     <Compile Include="MonoDevelop.CSharp\AstAmbience.cs" />
     <Compile Include="MonoDevelop.CSharp\AstStockIcons.cs" />
     <Compile Include="MonoDevelop.CSharp.Completion\AbstractParameterDataProvider.cs" />
+    <Compile Include="MonoDevelop.CSharp.Highlighting\CSharpSelectionSurroundingProvider.cs" />
+    <Compile Include="MonoDevelop.CSharp\SignatureMarkupCreator.cs" />
+    <Compile Include="MonoDevelop.CSharp.Completion\ArrayTypeParameterDataProvider.cs" />
+    <Compile Include="MonoDevelop.CSharp.CodeGeneration\ImplementInterfaceMembersGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile.am" />

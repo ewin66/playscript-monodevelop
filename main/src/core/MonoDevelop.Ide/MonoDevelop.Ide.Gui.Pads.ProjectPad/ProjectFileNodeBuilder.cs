@@ -41,7 +41,7 @@ using System.Linq;
 
 namespace MonoDevelop.Ide.Gui.Pads.ProjectPad
 {
-	public class ProjectFileNodeBuilder: TypeNodeBuilder
+	class ProjectFileNodeBuilder: TypeNodeBuilder
 	{
 		public override Type NodeDataType {
 			get { return typeof(ProjectFile); }
@@ -60,11 +60,9 @@ namespace MonoDevelop.Ide.Gui.Pads.ProjectPad
 		public override void GetNodeAttributes (ITreeNavigator treeNavigator, object dataObject, ref NodeAttributes attributes)
 		{
 			ProjectFile file = (ProjectFile) dataObject;
-			if (file.DependsOnFile != null) {
-				attributes = NodeAttributes.None;
-			} else {
-				attributes |= NodeAttributes.AllowRename;
-			}
+
+			attributes |= NodeAttributes.AllowRename;
+
 			if (!file.Visible && !treeNavigator.Options ["ShowAllFiles"])
 				attributes |= NodeAttributes.Hidden;
 		}
@@ -81,13 +79,19 @@ namespace MonoDevelop.Ide.Gui.Pads.ProjectPad
 			icon = DesktopService.GetPixbufForFile (file.FilePath, Gtk.IconSize.Menu);
 			
 			if (file.IsLink && icon != null) {
-				icon = icon.Copy ();
-				using (Gdk.Pixbuf overlay = Gdk.Pixbuf.LoadFromResource ("Icons.16x16.LinkOverlay.png")) {
-					overlay.Composite (icon,
-						0,  0,
-						icon.Width, icon.Width,
-						0, 0,
-						1, 1, Gdk.InterpType.Bilinear, 255); 
+				var overlay = ImageService.GetPixbuf ("md-link-overlay", Gtk.IconSize.Menu);
+				var cached = Context.GetComposedIcon (icon, overlay);
+				if (cached != null)
+					icon = cached;
+				else {
+					var res = icon.Copy ();
+					overlay.Composite (res,
+					                   0,  0,
+					                   icon.Width, icon.Width,
+					                   0, 0,
+					                   1, 1, Gdk.InterpType.Bilinear, 255); 
+					Context.CacheComposedIcon (icon, overlay, res);
+					icon = res;
 				}
 			}
 		}
@@ -135,7 +139,7 @@ namespace MonoDevelop.Ide.Gui.Pads.ProjectPad
 
 	}
 	
-	public class ProjectFileNodeCommandHandler: NodeCommandHandler
+	class ProjectFileNodeCommandHandler: NodeCommandHandler
 	{
 		public override void OnRenameStarting (ref int selectionStart, ref int selectionLength)
 		{
@@ -212,7 +216,7 @@ namespace MonoDevelop.Ide.Gui.Pads.ProjectPad
 			var target = (ProjectFile) CurrentNode.DataItem;
 			var pf = dataObject as ProjectFile;
 
-			return pf != null && !pf.HasChildren && target.DependsOn == null;
+			return pf != null && pf != target && !pf.HasChildren && target.DependsOn == null;
 		}
 
 		void Drop (ProjectFile pf, DragOperation operation, HashSet<SolutionEntityItem> projectsToSave)
@@ -240,7 +244,7 @@ namespace MonoDevelop.Ide.Gui.Pads.ProjectPad
 				bool move = operation == DragOperation.Move;
 				var opText = move ? GettextCatalog.GetString ("Moving file...") : GettextCatalog.GetString ("Copying file...");
 
-				using (var monitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor (opText, MonoDevelop.Ide.Gui.Stock.CopyIcon, true))
+				using (var monitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor (opText, Stock.StatusSolutionOperation, true))
 					IdeApp.ProjectOperations.TransferFiles (monitor, pf.Project, pf.FilePath, target.Project, targetPath, move, true);
 
 				pf = target.Project.Files.GetFile (targetPath);

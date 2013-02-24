@@ -108,6 +108,7 @@ namespace MonoDevelop.VersionControl.Views
 
 		protected EditorCompareWidgetBase (bool viewOnly)
 		{
+			GtkWorkarounds.FixContainerLeak (this);
 			this.viewOnly = viewOnly;
 		}
 
@@ -155,12 +156,12 @@ namespace MonoDevelop.VersionControl.Views
 
 			if (editors.Length == 2) {
 				editors[0].Painted +=  delegate (object sender, PaintEventArgs args) {
-					var myEditor = (TextEditor)sender;
+					var myEditor = (TextArea)sender;
 					PaintEditorOverlay (myEditor, args, LeftDiff, true);
 				};
 
 				editors[1].Painted +=  delegate (object sender, PaintEventArgs args) {
-					var myEditor = (TextEditor)sender;
+					var myEditor = (TextArea)sender;
 					PaintEditorOverlay (myEditor, args, LeftDiff, false);
 				};
 
@@ -168,16 +169,16 @@ namespace MonoDevelop.VersionControl.Views
 				Add (rightDiffScrollBar);
 			} else {
 				editors[0].Painted +=  delegate (object sender, PaintEventArgs args) {
-					var myEditor = (TextEditor)sender;
+					var myEditor = (TextArea)sender;
 					PaintEditorOverlay (myEditor, args, LeftDiff, true);
 				};
 				editors[1].Painted +=  delegate (object sender, PaintEventArgs args) {
-					var myEditor = (TextEditor)sender;
+					var myEditor = (TextArea)sender;
 					PaintEditorOverlay (myEditor, args, LeftDiff, false);
 					PaintEditorOverlay (myEditor, args, RightDiff, false);
 				};
 				editors[2].Painted +=  delegate (object sender, PaintEventArgs args) {
-					var myEditor = (TextEditor)sender;
+					var myEditor = (TextArea)sender;
 					PaintEditorOverlay (myEditor, args, RightDiff, true);
 				};
 				rightDiffScrollBar = new DiffScrollbar (this, editors[2], false, false);
@@ -250,6 +251,7 @@ namespace MonoDevelop.VersionControl.Views
 
 				editor.Options.ShowFoldMargin = false;
 				editor.Options.ShowIconMargin = false;
+				editor.Options.DrawIndentationMarkers = PropertyService.Get ("DrawIndentationMarkers", false);
 			}
 		}
 		
@@ -389,14 +391,14 @@ namespace MonoDevelop.VersionControl.Views
 
 		static void UpdateCaretPosition (Caret caret)
 		{
-			int offset = caret.Offset;
-			if (offset < 0 || offset > caret.TextEditorData.Document.TextLength)
-				return;
-			DocumentLocation location = caret.TextEditorData.LogicalToVisualLocation (caret.Location);
-			IdeApp.Workbench.StatusBar.ShowCaretState (caret.Line,
-			                                           location.Column,
-			                                           caret.TextEditorData.IsSomethingSelected ? caret.TextEditorData.SelectionRange.Length : 0,
-			                                           caret.IsInInsertMode);
+//			int offset = caret.Offset;
+//			if (offset < 0 || offset > caret.TextEditorData.Document.TextLength)
+//				return;
+//			DocumentLocation location = caret.TextEditorData.LogicalToVisualLocation (caret.Location);
+//			IdeApp.Workbench.StatusBar.ShowCaretState (caret.Line,
+//			                                           location.Column,
+//			                                           caret.TextEditorData.IsSomethingSelected ? caret.TextEditorData.SelectionRange.Length : 0,
+//			                                           caret.IsInInsertMode);
 		}
 
 		#region Container implementation
@@ -538,7 +540,7 @@ namespace MonoDevelop.VersionControl.Views
 			return result;
 		}
 		
-		void PaintEditorOverlay (TextEditor editor, PaintEventArgs args, List<Mono.TextEditor.Utils.Hunk> diff, bool paintRemoveSide)
+		void PaintEditorOverlay (TextArea editor, PaintEventArgs args, List<Mono.TextEditor.Utils.Hunk> diff, bool paintRemoveSide)
 		{
 			if (diff == null)
 				return;
@@ -637,17 +639,25 @@ namespace MonoDevelop.VersionControl.Views
 			using (var undo = toEditor.OpenUndoGroup ()) {
 				var start = toEditor.Document.GetLine (hunk.InsertStart);
 				int toOffset = start != null ? start.Offset : toEditor.Document.TextLength;
+
+				int replaceLength = 0;
 				if (start != null && hunk.Inserted > 0) {
 					int line = Math.Min (hunk.InsertStart + hunk.Inserted - 1, toEditor.Document.LineCount);
 					var end = toEditor.Document.GetLine (line);
-					toEditor.Remove (start.Offset, end.EndOffsetIncludingDelimiter - start.Offset);
+					replaceLength = end.EndOffsetIncludingDelimiter - start.Offset;
 				}
 	
 				if (hunk.Removed > 0) {
 					start = fromEditor.Document.GetLine (Math.Min (hunk.RemoveStart, fromEditor.Document.LineCount));
 					int line = Math.Min (hunk.RemoveStart + hunk.Removed - 1, fromEditor.Document.LineCount);
 					var end = fromEditor.Document.GetLine (line);
-					toEditor.Insert (toOffset, start.Offset == end.EndOffsetIncludingDelimiter ? toEditor.EolMarker : fromEditor.Document.GetTextBetween (start.Offset, end.EndOffsetIncludingDelimiter));
+					toEditor.Replace (
+						toOffset,
+						replaceLength,
+						fromEditor.Document.GetTextBetween (start.Offset, end.EndOffsetIncludingDelimiter)
+					);
+				} else if (replaceLength > 0) {
+					toEditor.Remove (toOffset, replaceLength);
 				}
 			}
 		}
@@ -921,6 +931,7 @@ namespace MonoDevelop.VersionControl.Views
 			EditorCompareWidgetBase widget;
 			bool useLeftDiff;
 			bool paintInsert;
+			Adjustment vAdjustment;
 			
 			public DiffScrollbar (EditorCompareWidgetBase widget, TextEditor editor, bool useLeftDiff, bool paintInsert)
 			{
@@ -928,14 +939,27 @@ namespace MonoDevelop.VersionControl.Views
 				this.useLeftDiff = useLeftDiff;
 				this.paintInsert = paintInsert;
 				this.widget = widget;
-				widget.vAdjustment.ValueChanged += delegate {
-					QueueDraw ();
-				};
+				vAdjustment = widget.vAdjustment;
+				vAdjustment.ValueChanged += HandleValueChanged;
 				WidthRequest = 50;
 
 				Events |= EventMask.ButtonPressMask | EventMask.ButtonReleaseMask | EventMask.ButtonMotionMask;
 
 				Show ();
+			}
+
+			protected override void OnDestroyed ()
+			{
+				base.OnDestroyed ();
+				if (vAdjustment != null) {
+					vAdjustment.ValueChanged -= HandleValueChanged;
+					vAdjustment = null;
+				}
+			}
+
+			void HandleValueChanged (object sender, EventArgs e)
+			{
+				QueueDraw ();
 			}
 
 			public void MouseMove (double y)

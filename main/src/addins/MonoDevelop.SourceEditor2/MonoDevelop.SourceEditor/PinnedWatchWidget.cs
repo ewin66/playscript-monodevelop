@@ -40,6 +40,10 @@ namespace MonoDevelop.SourceEditor
 	{
 		ObjectValueTreeView valueTree;
 		ObjectValue objectValue;
+
+		TextEditor Editor {
+			get; set;
+		}
 		
 		public PinnedWatch Watch {
 			get; private set;
@@ -62,18 +66,10 @@ namespace MonoDevelop.SourceEditor
 			}
 		}
 		
-		TextEditorContainer container;
-		
-		TextEditor Editor {
-			get {
-				return container.TextEditorWidget;
-			}
-		}
-		
-		public PinnedWatchWidget (TextEditorContainer container, PinnedWatch watch)
+		public PinnedWatchWidget (TextEditor editor, PinnedWatch watch)
 		{
-			this.container = container;
 			objectValue = watch.Value;
+			Editor = editor;
 			Watch = watch;
 
 			valueTree = new ObjectValueTreeView ();
@@ -157,7 +153,7 @@ namespace MonoDevelop.SourceEditor
 			Gdk.Rectangle rect = valueTree.GetCellArea (path, col);
 			if (!mousePressed && valueTree.Columns[0] == col && cx >= rect.Left) {
 				mousePressed = true;
-				container.MoveToTop (this);
+				Editor.MoveToTop (this);
 //				Gdk.Pointer.Grab (this.GdkWindow, true, Gdk.EventMask.ButtonPressMask | Gdk.EventMask.ButtonReleaseMask | Gdk.EventMask.PointerMotionMask | Gdk.EventMask.EnterNotifyMask | Gdk.EventMask.LeaveNotifyMask, null, null, Gtk.Global.CurrentEventTime);
 //				Gtk.Grab.Add (this);
 			}

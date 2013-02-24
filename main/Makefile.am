@@ -21,7 +21,7 @@ vcrevision:
 	@if test -d ../.git; then \
 		version=$$(cd ..; \
 			LANG=C; export LANG; \
-			git describe --dirty --always --abbrev=0 --match nothing; \
+			git rev-parse HEAD; \
 		); \
 		echo "$$version" > "vcrevision"; \
 	else \
@@ -112,10 +112,15 @@ apidocs:
 
 MD_LAUNCH=$(MD_LAUNCH_SETUP) UBUNTU_MENUPROXY=0 exec -a "monodevelop" $(RUNTIME)
 
-run: runmd
+run: runmd-sgen
+
+run-sgen: runmd-sgen
 
 runmd: $(PROGRAM)
 	$(MD_LAUNCH) --debug $(MD_BIN_PATH)/MonoDevelop.exe --no-redirect
+
+runmd-sgen: $(PROGRAM)
+	$(MD_LAUNCH)-sgen --debug $(MD_BIN_PATH)/MonoDevelop.exe --no-redirect
 
 run-debug: $(PROGRAM)
 	MONODEVELOP_CONSOLE_LOG_LEVEL=All $(MD_LAUNCH) --debug=casts $(MD_BIN_PATH)/MonoDevelop.exe --no-redirect
@@ -123,6 +128,11 @@ run-debug: $(PROGRAM)
 run-gdb: $(PROGRAM)
 	echo "run --debug $(MD_BIN_PATH)/MonoDevelop.exe" > gdb.commands
 	$(MD_LAUNCH_SETUP) gdb $(RUNTIME) -x gdb.commands
+	rm -f gdb.commands
+
+run-gdb-sgen: $(PROGRAM)
+	echo "run --debug $(MD_BIN_PATH)/MonoDevelop.exe" > gdb.commands
+	$(MD_LAUNCH_SETUP) gdb $(RUNTIME)-sgen -x gdb.commands
 	rm -f gdb.commands
 
 run-profile: $(PROGRAM)

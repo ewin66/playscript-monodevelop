@@ -44,8 +44,7 @@ namespace MonoDevelop.Ide.Gui.Components
 		Gtk.TextBuffer buffer;
 		Gtk.TextView textEditorControl;
 		TextMark endMark;
-		FontDescription customFont;
-		
+
 		TextTag tag;
 		TextTag bold;
 		TextTag errorTag;
@@ -65,9 +64,13 @@ namespace MonoDevelop.Ide.Gui.Components
 		/// The log text view allows the user to jump to the source of an error/warning
 		/// by double clicking on the line in the text view.
 		/// </summary>
-		class LogTextView : TextView
+		public class LogTextView : TextView
 		{
 			public LogTextView (Gtk.TextBuffer buf) : base (buf)
+			{
+			}
+
+			public LogTextView () 
 			{
 			}
 
@@ -146,7 +149,7 @@ namespace MonoDevelop.Ide.Gui.Components
 			
 			endMark = buffer.CreateMark ("end-mark", buffer.EndIter, false);
 
-			UpdateCustomFont (IdeApp.Preferences.CustomOutputPadFont);
+			UpdateCustomFont ();
 			IdeApp.Preferences.CustomOutputPadFontChanged += HandleCustomFontChanged;
 			
 			outputDispatcher = new GLib.TimeoutHandler (outputDispatchHandler);
@@ -183,21 +186,14 @@ namespace MonoDevelop.Ide.Gui.Components
 			buffer.Clear();
 		}
 		
-		void HandleCustomFontChanged (object sender, PropertyChangedEventArgs e)
+		void HandleCustomFontChanged (object sender, EventArgs e)
 		{
-			UpdateCustomFont ((string)e.NewValue);
+			UpdateCustomFont ();
 		}
 		
-		void UpdateCustomFont (string name)
+		void UpdateCustomFont ()
 		{
-			if (customFont != null) {
-				customFont.Dispose ();
-				customFont = null;
-			}
-			if (!string.IsNullOrEmpty (name)) {
-				customFont = Pango.FontDescription.FromString (name);
-			}
-			textEditorControl.ModifyFont (customFont);
+			textEditorControl.ModifyFont (IdeApp.Preferences.CustomOutputPadFont ?? FontService.DefaultMonospaceFontDescription);
 		}
 		
 		//mechanism to to batch copy text when large amounts are being dumped
@@ -355,10 +351,6 @@ namespace MonoDevelop.Ide.Gui.Components
 				lastTextWrite = null;
 			}
 			IdeApp.Preferences.CustomOutputPadFontChanged -= HandleCustomFontChanged;
-			if (customFont != null) {
-				customFont.Dispose ();
-				customFont = null;
-			}
 		}
 		
 		private abstract class QueuedUpdate
@@ -521,7 +513,11 @@ namespace MonoDevelop.Ide.Gui.Components
 				return;
 			userWarned = true;
 			string title = GettextCatalog.GetString ("Console input not supported");
-			string desc = GettextCatalog.GetString ("Console input is not supported when using the MonoDevelop output console. If your applications needs to read data from the standard input, please set the 'Run in External Console' option in the project options.");
+			string desc = GettextCatalog.GetString (
+				"Console input is not supported when using the {0} output console. If your application needs to read " +
+				"data from the standard input, please set the 'Run in External Console' option in the project options.",
+				BrandingService.ApplicationName
+			);
 			MessageService.ShowWarning (title, desc);
 		}
 		

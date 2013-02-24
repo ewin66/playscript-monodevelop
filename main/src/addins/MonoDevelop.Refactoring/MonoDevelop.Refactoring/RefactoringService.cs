@@ -195,13 +195,17 @@ namespace MonoDevelop.Refactoring
 				var result = new List<MonoDevelop.CodeActions.CodeAction> ();
 				try {
 					var editor = doc.Editor;
-					if (editor != null) {
-						string disabledNodes = PropertyService.Get ("ContextActions." + editor.Document.MimeType, "") ?? "";
-						foreach (var provider in contextActions.Where (fix => disabledNodes.IndexOf (fix.IdString) < 0)) {
-							try {
-								result.AddRange (provider.GetActions (doc, loc, cancellationToken));
-							} catch (Exception ex) {
-								LoggingService.LogError ("Error in context action provider " + provider.Title, ex);
+					var parsedDocument = doc.ParsedDocument;
+					if (editor != null && parsedDocument != null && parsedDocument.CreateRefactoringContext != null) {
+						var ctx = parsedDocument.CreateRefactoringContext (doc, cancellationToken);
+						if (ctx != null) {
+							string disabledNodes = PropertyService.Get ("ContextActions." + editor.Document.MimeType, "") ?? "";
+							foreach (var provider in contextActions.Where (fix => disabledNodes.IndexOf (fix.IdString) < 0)) {
+								try {
+									result.AddRange (provider.GetActions (doc, ctx, loc, cancellationToken));
+								} catch (Exception ex) {
+									LoggingService.LogError ("Error in context action provider " + provider.Title, ex);
+								}
 							}
 						}
 					}
@@ -214,21 +218,20 @@ namespace MonoDevelop.Refactoring
 
 		public static void QueueQuickFixAnalysis (MonoDevelop.Ide.Gui.Document doc, TextLocation loc, CancellationToken token, Action<List<MonoDevelop.CodeActions.CodeAction>> callback)
 		{
-			System.Threading.ThreadPool.QueueUserWorkItem (delegate {
+			var ext = doc.GetContent<MonoDevelop.AnalysisCore.Gui.ResultsEditorExtension> ();
+			var issues = ext != null ? ext.GetResultsAtOffset (doc.Editor.LocationToOffset (loc), token).OrderBy (r => r.Level).ToList () : new List<Result> ();
+
+			ThreadPool.QueueUserWorkItem (delegate {
 				try {
 					var result = new List<MonoDevelop.CodeActions.CodeAction> ();
-
-					var ext = doc.GetContent<MonoDevelop.AnalysisCore.Gui.ResultsEditorExtension> ();
-					if (ext != null) {
-						foreach (var r in ext.GetResultsAtOffset (doc.Editor.LocationToOffset (loc), token).OrderBy (r => r.Level)) {
-							if (token.IsCancellationRequested)
-								return;
-							var fresult = r as FixableResult;
-							if (fresult == null)
-								continue;
-							foreach (var action in FixOperationsHandler.GetActions (doc, fresult)) {
-								result.Add (new AnalysisContextActionProvider.AnalysisCodeAction (action, r));
-							}
+					foreach (var r in issues) {
+						if (token.IsCancellationRequested)
+							return;
+						var fresult = r as FixableResult;
+						if (fresult == null)
+							continue;
+						foreach (var action in FixOperationsHandler.GetActions (doc, fresult)) {
+							result.Add (new AnalysisContextActionProvider.AnalysisCodeAction (action, r));
 						}
 					}
 					result.AddRange (GetValidActions (doc, loc).Result);

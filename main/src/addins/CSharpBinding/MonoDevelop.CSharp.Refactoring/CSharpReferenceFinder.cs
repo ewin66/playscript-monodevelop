@@ -122,7 +122,6 @@ namespace MonoDevelop.CSharp.Refactoring
 			}
 			if (node is ConstructorInitializer)
 				return null;
-
 			if (node is ObjectCreateExpression)
 				node = ((ObjectCreateExpression)node).Type;
 
@@ -132,6 +131,9 @@ namespace MonoDevelop.CSharp.Refactoring
 			if (node is MemberReferenceExpression)
 				node = ((MemberReferenceExpression)node).MemberNameToken;
 			
+			if (node is SimpleType)
+				node = ((SimpleType)node).IdentifierToken;
+
 			if (node is MemberType)
 				node = ((MemberType)node).MemberNameToken;
 			
@@ -187,7 +189,14 @@ namespace MonoDevelop.CSharp.Refactoring
 			
 			foreach (var obj in searchedMembers) {
 				if (obj is IEntity) {
-					refFinder.FindReferencesInFile (refFinder.GetSearchScopes ((IEntity)obj), file, unit, doc.Compilation, (astNode, r) => {
+					var entity = (IEntity)obj;
+
+					// May happen for anonymous types since empty constructors are always generated.
+					// But there is no declaring type definition for them - we filter out this case.
+					if (entity.EntityType == EntityType.Constructor && entity.DeclaringTypeDefinition == null)
+						continue;
+
+					refFinder.FindReferencesInFile (refFinder.GetSearchScopes (entity), file, unit, doc.Compilation, (astNode, r) => {
 						if (IsNodeValid (obj, astNode))
 							result.Add (GetReference (r, astNode, editor.FileName, editor)); 
 					}, CancellationToken.None);
@@ -245,7 +254,7 @@ namespace MonoDevelop.CSharp.Refactoring
 					if (parsedFile == null) {
 						// for fallback purposes - should never happen.
 						parsedFile = unit.ToTypeSystem ();
-						content = content.UpdateProjectContent (content.GetFile (file), parsedFile);
+						content = content.AddOrUpdateFiles (parsedFile);
 						compilation = content.CreateCompilation ();
 					}
 					foreach (var scope in scopes) {

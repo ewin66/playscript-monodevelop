@@ -38,6 +38,7 @@ using MonoDevelop.Core.Assemblies;
 using MonoDevelop.CSharp.Project;
 using System.Threading;
 using MonoDevelop.Ide;
+using MonoDevelop.Core.ProgressMonitoring;
 
 
 namespace MonoDevelop.CSharp
@@ -123,6 +124,7 @@ namespace MonoDevelop.CSharp
 			foreach (ProjectReference lib in projectItems.GetAll <ProjectReference> ()) {
 				if (lib.ReferenceType == ReferenceType.Project && !(lib.OwnerProject.ParentSolution.FindProjectByName (lib.Reference) is DotNetProject))
 					continue;
+				string refPrefix = string.IsNullOrEmpty (lib.Aliases) ? "" : lib.Aliases + "=";
 				foreach (string fileName in lib.GetReferencedFileNames (configSelector)) {
 					switch (lib.ReferenceType) {
 					case ReferenceType.Package:
@@ -134,7 +136,7 @@ namespace MonoDevelop.CSharp
 						}
 
 						if (alreadyAddedReference.Add (fileName))
-							AppendQuoted (sb, "/r:", fileName);
+							AppendQuoted (sb, "/r:", refPrefix + fileName);
 						
 						if (pkg.GacRoot != null && !gacRoots.Contains (pkg.GacRoot))
 							gacRoots.Add (pkg.GacRoot);
@@ -152,7 +154,7 @@ namespace MonoDevelop.CSharp
 						break;
 					default:
 						if (alreadyAddedReference.Add (fileName))
-							AppendQuoted (sb, "/r:", fileName);
+							AppendQuoted (sb, "/r:", refPrefix + fileName);
 						break;
 					}
 				}
@@ -178,21 +180,16 @@ namespace MonoDevelop.CSharp
 //				sb.AppendLine ("/debug:+");
 				sb.AppendLine ("/debug:full");
 			}
-			
-			switch (compilerParameters.LangVersion) {
-			case LangVersion.Default:
-				break;
-			case LangVersion.ISO_1:
-				sb.AppendLine ("/langversion:ISO-1");
-				break;
-			case LangVersion.ISO_2:
-				sb.AppendLine ("/langversion:ISO-2");
-				break;
-			default:
-				string message = "Invalid LangVersion enum value '" + compilerParameters.LangVersion.ToString () + "'";
-				monitor.ReportError (message, null);
-				LoggingService.LogError (message);
-				return null;
+
+			if (compilerParameters.LangVersion != LangVersion.Default) {
+				var langVersionString = CSharpCompilerParameters.TryLangVersionToString (compilerParameters.LangVersion);
+				if (langVersionString == null) {
+					string message = "Invalid LangVersion enum value '" + compilerParameters.LangVersion.ToString () + "'";
+					monitor.ReportError (message, null);
+					LoggingService.LogError (message);
+					return null;
+				}
+				sb.AppendLine ("/langversion:" + langVersionString);
 			}
 			
 			// mcs default is + but others might not be
@@ -332,7 +329,7 @@ namespace MonoDevelop.CSharp
 			ExecutionEnvironment envVars = runtime.GetToolsExecutionEnvironment (project.TargetFramework);
 			string cargs = "/noconfig @\"" + responseFileName + "\"";
 
-			int exitCode = DoCompilation (compilerName, cargs, workingDir, envVars, gacRoots, ref output, ref error);
+			int exitCode = DoCompilation (monitor, compilerName, cargs, workingDir, envVars, gacRoots, ref output, ref error);
 			
 			BuildResult result = ParseOutput (output, error);
 			if (result.CompilerOutput.Trim ().Length != 0)
@@ -414,10 +411,10 @@ namespace MonoDevelop.CSharp
 			return result;
 		}
 		
-		static int DoCompilation (string compilerName, string compilerArgs, string working_dir, ExecutionEnvironment envVars, List<string> gacRoots, ref string output, ref string error) 
+		static int DoCompilation (IProgressMonitor monitor, string compilerName, string compilerArgs, string working_dir, ExecutionEnvironment envVars, List<string> gacRoots, ref string output, ref string error)
 		{
-			output = Path.GetTempFileName();
-			error = Path.GetTempFileName();
+			output = Path.GetTempFileName ();
+			error = Path.GetTempFileName ();
 			
 			StreamWriter outwr = new StreamWriter (output);
 			StreamWriter errwr = new StreamWriter (error);
@@ -441,12 +438,14 @@ namespace MonoDevelop.CSharp
 			pinfo.UseShellExecute = false;
 			pinfo.RedirectStandardOutput = true;
 			pinfo.RedirectStandardError = true;
-			
+
 			MonoDevelop.Core.Execution.ProcessWrapper pw = Runtime.ProcessService.StartProcess (pinfo, outwr, errwr, null);
-			pw.WaitForOutput();
+			using (var mon = new AggregatedOperationMonitor (monitor, pw)) {
+				pw.WaitForOutput ();
+			}
 			int exitCode = pw.ExitCode;
-			outwr.Close();
-			errwr.Close();
+			outwr.Close ();
+			errwr.Close ();
 			pw.Dispose ();
 			return exitCode;
 		}

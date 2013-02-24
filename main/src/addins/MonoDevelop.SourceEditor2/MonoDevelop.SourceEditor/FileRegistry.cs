@@ -147,7 +147,7 @@ namespace MonoDevelop.SourceEditor
 				foreach (var view in changedViews) {
 					view.SourceEditorWidget.ShowFileChangedWarning (true);
 				}
-				if (!changedViews.Contains (IdeApp.Workbench.ActiveDocument.PrimaryView as SourceEditorView))
+				if (!changedViews.Contains (IdeApp.Workbench.ActiveDocument.PrimaryView.GetContent<SourceEditorView> ()))
 					changedViews [0].WorkbenchWindow.SelectWindow ();
 			}
 		}

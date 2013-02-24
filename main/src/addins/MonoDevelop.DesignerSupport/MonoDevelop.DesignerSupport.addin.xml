@@ -5,17 +5,17 @@
        copyright   = "MIT X11"
        url         = "http://www.monodevelop.com/"
        description = "Supporting services and pads for visual design tools."
-	   category    = "MonoDevelop Core"
-       flags = "Hidden"
-       version     = "3.0.5">
-
+       category    = "MonoDevelop Core"
+       flags       = "Hidden"
+       version     = "4.0">
+	
 	<Runtime>
 		<Import assembly = "MonoDevelop.DesignerSupport.dll"/>
 	</Runtime>
 
 	<Dependencies>
-		<Addin id="Core" version="3.0.5"/>
-		<Addin id="Ide" version="3.0.5"/>
+		<Addin id="Core" version="4.0"/>
+		<Addin id="Ide" version="4.0"/>
 	</Dependencies>
 
 	<!-- Extension points -->
@@ -120,7 +120,7 @@
 		         _description = "Switch between related files, such as CodeBehind, headers, etc."
 		         defaultHandler="MonoDevelop.DesignerSupport.SwitchBetweenRelatedFilesCommand"
 		         shortcut="Control|Alt|Up"
-		         macShortcut="Meta|Alt|Up" />
+		         macShortcut="Control|Meta|Up" />
 	</Extension>
 
 	<Extension path="/MonoDevelop/Ide/ContextMenu/DocumentTab">

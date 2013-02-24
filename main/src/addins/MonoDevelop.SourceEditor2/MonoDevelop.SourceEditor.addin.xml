@@ -7,16 +7,16 @@
        description = "Provides a text editor for the MonoDevelop based on Mono.TextEditor"
        category    = "MonoDevelop Core"
        flags       = "Hidden"
-       version     = "3.0.5">
-
+       version     = "4.0">
+	
 	<Runtime>
 		<Import assembly="MonoDevelop.SourceEditor2.dll"/>
 	</Runtime>
 
 	<Dependencies>
-	    <Addin id="Core" version="3.0.5"/>
-		<Addin id="Ide" version="3.0.5"/>
-		<Addin id="Debugger" version="3.0.5"/>
+	    <Addin id="Core" version="4.0"/>
+	    <Addin id="Ide" version="4.0"/>
+	    <Addin id="Debugger" version="4.0"/>
 	</Dependencies>
 
 	<!-- Extension points -->
@@ -89,8 +89,8 @@
 	<Extension path = "/MonoDevelop/Ide/Commands">
 		<Command id = "MonoDevelop.SourceEditor.SourceEditorCommands.MarkerOperations"
 		         defaultHandler = "MonoDevelop.SourceEditor.MarkerOperationsHandler"
-		         _label = ""
-		         type = "array"/>
+		         _label = "MarkerOperations"
+		         type = "array"/> 
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/Commands/TextEditor">
@@ -108,19 +108,14 @@
 		<Command id = "MonoDevelop.SourceEditor.SourceEditorCommands.ToggleErrorTextMarker"
 				_label = "Toggle message bubble"
 				_description = "Toggles message bubble on/off"/>
-
-		<Command id = "MonoDevelop.SourceEditor.SourceEditorCommands.ToggleCodeFocus"
-				_label = "Toggle code focus"
-				_description = "Activates code focus on caret move"
-				shortcut = "Ctrl|Shift|k" />
-
+		
 		<Command id = "MonoDevelop.SourceEditor.MessageBubbleCommands.HideIssues"
 				defaultHandler = "MonoDevelop.SourceEditor.HideIssuesHandler"
 				_label = "_Hide Issues"/>
 
 		<Command id = "MonoDevelop.SourceEditor.MessageBubbleCommands.ToggleIssues"
 				defaultHandler = "MonoDevelop.SourceEditor.ToggleIssuesHandler"
-				_label = ""
+				_label = "Toggle Issues"
 				type="array"/>
 
 		<Command id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.Top"
@@ -131,9 +126,6 @@
 				_label = "_Page Up"/>
 		<Command id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.PgDown"
 				_label = "P_age Down"/>
-		<Command id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.ShowScrollBar"
-				_label = "Show _Scroll Bar Mode"
-				type="radio"/>
 		<Command id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.ShowTasks"
 				_label = "Show _Tasks"
 				type="radio"/>
@@ -161,7 +153,6 @@
 		<CommandItem id = "MonoDevelop.Ide.Commands.EditCommands.IndentSelection" />
 		<CommandItem id = "MonoDevelop.Ide.Commands.EditCommands.UnIndentSelection" />
 		<SeparatorItem id = "Separator3" />
-		<CommandItem id = "MonoDevelop.SourceEditor.SourceEditorCommands.ToggleCodeFocus" />
 		<CommandItem id = "MonoDevelop.Ide.Commands.TextEditorCommands.ShowCodeTemplateWindow" />
 	</Extension>
 
@@ -172,7 +163,6 @@
 		<CommandItem id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.PgUp" />
 		<CommandItem id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.PgDown" />
 		<SeparatorItem id = "Separator2" />
-		<CommandItem id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.ShowScrollBar" />
 		<CommandItem id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.ShowTasks" />
 		<CommandItem id = "MonoDevelop.SourceEditor.QuickTasks.ScrollbarCommand.ShowMinimap" />
 	</Extension>

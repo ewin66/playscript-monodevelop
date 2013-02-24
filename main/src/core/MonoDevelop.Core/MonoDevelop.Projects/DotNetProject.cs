@@ -470,7 +470,7 @@ namespace MonoDevelop.Projects
 			// Generated satellite resource files
 			
 			FilePath outputDir = conf.OutputDirectory;
-			string satelliteAsmName = Path.GetFileNameWithoutExtension (conf.OutputAssembly) + ".resources.dll";
+			string satelliteAsmName = Path.GetFileNameWithoutExtension (conf.CompiledOutputName) + ".resources.dll";
 			
 			HashSet<string> cultures = new HashSet<string> ();
 			foreach (ProjectFile finfo in Files) {
@@ -855,6 +855,8 @@ namespace MonoDevelop.Projects
 			if (config == null)
 				return false;
 			ExecutionCommand cmd = CreateExecutionCommand (configuration, config);
+			if (context.ExecutionTarget != null)
+				cmd.Target = context.ExecutionTarget;
 
 			return (compileTarget == CompileTarget.Exe || compileTarget == CompileTarget.WinExe || compileTarget == CompileTarget.JavaScript) && context.ExecutionHandler.CanExecute (cmd);
 		}
@@ -1043,7 +1045,7 @@ namespace MonoDevelop.Projects
 			if (oldHandler.GetType () != newHandler.GetType ()) {
 				// If the file format has a default resource handler different from the one
 				// choosen for this project, then all resource ids must be converted
-				foreach (ProjectFile file in Files) {
+				foreach (ProjectFile file in Files.Where (f => f.BuildAction == BuildAction.EmbeddedResource)) {
 					if (file.Subtype == Subtype.Directory)
 						continue;
 					string oldId = file.GetResourceId (oldHandler);
@@ -1132,6 +1134,8 @@ namespace MonoDevelop.Projects
 			try {
 				try {
 					ExecutionCommand executionCommand = CreateExecutionCommand (configuration, dotNetProjectConfig);
+					if (context.ExecutionTarget != null)
+						executionCommand.Target = context.ExecutionTarget;
 
 					if (!context.ExecutionHandler.CanExecute (executionCommand)) {
 						monitor.ReportError (GettextCatalog.GetString ("Can not execute \"{0}\". The selected execution mode is not supported for .NET projects.", dotNetProjectConfig.CompiledOutputName), null);
@@ -1148,6 +1152,7 @@ namespace MonoDevelop.Projects
 					aggregatedOperationMonitor.Dispose ();
 				}
 			} catch (Exception ex) {
+				LoggingService.LogError (string.Format ("Cannot execute \"{0}\"", dotNetProjectConfig.CompiledOutputName), ex);
 				monitor.ReportError (GettextCatalog.GetString ("Cannot execute \"{0}\"", dotNetProjectConfig.CompiledOutputName), ex);
 			}
 		}

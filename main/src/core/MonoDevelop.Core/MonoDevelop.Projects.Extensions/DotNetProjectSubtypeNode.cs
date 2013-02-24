@@ -148,7 +148,7 @@ namespace MonoDevelop.Projects.Extensions
 			UpdateImports (item, h.TargetImports);
 			h.SubtypeGuids.Add (guid);
 			if (UseXBuild)
-				h.UseXbuild = true;
+				h.ForceUseMSBuild = true;
 		}
 		
 		public void UpdateImports (SolutionEntityItem item, List<string> imports)
@@ -192,7 +192,7 @@ namespace MonoDevelop.Projects.Extensions
 		IEnumerable<string> FilesToBackup (string filename);
 		Type Migrate (IProjectLoadProgressMonitor monitor, MSBuildProject project, string fileName, string language);
 		bool CanPromptForMigration { get; }
-		MigrationType PromptForMigration ();
+		MigrationType PromptForMigration (IProjectLoadProgressMonitor monitor, MSBuildProject project, string fileName, string language);
 	}
 	
 	public enum MigrationType {
