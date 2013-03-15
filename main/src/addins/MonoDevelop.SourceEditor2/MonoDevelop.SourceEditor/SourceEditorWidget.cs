@@ -156,6 +156,36 @@ namespace MonoDevelop.SourceEditor
 		public Gtk.VBox Vbox {
 			get { return this.vbox; }
 		}
+
+		public bool SearchWidgetHasFocus {
+			get {
+				if (HasAnyFocusedChild (searchAndReplaceWidget) || HasAnyFocusedChild (gotoLineNumberWidget))
+					return true;
+				return false;
+			}
+		}
+
+		static bool HasAnyFocusedChild (Widget widget)
+		{
+			// Seems that this is the only reliable way doing it on os x and linux :/
+			if (widget == null)
+				return false;
+			var stack = new Stack<Widget> ();
+			stack.Push (widget);
+			while (stack.Count > 0) {
+				var cur = stack.Pop ();
+				if (cur.HasFocus) {
+					return true;
+				}
+				var c = cur as Gtk.Container;
+				if (c!= null) {
+					foreach (var child in c.Children) {
+						stack.Push (child);
+					}
+				}
+			}
+			return false;
+		}
 		
 		public class Border : Gtk.DrawingArea
 		{

@@ -1622,7 +1622,7 @@ namespace MonoDevelop.SourceEditor
 		#region IClipboardHandler
 		public bool EnableCut {
 			get {
-				return widget.EditorHasFocus;
+				return !widget.SearchWidgetHasFocus;
 			}
 		}
 
@@ -1634,19 +1634,19 @@ namespace MonoDevelop.SourceEditor
 
 		public bool EnablePaste {
 			get {
-				return widget.EditorHasFocus;
+				return EnableCut;
 			}
 		}
 
 		public bool EnableDelete {
 			get {
-				return widget.EditorHasFocus;
+				return EnableCut;
 			}
 		}
 
 		public bool EnableSelectAll {
 			get {
-				return widget.EditorHasFocus;
+				return EnableCut;
 			}
 		}
 		
