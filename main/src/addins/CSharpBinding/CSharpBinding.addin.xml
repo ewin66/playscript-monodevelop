@@ -46,6 +46,7 @@
 		<FileTemplate id = "CSharpEmptyFile" resource = "EmptyCSharpFile.xft.xml"/>
 		<FileTemplate id = "CSharpAssemblyInfo" resource = "AssemblyInfo.xft.xml"/>
 		<FileTemplate id = "ActionScriptEmptyFile" resource = "EmptyActionScriptFile.xft.xml"/>
+		<FileTemplate id = "PlayScriptEmptyFile" resource = "EmptyPlayScriptFile.xft.xml"/>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/ProjectTemplates">
@@ -71,7 +72,11 @@
 		<FileFilter id = "ActionScriptX"
 		            insertbefore = "Assemblies"
 		            _label = "ActionScript Extended Files"
-		            extensions = "*.asx"/>		            
+		            extensions = "*.asx"/>
+		<FileFilter id = "PlayScript"
+		            insertbefore = "Assemblies"
+		            _label = "PlayScript Files"
+		            extensions = "*.play"/>			            	            
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/Build/General">
@@ -92,12 +97,12 @@
 
 	<Extension path = "/MonoDevelop/ProjectModel/LanguageBindings">
 		<LanguageBinding id    = "CSharp"
-		                 supportedextensions = ".cs,.as,.asx"
+		                 supportedextensions = ".cs,.as,.asx,.play"
 		                 class = "MonoDevelop.CSharp.CSharpLanguageBinding" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/ReferenceFinder">
-		<ReferenceFinder supportedmimetypes = "text/x-csharp,text/x-actionscript,text/x-actionscriptx"
+		<ReferenceFinder supportedmimetypes = "text/x-csharp,text/x-actionscript,text/x-actionscriptx,text/x-playscript"
 		                 class = "MonoDevelop.CSharp.Refactoring.CSharpReferenceFinder" />
 	</Extension>
 
@@ -120,10 +125,10 @@
 		         privaet;
 
 		-->
-		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.Formatting.CSharpTextEditorIndentation" />
-		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.Completion.CSharpCompletionTextEditorExtension" />
-		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.Highlighting.HighlightUsagesExtension" />
-		<Class fileExtensions = ".cs,.as,.asx" class = "MonoDevelop.CSharp.PathedDocumentTextEditorExtension" />
+		<Class fileExtensions = ".cs,.as,.asx,.play" class = "MonoDevelop.CSharp.Formatting.CSharpTextEditorIndentation" />
+		<Class fileExtensions = ".cs,.as,.asx,.play" class = "MonoDevelop.CSharp.Completion.CSharpCompletionTextEditorExtension" />
+		<Class fileExtensions = ".cs,.as,.asx,.play" class = "MonoDevelop.CSharp.Highlighting.HighlightUsagesExtension" />
+		<Class fileExtensions = ".cs,.as,.asx,.play" class = "MonoDevelop.CSharp.PathedDocumentTextEditorExtension" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/MD1SerializationMaps">
@@ -133,6 +138,7 @@
 	<Extension path = "/MonoDevelop/Core/StockIcons">
 		<StockIcon stockid = "md-csharp-file" resource = "C#.FileIcon" size="Menu" />
 		<StockIcon stockid = "md-actionscript-file" resource = "ActionScript.FileIcon" size="Menu" />
+		<StockIcon stockid = "md-playscript-file" resource = "PlayScript.FileIcon" size="Menu" />
 		<StockIcon stockid = "md-csharp-project" resource = "csharp-project-16.png" size="Menu"/>
 	</Extension>
 
@@ -146,36 +152,44 @@
 		<MimeType id="text/x-actionscriptx" _description="ActionScript extended source code" icon="md-actionscript-file" isText="true">
 			<File pattern="*.asx" />
 		</MimeType>		
+		<MimeType id="text/x-playscript" _description="PlayScript source code" icon="md-playscript-file" isText="true">
+			<File pattern="*.play" />
+		</MimeType>		
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/CodeFormatters">
 		<Formatter mimeType="text/x-csharp" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
 		<Formatter mimeType="text/x-actionscript" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
 		<Formatter mimeType="text/x-actionscriptx" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
+		<Formatter mimeType="text/x-playscript" class="MonoDevelop.CSharp.Formatting.CSharpFormatter" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/TypeSystem/Ambiences">
 		<Ambience mimeType="text/x-csharp" class = "MonoDevelop.CSharp.CSharpAmbience" />
 		<Ambience mimeType="text/x-actionscript" class = "MonoDevelop.CSharp.CSharpAmbience" />
 		<Ambience mimeType="text/x-actionscriptx" class = "MonoDevelop.CSharp.CSharpAmbience" />
+		<Ambience mimeType="text/x-playscript" class = "MonoDevelop.CSharp.CSharpAmbience" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/TypeSystem/Parser">
 		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-csharp" />
 		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-actionscript" />
 		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-actionscriptx" />
+		<Parser class="MonoDevelop.CSharp.Parser.TypeSystemParser" mimeType = "text/x-playscript" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/TypeSystem/FoldingParser">
 		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-csharp" />
 		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-actionscript" />
 		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-actionscriptx" />
+		<Parser class = "MonoDevelop.CSharp.Parser.CSharpFoldingParser" mimeType="text/x-playscript" />		
 	</Extension>
 
 	<Extension path = "/MonoDevelop/TypeSystem/CodeGenerators">
 		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-csharp" />
 		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-actionscript" />
 		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-actionscriptx" />
+		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-playscript" />		
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets/Mono" >
@@ -217,8 +231,9 @@
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/MimeTypePolicyPanels">
 		<Panel id = "CSharpFormatting" _label = "C# Format" mimeType="text/x-csharp" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
-		<Panel id = "CSharpFormatting" _label = "C# Format" mimeType="text/x-actionscript" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
-		<Panel id = "CSharpFormatting" _label = "C# Format" mimeType="text/x-actionscriptx" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
+		<Panel id = "ActionScriptFormatting" _label = "ActionScript Format" mimeType="text/x-actionscript" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
+		<Panel id = "ActionScriptXFormatting" _label = "ActionScriptEx Format" mimeType="text/x-actionscriptx" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />
+		<Panel id = "PlayScriptFormatting" _label = "PlayScript Format" mimeType="text/x-playscript" class = "MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanel" />		
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Refactoring/CodeActions">
@@ -232,6 +247,7 @@
 		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-csharp" />
 		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-actionscript" />
 		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-actionscriptx" />
+		<Resolver class = "MonoDevelop.CSharp.Resolver.TextEditorResolverProvider" mimeType="text/x-playscript" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/Commands/TextEditor">
