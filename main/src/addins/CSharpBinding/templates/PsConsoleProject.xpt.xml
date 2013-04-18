@@ -27,8 +27,8 @@
 			<Options ExternalConsole="True"/>
 			<References>
 				<Reference type="Package" refto="System" />
-				<Reference type="Package" refto="ascorlib" />
-				<Reference type="Package" refto="ActionScript.Dynamic" />
+				<Reference type="Package" refto="pscorlib" />
+				<Reference type="Package" refto="PlayScript.Dynamic" />
 			</References>
 			<Files>
 				<File name="Main.play" AddStandardHeader="True"><![CDATA[package
@@ -37,7 +37,7 @@
 	{
 		public static function Main():void
 		{
-			trace("Hello World!");
+			trace("Hello World from PlayScript!");
 		}
 	}
 }]]></File>

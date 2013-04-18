@@ -200,12 +200,6 @@
     <EmbeddedResource Include="templates\PortableLibrary.xpt.xml">
       <LogicalName>PortableLibrary.xpt.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="templates\AsConsoleProject.xpt.xml">
-      <LogicalName>AsConsoleProject.xpt.xml</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="templates\EmptyActionScriptFile.xft.xml">
-      <LogicalName>EmptyActionScriptFile.xft.xml</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="icons\ActionScript.FileIcon">
       <LogicalName>ActionScript.FileIcon</LogicalName>
     </EmbeddedResource>
