@@ -24,7 +24,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	/// <summary>
 	///   Abstract Base class for parameters of a method.

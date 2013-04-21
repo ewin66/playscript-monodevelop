@@ -20,7 +20,7 @@ using IKVM.Reflection.Emit;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 	
 	public abstract class Statement {
 		public Location loc;
@@ -1408,6 +1408,7 @@ namespace Mono.CSharp {
 		bool IsDeclared { get; }
 		bool IsParameter { get; }
 		Location Location { get; }
+		FullNamedExpression TypeExpr { get; set; }
 	}
 
 	public class BlockVariableDeclaration : Statement
@@ -1415,20 +1416,24 @@ namespace Mono.CSharp {
 		public class Declarator
 		{
 			LocalVariable li;
+			FullNamedExpression type_expr;
 			Expression initializer;
+			Location loc;
 
-			public Declarator (LocalVariable li, Expression initializer)
+			public Declarator (LocalVariable li, Expression initializer, FullNamedExpression type_expr = null)
 			{
 				if (li.Type != null)
 					throw new ArgumentException ("Expected null variable type");
 
 				this.li = li;
+				this.type_expr = type_expr;
 				this.initializer = initializer;
 			}
 
 			public Declarator (Declarator clone, Expression initializer)
 			{
 				this.li = clone.li;
+				this.type_expr = clone.type_expr;
 				this.initializer = initializer;
 			}
 
@@ -1446,6 +1451,24 @@ namespace Mono.CSharp {
 				}
 				set {
 					initializer = value;
+				}
+			}
+
+			public FullNamedExpression TypeExpression {
+				get { 
+					return type_expr; 
+				}
+				set {
+					type_expr = value;
+				}
+			}
+
+			public Location Location {
+				get {
+					return loc;
+				}
+				set {
+					loc = value;
 				}
 			}
 
@@ -1734,8 +1757,10 @@ namespace Mono.CSharp {
 			UsingVariable = 1 << 7,
 //			DefinitelyAssigned = 1 << 8,
 			IsLocked = 1 << 9,
+			AsIgnoreMultiple = 1 << 10,  // ActionScript: Should ignore multiple decls
 
-			ReadonlyMask = ForeachVariable | FixedVariable | UsingVariable
+			ReadonlyMask = ForeachVariable | FixedVariable | UsingVariable,
+			CreateBuilderMask = CompilerGenerated | AsIgnoreMultiple
 		}
 
 		TypeSpec type;
@@ -1749,6 +1774,9 @@ namespace Mono.CSharp {
 		HoistedVariable hoisted_variant;
 
 		LocalBuilder builder;
+
+		// PlayScript - We need a copy of the type expression here to handle default initialization.
+		FullNamedExpression typeExpr;
 
 		public LocalVariable (Block block, string name, Location loc)
 		{
@@ -1791,6 +1819,16 @@ namespace Mono.CSharp {
 			}
 			set {
 				const_value = value;
+			}
+		}
+
+		// ActionScript - Needs type expression to detect when two local declarations are the same declaration.
+		public FullNamedExpression TypeExpr {
+			get { 
+				return typeExpr; 
+			}
+			set { 
+				typeExpr = value; 
 			}
 		}
 
@@ -1875,6 +1913,15 @@ namespace Mono.CSharp {
 			}
 		    set {
 				type = value;
+			}
+		}
+
+		public Flags DeclFlags {
+			get {
+				return flags;
+			}
+			set {
+				flags = value;
 			}
 		}
 
@@ -2694,6 +2741,8 @@ namespace Mono.CSharp {
 			public VariableInfo VariableInfo;
 			bool is_locked;
 
+			private FullNamedExpression typeExpr;
+
 			public ParameterInfo (ParametersBlock block, int index)
 			{
 				this.block = block;
@@ -2750,6 +2799,16 @@ namespace Mono.CSharp {
 			public TypeSpec ParameterType {
 				get {
 					return Parameter.Type;
+				}
+			}
+
+			// ActionScript - Needs type expression to detect when two local declarations are the same declaration.
+			public FullNamedExpression TypeExpr {
+				get {
+					return typeExpr;
+				}
+				set {
+					typeExpr = value;
 				}
 			}
 
@@ -5886,6 +5945,24 @@ namespace Mono.CSharp {
 	}
 
 	/// <summary>
+	/// PlayScript ForEach type.
+	/// </summary>/
+	public enum AsForEachType {
+		/// <summary>
+		/// Generate a normal cs foreach statement.
+		/// </summary>
+		CSharpForEach,
+		/// <summary>
+		/// Generate an PlayScript for (var a in collection) statement.  Yields keys.
+		/// </summary>
+		ForEachKey,
+		/// <summary>
+		/// Generate an PlayScript for each (var a in collection) statement.  Yields values.
+		/// </summary>
+		ForEachValue
+	}
+
+	/// <summary>
 	///   Implementation of the foreach C# statement
 	/// </summary>
 	public class Foreach : Statement
@@ -6376,11 +6453,13 @@ namespace Mono.CSharp {
 			#endregion
 		}
 
+		FullNamedExpression varRef;
 		Expression type;
 		LocalVariable variable;
 		Expression expr;
 		Statement statement;
 		Block body;
+		AsForEachType asForEachType = AsForEachType.CSharpForEach;
 
 		public Foreach (Expression type, LocalVariable var, Expression expr, Statement stmt, Block body, Location l)
 		{
@@ -6392,6 +6471,22 @@ namespace Mono.CSharp {
 			loc = l;
 		}
 
+		public Foreach (Expression type, LocalVariable var, Expression expr, Statement stmt, Block body, AsForEachType asType, Location l) 
+			: this(type, var, expr, stmt, body, l)
+		{
+			asForEachType = asType;
+		}
+
+		public Foreach (FullNamedExpression varRef, Expression expr, Statement stmt, Block body, AsForEachType asType, Location l)
+		{
+			this.varRef = varRef;
+			this.expr = expr;
+			this.statement = stmt;
+			this.body = body;
+			asForEachType = asType;
+			loc = l;
+		}
+
 		public Expression Expr {
 			get { return expr; }
 		}
@@ -6400,12 +6495,20 @@ namespace Mono.CSharp {
 			get { return statement; }
 		}
 
+		public FullNamedExpression VariableRef {
+			get { return varRef; }
+		}
+
 		public Expression TypeExpression {
 			get { return type; }
 		}
 
 		public LocalVariable Variable {
 			get { return variable; }
+		}
+
+		public AsForEachType AsForEachType {
+			get { return asForEachType; }
 		}
 
 		public override bool Resolve (BlockContext ec)

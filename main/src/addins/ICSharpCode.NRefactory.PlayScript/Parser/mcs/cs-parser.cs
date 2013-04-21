@@ -20,7 +20,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	/// <summary>
 	///    The C# Parser

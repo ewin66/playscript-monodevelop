@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics;
 using System.Collections;
-using Mono.CSharp;
+using Mono.CSharpPs;
 
 namespace Mono.PlayScript
 {
@@ -188,6 +188,7 @@ namespace Mono.PlayScript
 
 		readonly SeekableStreamReader reader;
 		readonly CompilationSourceFile source_file;
+		public CompilationSourceFile SourceFile { get { return source_file; } }
 		readonly CompilerContext context;
 
 		SourceFile current_source;
@@ -319,6 +320,8 @@ namespace Mono.PlayScript
 		static readonly char[] line_default = "default".ToCharArray ();
 
 		static readonly char[] simple_whitespaces = new char[] { ' ', '\t' };
+		bool startsLine = true;
+		internal SpecialsBag sbag;
 
 		public bool ParsingPlayScript {
 			get { return parsing_playscript; }
@@ -2156,24 +2159,28 @@ namespace Mono.PlayScript
 			if (x == '\r') {
 				if (peek_char () == '\n') {
 					putback_char = -1;
+					advance_line (SpecialsBag.NewLine.Windows);
+				} else {
+					advance_line (SpecialsBag.NewLine.Unix);
 				}
-
 				x = '\n';
-				advance_line ();
 			} else if (x == '\n') {
-				advance_line ();
+				advance_line (SpecialsBag.NewLine.Unix);
+
 			} else {
 				col++;
 			}
 			return x;
 		}
 
-		void advance_line ()
+		void advance_line (SpecialsBag.NewLine newLine)
 		{
+			sbag.AddNewLine (line, col, newLine);
 			line++;
 			ref_line++;
 			previous_col = col;
 			col = 0;
+			startsLine = true;
 		}
 
 		int peek_char ()
@@ -2734,15 +2741,22 @@ namespace Mono.PlayScript
 			return number;
 		}
 
+		
 		void ReadSingleLineComment ()
 		{
 			if (peek_char () != '/')
 				Report.Warning (1696, 1, Location, "Single-line comment or end-of-line expected");
-
+			if (position_stack.Count == 0)
+				sbag.StartComment (SpecialsBag.CommentType.Single, startsLine, line, col - 1);
 			// Read everything till the end of the line or file
 			int c;
 			do {
 				c = get_char ();
+				if (position_stack.Count == 0)
+					sbag.PushCommentChar (c);
+				var pc = peek_char ();
+				if ((pc == '\n' || pc == -1) && position_stack.Count == 0) 
+					sbag.EndComment (line, col + 1);
 			} while (c != -1 && c != '\n');
 		}
 
@@ -3340,11 +3354,6 @@ namespace Mono.PlayScript
 					                                         opt_builder != null ? opt_builder.ToString() : null, 
 					                                         start_location);
 					val = res;
-#if FULL_AST
-					res.ParsedValue = quoted ?
-						reader.ReadChars (reader_pos - 2, reader.Position - 1) :
-						reader.ReadChars (reader_pos - 1, reader.Position);
-#endif
 
 					return Token.LITERAL;
 				}
@@ -3417,12 +3426,7 @@ namespace Mono.PlayScript
 						
 						ILiteralConstant res = new XmlLiteral (context.BuiltinTypes, s, start_location);
 						val = res;
-#if FULL_AST
-						res.ParsedValue = quoted ?
-							reader.ReadChars (reader_pos - 2, reader.Position - 1) :
-								reader.ReadChars (reader_pos - 1, reader.Position);
-#endif
-						
+
 						return Token.LITERAL;
 					}
 				}
@@ -3444,7 +3448,7 @@ namespace Mono.PlayScript
 
 			if (doc_state == XmlCommentState.Allowed)
 				doc_state = XmlCommentState.NotAllowed;
-
+			startsLine = false;
 			return res;
 		}
 
@@ -3958,6 +3962,8 @@ namespace Mono.PlayScript
 								get_char ();
 								// Don't allow ////.
 								if ((d = peek_char ()) != '/') {
+									if (position_stack.Count == 0)
+										sbag.PushCommentChar (d);
 									if (doc_state == XmlCommentState.Allowed)
 										handle_one_line_xml_comment ();
 									else if (doc_state == XmlCommentState.NotAllowed)
@@ -3967,18 +3973,32 @@ namespace Mono.PlayScript
 								if (xml_comment_buffer.Length > 0)
 									doc_state = XmlCommentState.NotAllowed;
 							}
+						} else {
+							bool isDoc = peek_char () == '/';
+							if (position_stack.Count == 0)
+								sbag.StartComment (isDoc ? SpecialsBag.CommentType.Documentation : SpecialsBag.CommentType.Single, startsLine, line, col - 1);
+							if (isDoc)
+								get_char ();
 						}
 
-						while ((d = get_char ()) != -1 && d != '\n');
-
-						if (d == '\n')
-							putback (d);
+						d = peek_char ();
+						int endLine = line, endCol = col;
+						while ((d = get_char ()) != -1 && (d != '\n') && d != '\r') {
+							if (position_stack.Count == 0)
+								sbag.PushCommentChar (d);
+							endLine = line;
+							endCol = col;
+						}
+						if (position_stack.Count == 0)
+							sbag.EndComment (endLine, endCol + 1);
 
 						any_token_seen |= tokens_seen;
 						tokens_seen = false;
 						comments_seen = false;
 						continue;
 					} else if (d == '*') {
+						if (position_stack.Count == 0)
+							sbag.StartComment (SpecialsBag.CommentType.Multi, startsLine, line, col);
 						get_char ();
 						// Handle /*@asx conditional comment
 						if (peek_char () == '@') {
@@ -3999,11 +4019,17 @@ namespace Mono.PlayScript
 						}
 						bool docAppend = false;
 						if (doc_processing && peek_char () == '*') {
-							get_char ();
+							int ch = get_char ();
 							// But when it is /**/, just do nothing.
 							if (peek_char () == '/') {
-								get_char ();
+								ch = get_char ();
+								if (position_stack.Count == 0) {
+									sbag.EndComment (line, col + 1);
+								}
 								continue;
+							} else {
+								if (position_stack.Count == 0)
+									sbag.PushCommentChar (ch);
 							}
 							if (doc_state == XmlCommentState.Allowed)
 								docAppend = true;
@@ -4018,16 +4044,21 @@ namespace Mono.PlayScript
 							xml_comment_buffer.Append (Environment.NewLine);
 						}
 
-						while ((d = get_char ()) != -1) {
-							if (d == '*' && peek_char () == '/') {
+						while ((d = get_char ()) != -1){
+							if (d == '*' && peek_char () == '/'){
 								get_char ();
+								if (position_stack.Count == 0)
+									sbag.EndComment (line, col + 1);
 								comments_seen = true;
 								break;
+							} else {
+								if (position_stack.Count == 0)
+									sbag.PushCommentChar (d);
 							}
 							if (docAppend)
-								xml_comment_buffer.Append ((char)d);
+								xml_comment_buffer.Append ((char) d);
 							
-							if (d == '\n') {
+							if (d == '\n'){
 								any_token_seen |= tokens_seen;
 								tokens_seen = false;
 								// 
@@ -4037,6 +4068,7 @@ namespace Mono.PlayScript
 								comments_seen = false;
 							}
 						}
+						
 						if (!comments_seen)
 							Report.Error (1035, Location, "End-of-file found, '*/' expected");
 
@@ -4152,7 +4184,7 @@ namespace Mono.PlayScript
 					
 					if (ParsePreprocessingDirective (true))
 						continue;
-
+					sbag.StartComment (SpecialsBag.CommentType.InactiveCode, false, line, 1);
 					bool directive_expected = false;
 					while ((c = get_char ()) != -1) {
 						if (col == 1) {
@@ -4163,19 +4195,23 @@ namespace Mono.PlayScript
 //								Eror_WrongPreprocessorLocation ();
 //								return Token.ERROR;
 //							}
+							sbag.PushCommentChar (c);
 							continue;
 						}
 
-						if (c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\v')
+						if (c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\v') {
+							sbag.PushCommentChar (c);
 							continue;
+						}
 
 						if (c == '#') {
 							if (ParsePreprocessingDirective (false))
 								break;
 						}
+						sbag.PushCommentChar (c);
 						directive_expected = false;
 					}
-
+					sbag.EndComment (line, col);
 					if (c != -1) {
 						tokens_seen = false;
 						continue;

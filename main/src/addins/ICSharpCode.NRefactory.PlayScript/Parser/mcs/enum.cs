@@ -22,7 +22,7 @@ using MetaType = System.Type;
 using System.Reflection;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	public class EnumMember : Const
 	{

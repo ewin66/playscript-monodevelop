@@ -24,7 +24,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	/// <summary>
 	///   An Emit Context is created for each body of code (from methods,

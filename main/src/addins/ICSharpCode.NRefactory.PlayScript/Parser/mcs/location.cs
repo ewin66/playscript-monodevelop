@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	public enum SourceFileType 
 	{
@@ -80,10 +80,13 @@ namespace Mono.CSharp
 			this.Name = name;
 			this.FullPathName = path;
 			var ext = Path.GetExtension (path);
-			if (ext.ToLower() == ".as") {
+			if (ext == null) {
+				FileType = SourceFileType.PlayScript;
+				PsExtended = true;
+			} else if (ext.ToLower() == ".as") {
 				FileType = SourceFileType.PlayScript;
 				PsExtended = false;
-			} else if (ext.ToLower() == ".play" || ext.ToLower() == ".asx") {
+			} else if (ext == null || ext.ToLower() == ".play" || ext.ToLower() == ".asx") {  // NOTE: Default to playscript when in EditorBinding
 				FileType = SourceFileType.PlayScript;
 				PsExtended = true;
 			} else {

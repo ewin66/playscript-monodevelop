@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mono.CSharp.Linq
+namespace Mono.CSharpPs.Linq
 {
 	public class QueryExpression : AQueryClause
 	{
@@ -375,6 +375,12 @@ namespace Mono.CSharp.Linq
 		public Location Location { get; private set; }
 
 		public string Name { get; private set; }
+
+		// PlayScript - Not used.
+		FullNamedExpression INamedBlockVariable.TypeExpr {
+			get { return null; }
+			set { }
+		}
 
 		#endregion
 

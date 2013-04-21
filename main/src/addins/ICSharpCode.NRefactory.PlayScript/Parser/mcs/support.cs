@@ -17,7 +17,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	sealed class ReferenceEquality<T> : IEqualityComparer<T> where T : class
 	{

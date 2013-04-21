@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	//
 	// Module (top-level type) container

@@ -5,7 +5,7 @@ using MonoDevelop.Core;
 using MonoDevelop.Autotools;
 using MonoDevelop.Projects;
 using CSharpBinding;
-using MonoDevelop.PlayScript.Project;
+using MonoDevelop.CSharp.Project;
 
 namespace CSharpBinding.Autotools
 {

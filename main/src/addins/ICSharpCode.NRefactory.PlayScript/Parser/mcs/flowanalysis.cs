@@ -15,7 +15,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	// <summary>
 	//   A new instance of this class is created every time a new block is resolved

@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	public enum LookupMode
 	{

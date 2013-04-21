@@ -32,7 +32,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	//
 	// Better name would be DottenName
@@ -266,7 +266,7 @@ namespace Mono.CSharp {
 		///   Location where this declaration happens
 		/// </summary>
 		public Location Location {
-			get { return member_name.Location; }
+			get { return member_name != null ? member_name.Location : new Location(); }
 		}
 
 		/// <summary>
@@ -279,6 +279,12 @@ namespace Mono.CSharp {
 		///   for each member types.
 		/// </summary>
 		public abstract string DocCommentHeader { get; }
+
+		public virtual SourceFileType FileType { 
+			get {
+				return member_name.Location.SourceFile != null ? member_name.Location.SourceFile.FileType : SourceFileType.CSharp;
+			}
+		}
 
 		[Flags]
 		public enum Flags {
@@ -702,7 +708,11 @@ namespace Mono.CSharp {
 
 		public virtual FullNamedExpression LookupNamespaceOrType (string name, int arity, LookupMode mode, Location loc)
 		{
-			return Parent.LookupNamespaceOrType (name, arity, mode, loc);
+			if (Parent != null) {
+				return Parent.LookupNamespaceOrType (name, arity, mode, loc);
+			} else {
+				return null;
+			}
 		}
 
 		/// <summary>

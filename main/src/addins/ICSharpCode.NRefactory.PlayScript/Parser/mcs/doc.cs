@@ -19,7 +19,7 @@ using System.Text;
 using System.Xml;
 using System.Linq;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	//
 	// Implements XML documentation generation.

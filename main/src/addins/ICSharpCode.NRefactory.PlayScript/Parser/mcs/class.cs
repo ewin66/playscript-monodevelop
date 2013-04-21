@@ -36,7 +36,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	//
 	// General types container, used as a base class for all constructs which can hold types

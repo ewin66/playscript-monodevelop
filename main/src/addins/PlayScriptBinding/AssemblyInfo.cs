@@ -3,7 +3,7 @@
 using System.Reflection;
 
 [assembly: AssemblyProduct ("MonoDevelop")]
-[assembly: AssemblyTitle ("PlayScript Language Binding")]
-[assembly: AssemblyDescription ("PlayScript Language Binding")]
+[assembly: AssemblyTitle ("CSharp Language Binding")]
+[assembly: AssemblyDescription ("CSharp Language Binding")]
 [assembly: AssemblyVersion ("2.6")]
 [assembly: AssemblyCopyright ("MIT X11")]

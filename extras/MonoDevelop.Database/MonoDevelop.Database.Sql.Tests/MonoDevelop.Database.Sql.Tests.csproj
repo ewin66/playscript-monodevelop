@@ -42,7 +42,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <Deployment.LinuxDeployData generateScript="false" />
+        <Deployment.LinuxDeployData generateScript="False" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>

@@ -18,7 +18,7 @@ using IKVM.Reflection;
 using System.Reflection;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	[Flags]
 	public enum Modifiers
@@ -38,7 +38,8 @@ namespace Mono.CSharp
 		VOLATILE  = 0x1000,
 		UNSAFE    = 0x2000,
 		ASYNC     = 0x4000,
-		TOP       = 0x8000,
+		AS_DYNAMIC = 0x8000,
+		TOP       = 0x10000,
 
 		//
 		// Compiler specific flags
@@ -111,6 +112,8 @@ namespace Mono.CSharp
 				s = "unsafe"; break;
 			case Modifiers.ASYNC:
 				s = "async"; break;
+			case Modifiers.AS_DYNAMIC:
+				s = "dynamic"; break;
 			}
 
 			return s;

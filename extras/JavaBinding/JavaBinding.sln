@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaBinding", "JavaBinding.csproj", "{50A54FBA-D5B3-49F3-AC28-A7EE6AF145B5}"
 EndProject
-Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "po", "po\po.mdproj", "{32285FB0-30D6-408F-8220-DFA21C56A10B}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "po", "po\po.mdproj", "{32285FB0-30D6-408F-8220-DFA21C56A10B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

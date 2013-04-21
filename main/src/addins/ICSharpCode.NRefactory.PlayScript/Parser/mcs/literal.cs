@@ -26,7 +26,7 @@ using IKVM.Reflection.Emit;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	public interface ILiteralConstant
 	{

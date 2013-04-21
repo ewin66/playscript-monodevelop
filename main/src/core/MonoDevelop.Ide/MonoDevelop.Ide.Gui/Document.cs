@@ -785,7 +785,7 @@ namespace MonoDevelop.Ide.Gui
 				string mimeType = editor.Document.MimeType;
 				ThreadPool.QueueUserWorkItem (delegate {
 					TypeSystemService.AddSkippedFile (currentParseFile);
-					var currentParsedDocument = TypeSystemService.ParseFile (Project, currentParseFile, mimeType, currentParseText);
+					;					var currentParsedDocument = TypeSystemService.ParseFile (Project, currentParseFile, mimeType, currentParseText);
 					Application.Invoke (delegate {
 						// this may be called after the document has closed, in that case the OnDocumentParsed event shouldn't be invoked.
 						if (isClosed)

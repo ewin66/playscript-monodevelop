@@ -38,7 +38,7 @@ using System.CodeDom.Compiler;
 using System.IO;
 using System.Text;
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 public class Outline {
 
 	bool declared_only;

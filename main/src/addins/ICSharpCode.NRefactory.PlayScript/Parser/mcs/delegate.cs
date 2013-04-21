@@ -23,7 +23,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	//
 	// Delegate container implementation
@@ -66,6 +66,66 @@ namespace Mono.CSharp {
 							   Modifiers.PRIVATE, name.Location, Report);
 			parameters      = param_list;
 			spec = new TypeSpec (Kind, null, this, null, ModFlags | Modifiers.SEALED);
+		}
+
+		public static TypeSpec CreateDelegateType (ResolveContext rc, AParametersCollection parameters, TypeSpec returnType, Location loc)
+		{
+			Namespace type_ns = rc.Module.GlobalRootNamespace.GetNamespace ("System", true);
+			if (type_ns == null) {
+				return null;
+			}
+			if (returnType == rc.BuiltinTypes.Void) {
+				var actArgs = parameters.Types;
+				var actionSpec = type_ns.LookupType (rc.Module, "Action", actArgs.Length, LookupMode.Normal, loc).ResolveAsType(rc);
+				if (actionSpec == null) {
+					return null;
+				}
+				if (actArgs.Length == 0)
+					return actionSpec;
+				else
+					return actionSpec.MakeGenericType(rc, actArgs);
+			} else {
+				TypeSpec[] funcArgs = new TypeSpec[parameters.Types.Length + 1];
+				parameters.Types.CopyTo(funcArgs, 0);
+				funcArgs[parameters.Types.Length] = returnType;
+				var funcSpec = type_ns.LookupType (rc.Module, "Func", funcArgs.Length, LookupMode.Normal, loc).ResolveAsType(rc);
+				if (funcSpec == null)
+					return null;
+				return funcSpec.MakeGenericType(rc, funcArgs);
+			}
+		}
+
+		public static FullNamedExpression CreateDelegateTypeExpression (BuiltinTypes builtinTypes, ParametersCompiled parameters, FullNamedExpression retType, Location loc){
+			bool hasParams = parameters != null && parameters.Count > 0;
+			int paramCount = hasParams ? parameters.Count : 0;
+			bool hasRetType = !(retType is TypeExpression && ((TypeExpression)retType).Type == builtinTypes.Void);
+			int typeParamCount = paramCount;
+			if (hasRetType)
+				typeParamCount++;
+			TypeArguments typeArgs = null;
+			if (typeParamCount > 0) {
+				var typeArgArray = new FullNamedExpression[typeParamCount];
+				for (var i = 0; i < paramCount; i++) {
+					if (i < paramCount) {
+						var param = parameters.FixedParameters[i] as Parameter;
+						typeArgArray[i] = param.TypeExpression;
+					} else {
+						typeArgArray[i] = retType;
+					}
+				}
+				typeArgs = new TypeArguments (typeArgArray);
+			}
+			if (!hasRetType) {
+				return new MemberAccess(new SimpleName("System", loc), "Action", typeArgs, loc);
+			} else {
+				return new MemberAccess(new SimpleName("System", loc), "Func", typeArgs, loc);
+			}
+		}
+
+
+		public static TypeSpec CreateDelegateTypeFromMethodSpec (ResolveContext rc, MethodSpec ms, Location loc)
+		{
+			return CreateDelegateType (rc, ms.Parameters, ms.ReturnType, loc);
 		}
 
 		#region Properties

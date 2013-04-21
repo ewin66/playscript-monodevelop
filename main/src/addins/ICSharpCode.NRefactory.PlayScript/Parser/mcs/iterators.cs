@@ -21,7 +21,7 @@ using IKVM.Reflection.Emit;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	public abstract class YieldStatement<T> : ResumableStatement where T : StateMachineInitializer
 	{

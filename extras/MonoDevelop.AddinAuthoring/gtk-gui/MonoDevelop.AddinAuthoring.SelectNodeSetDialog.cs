@@ -55,10 +55,7 @@ namespace MonoDevelop.AddinAuthoring
 			w4.Expand = false;
 			w4.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.nodeseteditor = new global::MonoDevelop.AddinAuthoring.NodeSetEditorWidget ();
-			this.nodeseteditor.Events = ((global::Gdk.EventMask)(256));
-			this.nodeseteditor.Name = "nodeseteditor";
-			this.nodeseteditor.AllowEditing = false;
+			this.nodeseteditor = null;
 			this.vbox3.Add (this.nodeseteditor);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.nodeseteditor]));
 			w5.Position = 1;

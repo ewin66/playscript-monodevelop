@@ -4,7 +4,40 @@ include $(top_srcdir)/xbuild.include
 
 PARSE = parse.exe
 
-TESTFILES = 
+TESTFILES =  \
+	CSharpAmbience.cs \
+	CSharpBindingCompilerManager.cs \
+	CSharpEnhancedCodeProvider.cs \
+	CSharpLanguageBinding.cs \
+	FormattingStrategy/CSharpFormattingProperties.cs \
+	FormattingStrategy/CSharpFormattingStrategy.cs \
+	FormattingStrategy/CSharpIndentEngine.cs \
+	FormattingStrategy/CSharpIndentEngineStack.cs \
+	gtk-gui/CSharpBinding.CodeGenerationPanelWidget.cs \
+	gtk-gui/CSharpBinding.FormattingPanelWidget.cs \
+	gtk-gui/generated.cs \
+	Gui/ChooseRuntimePanel.cs \
+	Gui/CodeGenerationPanel.cs \
+	Gui/CSharpParameterDataProvider.cs \
+	Gui/CSharpTextEditorExtension.cs \
+	Gui/FormattingPanel.cs \
+	Gui/OverrideCompletionData.cs \
+	Parser/CodeGenerator.cs \
+	Parser/CSharpVisitor.cs \
+	Parser/ExpressionFinder.cs \
+	Parser/LanguageItemVisitor.cs \
+	Parser/Parser.cs \
+	Parser/Resolver.cs \
+	Parser/SharpDevelopTree/AttributeSection.cs \
+	Parser/SharpDevelopTree/Class.cs \
+	Parser/SharpDevelopTree/Constructor.cs \
+	Parser/SharpDevelopTree/Destructor.cs \
+	Parser/SharpDevelopTree/GenericParameter.cs \
+	Parser/SharpDevelopTree/Method.cs \
+	Parser/SharpDevelopTree/ReturnType.cs \
+	Parser/TypeVisitor.cs \
+	Project/CSharpCompilerParameters.cs \
+	MonoDevelop.CSharp.Inspection/Inspectors/RedundantThisInspector.cs
 
 TESTDLLS = \
 	$(NUNIT_LIBS)

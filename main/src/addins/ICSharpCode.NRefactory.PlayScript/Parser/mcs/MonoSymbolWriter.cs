@@ -1,5 +1,5 @@
 //
-// Mono.CSharp.Debugger/MonoSymbolWriter.cs
+// Mono.CSharpPs.Debugger/MonoSymbolWriter.cs
 //
 // Author:
 //   Martin Baulig (martin@ximian.com)

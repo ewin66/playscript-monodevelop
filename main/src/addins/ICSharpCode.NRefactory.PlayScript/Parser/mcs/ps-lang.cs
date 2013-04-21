@@ -14,8 +14,8 @@
 
 using System;
 using System.Collections.Generic;
-//using Mono.CSharp.JavaScript;
-//using Mono.CSharp.Cpp;
+//using Mono.CSharpPs.JavaScript;
+//using Mono.CSharpPs.Cpp;
 
 #if STATIC
 using IKVM.Reflection;
@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	//
 	// Constants

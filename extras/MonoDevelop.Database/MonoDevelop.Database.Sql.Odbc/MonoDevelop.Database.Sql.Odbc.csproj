@@ -41,19 +41,15 @@
     <Reference Include="System.Data" />
     <Reference Include="MonoDevelop.Ide, Version=1.9.2.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="MonoDevelop.Core, Version=1.9.2.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="MonoDevelop.Core.Gui, Version=1.9.2.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="MonoDevelop.Components, Version=1.9.2.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +84,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <Deployment.LinuxDeployData generatePcFile="false" />
+        <Deployment.LinuxDeployData generatePcFile="False" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>

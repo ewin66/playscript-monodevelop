@@ -32,7 +32,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	/// <summary>
 	///   Base class for objects that can have Attributes applied to them.

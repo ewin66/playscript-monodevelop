@@ -32,43 +32,43 @@ namespace ICSharpCode.NRefactory.PlayScript
 {
 	public enum OperatorType
 	{
-		// Values must correspond to Mono.CSharp.Operator.OpType
+		// Values must correspond to Mono.CSharpPs.Operator.OpType
 		// due to the casts used in OperatorDeclaration.
 		
 		// Unary operators
-		LogicalNot = Mono.CSharp.Operator.OpType.LogicalNot,
-		OnesComplement = Mono.CSharp.Operator.OpType.OnesComplement,
-		Increment = Mono.CSharp.Operator.OpType.Increment,
-		Decrement = Mono.CSharp.Operator.OpType.Decrement,
-		True = Mono.CSharp.Operator.OpType.True,
-		False = Mono.CSharp.Operator.OpType.False,
+		LogicalNot = Mono.CSharpPs.Operator.OpType.LogicalNot,
+		OnesComplement = Mono.CSharpPs.Operator.OpType.OnesComplement,
+		Increment = Mono.CSharpPs.Operator.OpType.Increment,
+		Decrement = Mono.CSharpPs.Operator.OpType.Decrement,
+		True = Mono.CSharpPs.Operator.OpType.True,
+		False = Mono.CSharpPs.Operator.OpType.False,
 
 		// Unary and Binary operators
-		Addition = Mono.CSharp.Operator.OpType.Addition,
-		Subtraction = Mono.CSharp.Operator.OpType.Subtraction,
+		Addition = Mono.CSharpPs.Operator.OpType.Addition,
+		Subtraction = Mono.CSharpPs.Operator.OpType.Subtraction,
 
-		UnaryPlus = Mono.CSharp.Operator.OpType.UnaryPlus,
-		UnaryNegation = Mono.CSharp.Operator.OpType.UnaryNegation,
+		UnaryPlus = Mono.CSharpPs.Operator.OpType.UnaryPlus,
+		UnaryNegation = Mono.CSharpPs.Operator.OpType.UnaryNegation,
 		
 		// Binary operators
-		Multiply = Mono.CSharp.Operator.OpType.Multiply,
-		Division = Mono.CSharp.Operator.OpType.Division,
-		Modulus = Mono.CSharp.Operator.OpType.Modulus,
-		BitwiseAnd = Mono.CSharp.Operator.OpType.BitwiseAnd,
-		BitwiseOr = Mono.CSharp.Operator.OpType.BitwiseOr,
-		ExclusiveOr = Mono.CSharp.Operator.OpType.ExclusiveOr,
-		LeftShift = Mono.CSharp.Operator.OpType.LeftShift,
-		RightShift = Mono.CSharp.Operator.OpType.RightShift,
-		Equality = Mono.CSharp.Operator.OpType.Equality,
-		Inequality = Mono.CSharp.Operator.OpType.Inequality,
-		GreaterThan = Mono.CSharp.Operator.OpType.GreaterThan,
-		LessThan = Mono.CSharp.Operator.OpType.LessThan,
-		GreaterThanOrEqual = Mono.CSharp.Operator.OpType.GreaterThanOrEqual,
-		LessThanOrEqual = Mono.CSharp.Operator.OpType.LessThanOrEqual,
+		Multiply = Mono.CSharpPs.Operator.OpType.Multiply,
+		Division = Mono.CSharpPs.Operator.OpType.Division,
+		Modulus = Mono.CSharpPs.Operator.OpType.Modulus,
+		BitwiseAnd = Mono.CSharpPs.Operator.OpType.BitwiseAnd,
+		BitwiseOr = Mono.CSharpPs.Operator.OpType.BitwiseOr,
+		ExclusiveOr = Mono.CSharpPs.Operator.OpType.ExclusiveOr,
+		LeftShift = Mono.CSharpPs.Operator.OpType.LeftShift,
+		RightShift = Mono.CSharpPs.Operator.OpType.RightShift,
+		Equality = Mono.CSharpPs.Operator.OpType.Equality,
+		Inequality = Mono.CSharpPs.Operator.OpType.Inequality,
+		GreaterThan = Mono.CSharpPs.Operator.OpType.GreaterThan,
+		LessThan = Mono.CSharpPs.Operator.OpType.LessThan,
+		GreaterThanOrEqual = Mono.CSharpPs.Operator.OpType.GreaterThanOrEqual,
+		LessThanOrEqual = Mono.CSharpPs.Operator.OpType.LessThanOrEqual,
 
 		// Implicit and Explicit
-		Implicit = Mono.CSharp.Operator.OpType.Implicit,
-		Explicit = Mono.CSharp.Operator.OpType.Explicit
+		Implicit = Mono.CSharpPs.Operator.OpType.Implicit,
+		Explicit = Mono.CSharpPs.Operator.OpType.Explicit
 	}
 	
 	public class OperatorDeclaration : EntityDeclaration
@@ -150,7 +150,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 		/// </summary>
 		public static OperatorType? GetOperatorType(string methodName)
 		{
-			return (OperatorType?)Mono.CSharp.Operator.GetType(methodName);
+			return (OperatorType?)Mono.CSharpPs.Operator.GetType(methodName);
 		}
 		
 		public static TokenRole GetRole (OperatorType type)
@@ -220,7 +220,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 		/// </summary>
 		public static string GetName (OperatorType type)
 		{
-			return Mono.CSharp.Operator.GetMetadataName ((Mono.CSharp.Operator.OpType)type);
+			return Mono.CSharpPs.Operator.GetMetadataName ((Mono.CSharpPs.Operator.OpType)type);
 		}
 		
 		/// <summary>
@@ -228,7 +228,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 		/// </summary>
 		public static string GetToken (OperatorType type)
 		{
-			return Mono.CSharp.Operator.GetName ((Mono.CSharp.Operator.OpType)type);
+			return Mono.CSharpPs.Operator.GetName ((Mono.CSharpPs.Operator.OpType)type);
 		}
 		
 		public override void AcceptVisitor (IAstVisitor visitor)

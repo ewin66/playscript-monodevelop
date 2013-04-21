@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	//
 	// This is an user operator expression, automatically created during
@@ -99,6 +99,12 @@ namespace Mono.CSharp
 			: base (expr)
 		{
 			loc = expr.Location;
+		}
+
+		public ParenthesizedExpression (Expression expr, Location loc)
+			: base (expr)
+		{
+			this.loc = loc;
 		}
 
 		protected override Expression DoResolve (ResolveContext ec)
@@ -690,16 +696,16 @@ namespace Mono.CSharp
 		//
 		protected virtual Expression ResolveUserOperator (ResolveContext ec, Expression expr)
 		{
-			CSharp.Operator.OpType op_type;
+			CSharpPs.Operator.OpType op_type;
 			switch (Oper) {
 			case Operator.LogicalNot:
-				op_type = CSharp.Operator.OpType.LogicalNot; break;
+				op_type = CSharpPs.Operator.OpType.LogicalNot; break;
 			case Operator.OnesComplement:
-				op_type = CSharp.Operator.OpType.OnesComplement; break;
+				op_type = CSharpPs.Operator.OpType.OnesComplement; break;
 			case Operator.UnaryNegation:
-				op_type = CSharp.Operator.OpType.UnaryNegation; break;
+				op_type = CSharpPs.Operator.OpType.UnaryNegation; break;
 			case Operator.UnaryPlus:
-				op_type = CSharp.Operator.OpType.UnaryPlus; break;
+				op_type = CSharpPs.Operator.OpType.UnaryPlus; break;
 			default:
 				throw new InternalErrorException (Oper.ToString ());
 			}
@@ -2423,43 +2429,43 @@ namespace Mono.CSharp
 			}
 		}
 
-		static CSharp.Operator.OpType ConvertBinaryToUserOperator (Operator op)
+		static Mono.CSharpPs.Operator.OpType ConvertBinaryToUserOperator (Operator op)
 		{
 			switch (op) {
 			case Operator.Addition:
-				return CSharp.Operator.OpType.Addition;
+				return CSharpPs.Operator.OpType.Addition;
 			case Operator.BitwiseAnd:
 			case Operator.LogicalAnd:
-				return CSharp.Operator.OpType.BitwiseAnd;
+				return CSharpPs.Operator.OpType.BitwiseAnd;
 			case Operator.BitwiseOr:
 			case Operator.LogicalOr:
-				return CSharp.Operator.OpType.BitwiseOr;
+				return CSharpPs.Operator.OpType.BitwiseOr;
 			case Operator.Division:
-				return CSharp.Operator.OpType.Division;
+				return CSharpPs.Operator.OpType.Division;
 			case Operator.Equality:
-				return CSharp.Operator.OpType.Equality;
+				return CSharpPs.Operator.OpType.Equality;
 			case Operator.ExclusiveOr:
-				return CSharp.Operator.OpType.ExclusiveOr;
+				return CSharpPs.Operator.OpType.ExclusiveOr;
 			case Operator.GreaterThan:
-				return CSharp.Operator.OpType.GreaterThan;
+				return CSharpPs.Operator.OpType.GreaterThan;
 			case Operator.GreaterThanOrEqual:
-				return CSharp.Operator.OpType.GreaterThanOrEqual;
+				return CSharpPs.Operator.OpType.GreaterThanOrEqual;
 			case Operator.Inequality:
-				return CSharp.Operator.OpType.Inequality;
+				return CSharpPs.Operator.OpType.Inequality;
 			case Operator.LeftShift:
-				return CSharp.Operator.OpType.LeftShift;
+				return CSharpPs.Operator.OpType.LeftShift;
 			case Operator.LessThan:
-				return CSharp.Operator.OpType.LessThan;
+				return CSharpPs.Operator.OpType.LessThan;
 			case Operator.LessThanOrEqual:
-				return CSharp.Operator.OpType.LessThanOrEqual;
+				return CSharpPs.Operator.OpType.LessThanOrEqual;
 			case Operator.Modulus:
-				return CSharp.Operator.OpType.Modulus;
+				return CSharpPs.Operator.OpType.Modulus;
 			case Operator.Multiply:
-				return CSharp.Operator.OpType.Multiply;
+				return CSharpPs.Operator.OpType.Multiply;
 			case Operator.RightShift:
-				return CSharp.Operator.OpType.RightShift;
+				return CSharpPs.Operator.OpType.RightShift;
 			case Operator.Subtraction:
-				return CSharp.Operator.OpType.Subtraction;
+				return CSharpPs.Operator.OpType.Subtraction;
 			default:
 				throw new InternalErrorException (op.ToString ());
 			}
@@ -3542,12 +3548,12 @@ namespace Mono.CSharp
 			if (!TypeSpec.IsReferenceType (l) || !TypeSpec.IsReferenceType (r))
 				return null;
 
-			if (l.BuiltinType == BuiltinTypeSpec.Type.String || l.BuiltinType == BuiltinTypeSpec.Type.Delegate || MemberCache.GetUserOperator (l, CSharp.Operator.OpType.Equality, false) != null)
+			if (l.BuiltinType == BuiltinTypeSpec.Type.String || l.BuiltinType == BuiltinTypeSpec.Type.Delegate || MemberCache.GetUserOperator (l, CSharpPs.Operator.OpType.Equality, false) != null)
 				ec.Report.Warning (253, 2, loc,
 					"Possible unintended reference comparison. Consider casting the right side expression to type `{0}' to get value comparison",
 					l.GetSignatureForError ());
 
-			if (r.BuiltinType == BuiltinTypeSpec.Type.String || r.BuiltinType == BuiltinTypeSpec.Type.Delegate || MemberCache.GetUserOperator (r, CSharp.Operator.OpType.Equality, false) != null)
+			if (r.BuiltinType == BuiltinTypeSpec.Type.String || r.BuiltinType == BuiltinTypeSpec.Type.Delegate || MemberCache.GetUserOperator (r, CSharpPs.Operator.OpType.Equality, false) != null)
 				ec.Report.Warning (252, 2, loc,
 					"Possible unintended reference comparison. Consider casting the left side expression to type `{0}' to get value comparison",
 					r.GetSignatureForError ());
@@ -7960,6 +7966,17 @@ namespace Mono.CSharp
 	/// </summary>
 	public class MemberAccess : ATypeNameExpression
 	{
+		public enum Accessor {
+			Member,
+			AsE4xDescendant,				// The PlayScript E4X .. operator.
+			AsE4xChildAll,					// The PlayScript E4X .* operator.
+			AsE4xChildAttribute,			// The PlayScript E4X .@ operator.
+			AsE4xDescendantAll,				// The PlayScript E4X ..* operator.
+			AsE4xNamespace					// The PlayScript :: operator.
+		}
+
+		public Accessor AccessorType = Accessor.Member;
+
 		protected Expression expr;
 
 #if FULL_AST
@@ -8573,6 +8590,14 @@ namespace Mono.CSharp
 	{
 		public Arguments Arguments;
 		public Expression Expr;
+
+		public enum Accessor {
+			ElementAccess,
+			AsE4xNamespaceAccess,
+			AsE4xAttributeAccess
+		}
+
+		public Accessor AccessorType = Accessor.ElementAccess;
 
 		public ElementAccess (Expression e, Arguments args, Location loc)
 		{
@@ -10231,9 +10256,9 @@ namespace Mono.CSharp
 		{
 			NewInitialize new_instance;
 
-			public InitializerTargetExpression (NewInitialize newInstance)
+			public InitializerTargetExpression (NewInitialize newInstance, TypeSpec castType = null)
 			{
-				this.type = newInstance.type;
+				this.type = castType ?? newInstance.type;
 				this.loc = newInstance.loc;
 				this.eclass = newInstance.eclass;
 				this.new_instance = newInstance;

@@ -39,7 +39,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	public abstract class MethodCore : InterfaceMemberBase, IParametersMember
 	{
@@ -1368,6 +1368,9 @@ namespace Mono.CSharp {
 	{
 		Arguments argument_list;
 		MethodSpec base_ctor;
+
+		// PlayScript: Initializer is explicitly called via super() call in constructor method.
+		public bool IsAsExplicitSuperCall;
 
 		public ConstructorInitializer (Arguments argument_list, Location loc)
 		{

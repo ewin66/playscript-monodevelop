@@ -20,7 +20,7 @@ using IKVM.Reflection.Emit;
 using System.Reflection.Emit;
 #endif
 	
-namespace Mono.CSharp.Nullable
+namespace Mono.CSharpPs.Nullable
 {
 	public class NullableType : TypeExpr
 	{

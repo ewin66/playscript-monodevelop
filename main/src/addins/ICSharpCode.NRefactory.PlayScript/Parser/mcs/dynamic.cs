@@ -17,7 +17,7 @@ using SLE = System.Linq.Expressions;
 using System.Dynamic;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	//
 	// A copy of Microsoft.CSharp/Microsoft.CSharp.RuntimeBinder/CSharpBinderFlags.cs

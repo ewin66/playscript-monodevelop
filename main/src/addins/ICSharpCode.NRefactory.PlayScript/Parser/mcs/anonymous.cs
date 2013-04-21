@@ -24,7 +24,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	public abstract class CompilerGeneratedContainer : ClassOrStruct
 	{
@@ -935,10 +935,18 @@ namespace Mono.CSharp {
 
 		public ParametersBlock Block;
 
-		public AnonymousMethodExpression (Location loc)
+		// PlayScript requires us to remember both parameters and return type.  (Will be null in C#)
+		public ParametersCompiled AsParameters;
+		public FullNamedExpression AsReturnType;
+
+		public AnonymousMethodExpression (Location loc, ParametersCompiled asParameters = null, FullNamedExpression asReturnType = null)
 		{
 			this.loc = loc;
 			this.compatibles = new Dictionary<TypeSpec, Expression> ();
+
+			// Actionscript anon function declarations include concrete parameter types and return types.
+			this.AsParameters = asParameters;
+			this.AsReturnType = asReturnType;
 		}
 
 		#region Properties
@@ -1966,7 +1974,7 @@ namespace Mono.CSharp {
 
 			Method tostring = new Method (this, new TypeExpression (Compiler.BuiltinTypes.String, loc),
 				Modifiers.PUBLIC | Modifiers.OVERRIDE | Modifiers.DEBUGGER_HIDDEN, new MemberName ("ToString", loc),
-				Mono.CSharp.ParametersCompiled.EmptyReadOnlyParameters, null);
+				Mono.CSharpPs.ParametersCompiled.EmptyReadOnlyParameters, null);
 
 			ToplevelBlock equals_block = new ToplevelBlock (Compiler, equals.ParameterInfo, loc);
 
@@ -2074,7 +2082,7 @@ namespace Mono.CSharp {
 			Method hashcode = new Method (this, new TypeExpression (Compiler.BuiltinTypes.Int, loc),
 				Modifiers.PUBLIC | Modifiers.OVERRIDE | Modifiers.DEBUGGER_HIDDEN,
 				new MemberName ("GetHashCode", loc),
-				Mono.CSharp.ParametersCompiled.EmptyReadOnlyParameters, null);
+				Mono.CSharpPs.ParametersCompiled.EmptyReadOnlyParameters, null);
 
 			//
 			// Modified FNV with good avalanche behavior and uniform

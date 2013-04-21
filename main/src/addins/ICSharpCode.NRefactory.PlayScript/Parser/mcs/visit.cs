@@ -13,7 +13,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	public abstract class StructuralVisitor
 	{

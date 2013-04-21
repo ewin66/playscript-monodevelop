@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	/// <remarks>
 	///   The ExprClass class contains the is used to pass the 
@@ -6684,12 +6684,12 @@ namespace Mono.CSharp {
 			// nothing
 		}
 		
-		public override Mono.CSharp.Expression CreateExpressionTree (ResolveContext ec)
+		public override Mono.CSharpPs.Expression CreateExpressionTree (ResolveContext ec)
 		{
 			return null;
 		}
 		
-		public override object Accept (Mono.CSharp.StructuralVisitor visitor)
+		public override object Accept (Mono.CSharpPs.StructuralVisitor visitor)
 		{
 			return visitor.Visit (this);
 		}

@@ -16,12 +16,12 @@ using System.Text;
 using System.IO;
 using System;
 using System.Collections.Generic;
-using Mono.CSharp;
-using Linq = Mono.CSharp.Linq;
-using Enum = Mono.CSharp.Enum;
-using Attribute = Mono.CSharp.Attribute;
-using Delegate = Mono.CSharp.Delegate;
-using Nullable = Mono.CSharp.Nullable;
+using Mono.CSharpPs;
+using Linq = Mono.CSharpPs.Linq;
+using Enum = Mono.CSharpPs.Enum;
+using Attribute = Mono.CSharpPs.Attribute;
+using Delegate = Mono.CSharpPs.Delegate;
+using Nullable = Mono.CSharpPs.Nullable;
 
 namespace Mono.PlayScript
 {
@@ -159,6 +159,15 @@ namespace Mono.PlayScript
 		//
 		LocationsBag lbag;
 		List<Tuple<Modifiers, Location>> mod_locations;
+		Location parameterModifierLocation, savedLocation, savedOpenLocation, savedCloseLocation, savedEventAssignLocation;
+		Location savedAttrParenOpenLocation, savedAttrParenCloseLocation, savedOperatorLocation;
+		Stack<List<Location>> locationListStack = new Stack<List<Location>> (); // used for type parameters
+		Stack<Location> opt_intoStack = new Stack<Location> ();
+
+		bool HadAttributeParens;
+		List<Location> attributeCommas = new List<Location> ();
+		List<Location> attributeArgumentCommas = new List<Location> ();
+		List<Location> parameterListCommas = new List<Location> ();
 %}
 
 %token EOF
@@ -1163,13 +1172,14 @@ struct_declaration
 	  opt_partial
 	  STRUCT
 	  {
-		lexer.ConstraintsParsing = true;
 		lexer.AutoSemiInsertion = false;
 	  }
 	  type_declaration_name
 	  {
+		lexer.ConstraintsParsing = true;	  
 	  	bool is_partial = IsPartial($1) || $3 != null;
 		push_current_container (new Struct (current_container, (MemberName) $6, (Modifiers) $2, (Attributes) $1), is_partial);
+		lbag.AddMember (current_container, GetModifierLocations (), GetLocation ($4));
 	  }
 	  opt_class_extends
 	  opt_class_implements
@@ -1183,7 +1193,6 @@ struct_declaration
 		if (doc_support)
 			current_container.PartialContainer.DocComment = Lexer.consume_doc_comment ();
 
-		lbag.AddMember (current_container, mod_locations, GetLocation ($4));
 		
 		lexer.parsing_modifiers = true;
 		lexer.AutoSemiInsertion = true;
@@ -1203,7 +1212,11 @@ struct_declaration
 	  }
 	  opt_semicolon
 	  {
-		lbag.AppendToMember (current_container, GetLocation ($12), GetLocation ($15), GetLocation ($17));
+		if ($17 == null) {
+			lbag.AppendToMember (current_container, GetLocation ($12), GetLocation ($15));
+		} else {
+			lbag.AppendToMember (current_container, GetLocation ($12), GetLocation ($15), GetLocation ($17));
+		}
 		$$ = pop_current_class ();
 	  }
 	| opt_attributes opt_modifiers opt_partial STRUCT error
@@ -1236,7 +1249,7 @@ constant_declaration
 		}
 		
 		current_field.Initializer = (ConstInitializer) $8;
-		lbag.AddMember (current_field, mod_locations, GetLocation ($3), GetLocation ($10));
+		lbag.AddMember (current_field, GetModifierLocations (), GetLocation ($3), GetLocation ($10));
 		current_field = null;
 	  }
 	;
@@ -1320,7 +1333,7 @@ field_declaration
 			Lexer.doc_state = XmlCommentState.Allowed;
 		}
 			
-		lbag.AddMember (current_field, mod_locations, GetLocation ($10));
+		lbag.AddMember (current_field, GetModifierLocations (), GetLocation ($10));
 		$$ = current_field;
 		current_field = null;
 	  }
@@ -1348,7 +1361,7 @@ field_declaration
 	    }
 
 		current_field.Initializer = (ConstInitializer) $8;	    
-		lbag.AddMember (current_field, mod_locations, GetLocation ($10));
+		lbag.AddMember (current_field, GetModifierLocations (), GetLocation ($10));
 		$$ = current_field;
 	    current_field = null;
 	  }
@@ -1508,6 +1521,7 @@ method_declaration
 			Method method = $1 as Method;
 			
 			if ($3 == null) {
+				lbag.AppendToMember (method, savedLocation); // semicolon			
 				method.ParameterInfo.CheckParameters (method);
 	
 				if ((method.ModFlags & Modifiers.ASYNC) != 0) {
@@ -1620,7 +1634,7 @@ method_header
 			if (doc_support)
 				c.DocComment = Lexer.consume_doc_comment ();
 				
-			lbag.AddMember (c, mod_locations, GetLocation ($5), GetLocation ($8));
+			lbag.AddMember (c, GetModifierLocations (), GetLocation ($5), GetLocation ($8));
 			$$ = c;
 		
 		} else {
@@ -1645,7 +1659,7 @@ method_header
 			if (doc_support)
 				method.DocComment = Lexer.consume_doc_comment ();
 
-			lbag.AddMember (method, mod_locations, GetLocation ($5), GetLocation ($8));
+			lbag.AddMember (method, GetModifierLocations (), GetLocation ($5), GetLocation ($8));
 			$$ = method;
 			
 		}
@@ -1707,7 +1721,7 @@ method_header
 		current_property.Get = new Property.GetMethod (current_property,
 			modifiers & Modifiers.AccessibilityMask, (Attributes) $1, GetLocation ($3));
 	  
-		lbag.AddMember (current_property, mod_locations, GetLocation ($10));
+		lbag.AddMember (current_property, GetModifierLocations (), GetLocation ($10));
 		current_local_parameters = current_property.Get.ParameterInfo;
 		$$ = current_property.Get;
 	  }
@@ -1774,7 +1788,7 @@ method_header
 		current_property.Set = new Property.SetMethod (current_property, 
 			modifiers & Modifiers.AccessibilityMask, (ParametersCompiled) $7, (Attributes) $1, GetLocation ($3));
 	  
-		lbag.AddMember (current_property, mod_locations, GetLocation ($10));
+		lbag.AddMember (current_property, GetModifierLocations (), GetLocation ($10));
 		current_local_parameters = parameters;
 		$$ = current_property.Set;
 	  }
@@ -1819,7 +1833,7 @@ method_header
 			method.DocComment = Lexer.consume_doc_comment ();
 
 		StoreModifierLocation (Modifiers.PARTIAL, GetLocation ($3));
-		lbag.AddMember (method, mod_locations, GetLocation ($7), GetLocation ($10));
+		lbag.AddMember (method, GetModifierLocations (), GetLocation ($7), GetLocation ($10));
 		$$ = method;
 	  }
 	| opt_attributes
@@ -1881,6 +1895,7 @@ method_body
 	| SEMICOLON		
 	  { 
 	  	// method body.
+	   	savedLocation = GetLocation ($1);
 	   	$$ = null; 
 	  }
 	;
@@ -1895,19 +1910,25 @@ formal_parameter_list
 	  {
 		var pars_list = (List<Parameter>) $1;
 	  	$$ = new ParametersCompiled (pars_list.ToArray ());
+	  	lbag.AddLocation ($$, parameterListCommas);
 	  } 
 	| fixed_parameters COMMA parameter_array
 	  {
 		var pars_list = (List<Parameter>) $1;
 		pars_list.Add ((Parameter) $3);
+		parameterListCommas.Add (GetLocation ($2));
 
 		$$ = new ParametersCompiled (pars_list.ToArray ()); 
+	  	lbag.AddLocation ($$, parameterListCommas);		
 	  }
 //	| fixed_parameters COMMA arglist_modifier
 //	  {
 //		var pars_list = (List<Parameter>) $1;
 //		pars_list.Add (new ArglistParameter (GetLocation ($3)));
+//		parameterListCommas.Add (GetLocation ($2));
+//		
 //		$$ = new ParametersCompiled (pars_list.ToArray (), true);
+//	  	lbag.AddLocation ($$, parameterListCommas);
 //	  }
 	| parameter_array COMMA error
 	  {
@@ -1915,6 +1936,7 @@ formal_parameter_list
 			report.Error (231, ((Parameter) $1).Location, "A params parameter must be the last parameter in a formal parameter list");
 
 		$$ = new ParametersCompiled (new Parameter[] { (Parameter) $1 } );			
+	  	lbag.AddLocation ($$, parameterListCommas);
 	  }
 	| fixed_parameters COMMA parameter_array COMMA error
 	  {
@@ -1923,14 +1945,18 @@ formal_parameter_list
 
 		var pars_list = (List<Parameter>) $1;
 		pars_list.Add (new ArglistParameter (GetLocation ($3)));
+		parameterListCommas.Add (GetLocation ($2));
+		parameterListCommas.Add (GetLocation ($4));
 
 		$$ = new ParametersCompiled (pars_list.ToArray (), true);
+	  	lbag.AddLocation ($$, parameterListCommas);		
 	  }
 //	| arglist_modifier COMMA error
 //	  {
 //		report.Error (257, GetLocation ($1), "An __arglist parameter must be the last parameter in a formal parameter list");
 //
 //		$$ = new ParametersCompiled (new Parameter [] { new ArglistParameter (GetLocation ($1)) }, true);
+//	  	lbag.AddLocation ($$, parameterListCommas);
 //	  }
 //	| fixed_parameters COMMA ARGLIST COMMA error 
 //	  {
@@ -1938,8 +1964,11 @@ formal_parameter_list
 //
 //		var pars_list = (List<Parameter>) $1;
 //		pars_list.Add (new ArglistParameter (GetLocation ($3)));
+//		parameterListCommas.Add (GetLocation ($2));
+//		parameterListCommas.Add (GetLocation ($4));
 //
 //		$$ = new ParametersCompiled (pars_list.ToArray (), true);
+//	  	lbag.AddLocation ($$, parameterListCommas);
 //	  }
 	| parameter_array 
 	  {
@@ -1962,7 +1991,7 @@ fixed_parameters
 		parameters_bucket.Clear ();
 		Parameter p = (Parameter) $1;
 		parameters_bucket.Add (p);
-		
+		parameterListCommas.Clear ();
 		default_parameter_used = p.HasDefaultValue;
 		$$ = parameters_bucket;
 	  }
@@ -1979,7 +2008,7 @@ fixed_parameters
 			default_parameter_used |= p.HasDefaultValue;
 			pars.Add (p);
 			
-			lbag.AddLocation (p, GetLocation ($2));
+			parameterListCommas.Add (GetLocation ($2));
 		}
 		
 		$$ = $1;
@@ -1995,6 +2024,7 @@ fixed_parameter
 	  {
 		var lt = (Tokenizer.LocatedToken) $3;
 		$$ = new Parameter ((FullNamedExpression) $5, lt.Value, (Parameter.Modifier) $2, (Attributes) $1, lt.Location);
+		lbag.AddLocation ($$, parameterModifierLocation);
 	  }
 	| attribute_sections error
 	  {
@@ -2012,6 +2042,7 @@ fixed_parameter
 	  	Location l = GetLocation ($5);
 		var lt = (Tokenizer.LocatedToken) $3;
 		$$ = new Parameter (new TypeExpression (compiler.BuiltinTypes.Object, GetLocation ($5)), lt.Value, (Parameter.Modifier) $2, (Attributes) $1, l);
+		lbag.AddLocation ($$, parameterModifierLocation);
 	  }
 	| opt_attributes
 	  opt_parameter_modifier
@@ -2054,7 +2085,7 @@ fixed_parameter
 		
 		var lt = (Tokenizer.LocatedToken) $3;
 		$$ = new Parameter ((FullNamedExpression) $5, lt.Value, mod, (Attributes) $1, lt.Location);
-		lbag.AddLocation ($$, GetLocation ($6));
+		lbag.AddLocation ($$, parameterModifierLocation, GetLocation ($6)); // parameterModifierLocation should be ignored when mod == NONE
 		
 		if ($8 != null)
 			((Parameter) $$).DefaultValue = new DefaultParameterValueExpression ((Expression) $8);
@@ -2129,6 +2160,7 @@ parameter_array
 			new TypeExpression(compiler.BuiltinTypes.Object, GetLocation($3)),  
 			ComposedTypeSpecifier.CreateArrayDimension (1, GetLocation ($3)));
 		$$ = new ParamsParameter (type, lt.Value, (Attributes) $1, lt.Location);
+		lbag.AddLocation ($$, savedLocation);
 	  }
 	| opt_attributes DOTDOTDOT IDENTIFIER ASSIGN constant_expression
 	  {
@@ -2138,15 +2170,40 @@ parameter_array
 		var type = new ComposedCast (
 			new TypeExpression(compiler.BuiltinTypes.Object, GetLocation($3)),  
 			ComposedTypeSpecifier.CreateArrayDimension (1, GetLocation ($3)));
-		$$ = new ParamsParameter (type, lt.Value, (Attributes) $1, lt.Location);		
+		$$ = new ParamsParameter (type, lt.Value, (Attributes) $1, lt.Location);
+		lbag.AddLocation ($$, savedLocation);
 	  }
 	| opt_attributes DOTDOTDOT error
 	  {
 		Error_SyntaxError (yyToken);
-		$$ = null;
+		
+		$$ = new ParamsParameter ((FullNamedExpression) $3, null, (Attributes) $1, Location.Null);
 	  }
 	;
 	
+//params_modifier
+//	: PARAMS
+//	  {
+//		if ((valid_param_mod & ParameterModifierType.Params) == 0)
+//			report.Error (1670, (GetLocation ($1)), "The `params' modifier is not allowed in current context");
+//		savedLocation = GetLocation ($1);
+//	  }
+//	| PARAMS parameter_modifier
+//	  {
+//		Parameter.Modifier mod = (Parameter.Modifier)$2;
+//		if ((mod & Parameter.Modifier.This) != 0) {
+//			report.Error (1104, GetLocation ($1), "The parameter modifiers `this' and `params' cannot be used altogether");
+//		} else {
+//			report.Error (1611, GetLocation ($1), "The params parameter cannot be declared as ref or out");
+//		}	  
+//		savedLocation = GetLocation ($1);
+//	  }
+//	| PARAMS params_modifier
+//	  {
+//		Error_DuplicateParameterModifier (GetLocation ($1), Parameter.Modifier.PARAMS);
+//	  }
+//	;
+//	
 //arglist_modifier
 //	: ARGLIST
 //	  {
@@ -2185,7 +2242,7 @@ property_declaration
 			current_type.AddMember (current_property);
 		}
 		is_config_enabled = true;
-		lbag.AddMember (current_property, mod_locations, GetLocation ($8));
+		lbag.AddMember (current_property, GetModifierLocations (), GetLocation ($8));
 		
 		lexer.PropertyParsing = true;
 	  }
@@ -2232,7 +2289,7 @@ indexer_declaration
 	  		current_type.AddIndexer (indexer);
 	  	}
 	  	is_config_enabled = true;
-		lbag.AddMember (current_property, mod_locations, GetLocation ($5), GetLocation ($8));
+		lbag.AddMember (current_property, GetModifierLocations (), GetLocation ($5), GetLocation ($8));
   		
 		if (type.Type != null && type.Type.Kind == MemberKind.Void)
 			report.Error (620, GetLocation ($3), "`{0}': indexer return type cannot be `void'", indexer.GetSignatureForError ());  		
@@ -2306,7 +2363,7 @@ get_accessor_declaration
 		}	
 	  
 		current_local_parameters = current_property.Get.ParameterInfo;	  
-		lbag.AddMember (current_property.Get, mod_locations);
+		lbag.AddMember (current_property.Get, GetModifierLocations ());
 		lexer.PropertyParsing = false;
 	  }
 	  accessor_body
@@ -2317,7 +2374,10 @@ get_accessor_declaration
 			if (current_container.Kind == MemberKind.Interface) {
 				report.Error (531, current_property.Get.Block.StartLocation,
 					"`{0}': interface members cannot have a definition", current_property.Get.GetSignatureForError ());
-			}		
+			}
+			lbag.AddMember (current_property.Get, GetModifierLocations ());
+		} else {
+			lbag.AddMember (current_property.Get, GetModifierLocations (), savedLocation);
 		}
 	  
 		current_local_parameters = null;
@@ -2354,7 +2414,6 @@ set_accessor_declaration
 		}
 		
 		current_local_parameters = current_property.Set.ParameterInfo;	
-		lbag.AddMember (current_property.Set, mod_locations);
 		lexer.PropertyParsing = false;
 	  }
 	  accessor_body
@@ -2366,6 +2425,9 @@ set_accessor_declaration
 				report.Error (531, current_property.Set.Block.StartLocation,
 					"`{0}': interface members cannot have a definition", current_property.Set.GetSignatureForError ());
 			}
+			lbag.AddMember (current_property.Set, GetModifierLocations ());
+		} else {
+			lbag.AddMember (current_property.Set, GetModifierLocations (), savedLocation);
 		}
 		
 		current_local_parameters = null;
@@ -2381,7 +2443,7 @@ accessor_body
 	: block 
 	| SEMICOLON
 	  {
-		// TODO: lbag
+		savedLocation = GetLocation ($1);
 	  	$$ = null;
 	  }
 	| error
@@ -2397,14 +2459,14 @@ interface_declaration
 	  opt_partial
 	  INTERFACE
 	  {
-		lexer.ConstraintsParsing = true;
 	    Lexer.AutoSemiInsertion = false;
 	  }
 	  type_declaration_name
 	  {
+		lexer.ConstraintsParsing = true;	  
 	    bool is_partial = IsPartial($1) || $3 != null;
 		push_current_container (new Interface (current_container, (MemberName) $6, (Modifiers) $2, (Attributes) $1), is_partial);
-		lbag.AddMember (current_container, mod_locations, GetLocation ($4));		
+		lbag.AddMember (current_container, GetModifierLocations (), GetLocation ($4));		
 	  }
 	  opt_class_extends
 	  opt_class_implements
@@ -2525,7 +2587,10 @@ operator_declaration
 				}
 				is_config_enabled = true;
 
-				lbag.AddMember (op, mod_locations, lbag.GetLocations (decl));
+				lbag.AddMember (op, GetModifierLocations (), lbag.GetLocations (decl));
+				if ($5 == null) { // Semicolon
+					lbag.AppendTo (op, savedLocation);
+				}
 			}
 		}
 		
@@ -2535,7 +2600,7 @@ operator_declaration
 
 operator_body 
 	: block
-	| SEMICOLON { $$ = null; }
+	| SEMICOLON { savedLocation = GetLocation ($1); $$ = null; }
 	; 
 
 operator_type
@@ -2729,7 +2794,7 @@ conversion_operator_declarator
 //		}
 //
 //		current_type.AddConstructor (c);
-//		lbag.AddMember (c, mod_locations, GetLocation ($6), GetLocation ($8));
+//		lbag.AddMember (c, GetModifierLocations (), GetLocation ($6), GetLocation ($8));
 //		$$ = c;
 //
 //		
@@ -2839,7 +2904,7 @@ destructor_declaration
 			current_type.AddMember (d);
 		}
 		is_config_enabled = true;
-		lbag.AddMember (d, mod_locations, GetLocation ($4), GetLocation ($7), GetLocation ($8));
+		lbag.AddMember (d, GetModifierLocations (), GetLocation ($4), GetLocation ($7), GetLocation ($8));
 
 		current_local_parameters = null;
 	  }
@@ -2871,8 +2936,11 @@ event_declaration
 			current_event_field.DocComment = Lexer.consume_doc_comment ();
 			Lexer.doc_state = XmlCommentState.Allowed;
 		}
-		
-		lbag.AddMember (current_event_field, mod_locations, GetLocation ($3), GetLocation ($10));
+		if (current_event_field.Initializer != null) {
+			lbag.AddMember (current_event_field, GetModifierLocations (), GetLocation ($3), savedEventAssignLocation, GetLocation ($10));
+		} else {
+			lbag.AddMember (current_event_field, GetModifierLocations (), GetLocation ($3), GetLocation ($10));
+		}
 		current_event_field = null;
 	  }
 	| opt_attributes
@@ -2885,7 +2953,7 @@ event_declaration
 			current_type.AddMember (current_event);
 		}
 		is_config_enabled = true;
-		lbag.AddMember (current_event, mod_locations, GetLocation ($3), GetLocation ($7));
+		lbag.AddMember (current_event, GetModifierLocations (), GetLocation ($3), GetLocation ($7));
 		
 		lexer.EventParsing = true;
 	  }
@@ -3006,7 +3074,7 @@ add_accessor_declaration
 	  	current_event.Add = new EventProperty.AddDelegateMethod (current_event, (Attributes) $1, GetLocation ($3));
 		current_local_parameters = current_event.Add.ParameterInfo;
 		
-		lbag.AddMember (current_event.Add, mod_locations);
+		lbag.AddMember (current_event.Add, GetModifierLocations ());
 		lexer.EventParsing = false;		
 	  }
 	  event_accessor_block
@@ -3034,7 +3102,7 @@ remove_accessor_declaration
 	  	current_event.Remove = new EventProperty.RemoveDelegateMethod (current_event, (Attributes) $1, GetLocation ($3));
 		current_local_parameters = current_event.Remove.ParameterInfo;
 
-		lbag.AddMember (current_event.Remove, mod_locations);
+		lbag.AddMember (current_event.Remove, GetModifierLocations ());
 		lexer.EventParsing = false;		
 	  }
 	  event_accessor_block
@@ -3109,7 +3177,7 @@ enum_declaration
 //			if (doc_support)
 //				em.DocComment = ev.DocComment;
 
-		lbag.AddMember (current_container, mod_locations, GetLocation ($3), GetLocation ($7), GetLocation ($11));
+		lbag.AddMember (current_container, GetModifierLocations (), GetLocation ($3), GetLocation ($7), GetLocation ($11));
 		$$ = pop_current_class ();
 	  }
 	;
@@ -3242,7 +3310,7 @@ delegate_declaration
 	  
 		if ($12 != null)
 			current_delegate.SetConstraints ((List<Constraints>) $12);
-		lbag.AddMember (current_delegate, mod_locations, GetLocation ($3), GetLocation ($5), GetLocation ($8), GetLocation ($14));
+		lbag.AddMember (current_delegate, GetModifierLocations (), GetLocation ($3), GetLocation ($5), GetLocation ($8), GetLocation ($14));
 
 		$$ = current_delegate;
 
@@ -5282,7 +5350,7 @@ lambda_parameter_list
 	  {
 		var pars = new List<Parameter> (4);
 		pars.Add ((Parameter) $1);
-
+		parameterListCommas.Clear ();
 		$$ = pars;
 	  }
 	| lambda_parameter_list COMMA lambda_parameter
@@ -5294,6 +5362,8 @@ lambda_parameter_list
 		}
 		
 		pars.Add (p);
+		parameterListCommas.Add (GetLocation ($2));
+
 		$$ = pars;
 	  }
 	;
@@ -5328,6 +5398,7 @@ opt_lambda_parameter_list
 	| lambda_parameter_list		{ 
 		var pars_list = (List<Parameter>) $1;
 		$$ = new ParametersCompiled (pars_list.ToArray ());
+		lbag.AddLocation ($$, parameterListCommas);
 	  }
 	;
 
@@ -5486,11 +5557,12 @@ class_declaration
 	  opt_partial
 	  CLASS
 	  {
-		lexer.ConstraintsParsing = true;
 		lexer.AutoSemiInsertion = false;
 	  }
 	  type_declaration_name
 	  {
+		lexer.ConstraintsParsing = true;
+		
 		Class c = new Class (current_container, (MemberName) $6, (Modifiers) $2, (Attributes) $1);
 		if (((c.ModFlags & Modifiers.STATIC) != 0) && lang_version == LanguageVersion.ISO_1) {
 			FeatureIsNotAvailable (c.Location, "static classes");
@@ -5498,6 +5570,7 @@ class_declaration
 			
 	    bool is_partial = IsPartial($1) || $3 != null;
 		push_current_container (c, is_partial);
+		lbag.AddMember (current_container, GetModifierLocations (), GetLocation ($4));
 	  }
 	  opt_class_extends
 	  opt_class_implements
@@ -5507,7 +5580,7 @@ class_declaration
 
 		if ($10 != null)
 			current_container.SetConstraints ((List<Constraints>) $10);
-		lbag.AddMember (current_container, mod_locations, GetLocation ($4));
+		lbag.AddMember (current_container, GetModifierLocations (), GetLocation ($4));
 
 		if (doc_support) {
 			current_container.PartialContainer.DocComment = Lexer.consume_doc_comment ();
@@ -5530,7 +5603,11 @@ class_declaration
 	  }
 	  opt_semicolon 
 	  {
-		lbag.AppendToMember (current_container, GetLocation ($12), GetLocation ($15), GetLocation ($17));
+		if ($17 == null) {
+			lbag.AppendToMember (current_container, GetLocation ($12), GetLocation ($15));
+		} else {
+			lbag.AppendToMember (current_container, GetLocation ($12), GetLocation ($15), GetLocation ($17));
+		}
 		$$ = pop_current_class ();
 	  }
 	;	
@@ -5539,7 +5616,7 @@ opt_partial
 	: /* empty */
 	  { $$ = null; }
 	| PARTIAL
-	  { $$ = $1; } // location
+	  { $$ = $1; StoreModifierLocation (Modifiers.PARTIAL, GetLocation ($1)); } // location
 	;
 
 opt_modifiers
@@ -6439,15 +6516,15 @@ switch_statement
 	  }
 	  opt_switch_sections CLOSE_BRACE
 	  {
-		$$ = new Switch ((Expression) $3, (ExplicitBlock) current_block.Explicit, GetLocation ($1));	
+		$$ = new Switch ((Expression) $3, (ExplicitBlock) current_block.Explicit, (List<SwitchSection>) $7, GetLocation ($1));	
 		end_block (GetLocation ($8));
-		lbag.AddStatement ($$, GetLocation ($2), GetLocation ($4));
+		lbag.AddStatement ($$, GetLocation ($2), GetLocation ($4), GetLocation ($5), GetLocation ($8));
 	  }
 	| SWITCH open_parens_any expression error
 	  {
 		Error_SyntaxError (yyToken);
 	  
-		$$ = new Switch ((Expression) $3, null, GetLocation ($1));	
+		$$ = new Switch ((Expression) $3, null, null, GetLocation ($1));	
 		lbag.AddStatement ($$, GetLocation ($2));
 	  }
 	;
@@ -6456,42 +6533,58 @@ opt_switch_sections
 	: /* empty */ 		
       {
 		report.Warning (1522, 1, current_block.StartLocation, "Empty switch block"); 
+		$$ = new List<SwitchSection> ();
 	  }
-	| switch_labels
-      {
-		report.Warning (1522, 1, current_block.StartLocation, "Empty switch block"); 
-	  }
-	| switch_sections opt_switch_labels
+	| switch_sections
 	;
 
 switch_sections
 	: switch_section 
+	  {
+		var sections = new List<SwitchSection> (4);
+
+		sections.Add ((SwitchSection) $1);
+		$$ = sections;
+	  }
 	| switch_sections switch_section
+	  {
+		var sections = (List<SwitchSection>) $1;
+
+		sections.Add ((SwitchSection) $2);
+		$$ = sections;
+	  }
 	| error
 	  {
 		Error_SyntaxError (yyToken);
+		$$ = new List<SwitchSection> ();
 	  } 
 	;
 
 switch_section
-	: switch_labels statement_list 
-	;
-
-opt_switch_labels
-	: /* empty */
-	| switch_labels
+	: switch_labels
+	  {
+		current_block = current_block.CreateSwitchBlock (lexer.Location);
+	  }
+ 	  statement_list 
+	  {
+		$$ = new SwitchSection ((List<SwitchLabel>) $1, current_block);
+	  }
 	;
 
 switch_labels
 	: switch_label 
 	  {
-	  	var label = (SwitchLabel) $1;
-	  	label.SectionStart = true;
-		current_block.AddStatement (label);
+		var labels = new List<SwitchLabel> (2);
+
+		labels.Add ((SwitchLabel) $1);
+		$$ = labels;
 	  }
 	| switch_labels switch_label 
 	  {
-		current_block.AddStatement ((Statement) $2);
+		var labels = (List<SwitchLabel>) ($1);
+		labels.Add ((SwitchLabel) $2);
+
+		$$ = labels;
 	  }
 	;
 
@@ -7132,6 +7225,7 @@ fixed_statement
 	  
 		Fixed f = new Fixed ((Fixed.VariableDeclaration) $9, (Statement) $10, GetLocation ($1));
 		current_block.AddStatement (f);
+		lbag.AddStatement (f, GetLocation ($2), GetLocation ($8));
 		$$ = end_block (GetLocation ($8));
 	  }
 	;
@@ -7160,6 +7254,7 @@ using_statement
 			Warning_EmptyStatement (GetLocation ($9));
 	  
 		Using u = new Using ((Using.VariableDeclaration) $8, (Statement) $9, GetLocation ($1));
+		lbag.AddStatement (u, GetLocation ($2), GetLocation ($7));
 		current_block.AddStatement (u);
 		$$ = end_block (GetLocation ($7));
 	  }
@@ -7201,6 +7296,7 @@ using_or_fixed_variable_initializer
 	| ASSIGN variable_initializer
 	  {
 		current_variable.Initializer = (Expression) $2;
+		lbag.AppendTo (current_variable, GetLocation ($1));
 		$$ = current_variable;
 	  }
 	;
@@ -8028,6 +8124,13 @@ void StoreModifierLocation (object token, Location loc)
   		mod_locations = new List<Tuple<Modifiers, Location>> ();
 
 	mod_locations.Add (Tuple.Create ((Modifiers) token, loc));
+}
+
+List<Tuple<Modifiers, Location>> GetModifierLocations ()
+{
+	var result = mod_locations;
+	mod_locations = null;
+	return result;
 }
 
 string CheckAttributeTarget (string a, Location l)

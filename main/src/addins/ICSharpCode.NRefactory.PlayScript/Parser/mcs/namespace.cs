@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.CompilerServices.SymbolWriter;
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	public class RootNamespace : Namespace {
 
@@ -252,7 +252,7 @@ namespace Mono.CSharp {
 
 			case "System.Windows.Forms":
 			case "System.Windows.Forms.Layout":
-				assembly = "System.Windows.Name";
+				assembly = "System.Windows.Forms";
 				break;
 			}
 
@@ -880,9 +880,9 @@ namespace Mono.CSharp {
 
 		public void AddUsing (UsingNamespace un, bool forceAppend = false)
 		{
-			bool isPlayScript = this.CompilationSourceFile != null &&
-				this.CompilationSourceFile.SourceFile != null && 
-				this.CompilationSourceFile.SourceFile.FileType == Mono.CSharp.SourceFileType.PlayScript;
+			bool isPlayScript = compSourceFile != null &&
+				compSourceFile.SourceFile != null && 
+					compSourceFile.SourceFile.FileType == Mono.CSharpPs.SourceFileType.PlayScript;
 
 			if (DeclarationFound && !forceAppend && !isPlayScript){
 				Compiler.Report.Error (1529, un.Location, "A using clause must precede all other namespace elements except extern alias declarations");

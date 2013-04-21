@@ -68,7 +68,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 			set { checkForOverflow = value; }
 		}
 		
-		Version languageVersion = new Version((int)Mono.CSharp.LanguageVersion.Default, 0);
+		Version languageVersion = new Version((int)Mono.CSharpPs.LanguageVersion.Default, 0);
 		
 		/// <summary>
 		/// Gets/Sets the language version used by the parser.
@@ -131,12 +131,12 @@ namespace ICSharpCode.NRefactory.PlayScript
 			get { return disabledWarnings; }
 		}
 		
-		internal Mono.CSharp.CompilerSettings ToMono()
+		internal Mono.CSharpPs.CompilerSettings ToMono()
 		{
-			var s = new Mono.CSharp.CompilerSettings();
+			var s = new Mono.CSharpPs.CompilerSettings();
 			s.Unsafe = allowUnsafeBlocks;
 			s.Checked = checkForOverflow;
-			s.Version = (Mono.CSharp.LanguageVersion)languageVersion.Major;
+			s.Version = (Mono.CSharpPs.LanguageVersion)languageVersion.Major;
 			s.WarningsAreErrors = treatWarningsAsErrors;
 			s.WarningLevel = warningLevel;
 			foreach (int code in disabledWarnings)

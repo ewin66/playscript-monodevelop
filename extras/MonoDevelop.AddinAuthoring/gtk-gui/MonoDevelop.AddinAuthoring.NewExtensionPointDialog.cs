@@ -197,11 +197,7 @@ namespace MonoDevelop.AddinAuthoring
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
-			this.baseTypeSelector = new global::MonoDevelop.AddinAuthoring.TypeSelector ();
-			this.baseTypeSelector.Events = ((global::Gdk.EventMask)(256));
-			this.baseTypeSelector.Name = "baseTypeSelector";
-			this.baseTypeSelector.AllowCreate = false;
-			this.baseTypeSelector.AllowCreateInterface = false;
+			this.baseTypeSelector = null;
 			this.table1.Add (this.baseTypeSelector);
 			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.table1 [this.baseTypeSelector]));
 			w15.TopAttach = ((uint)(1));
@@ -272,10 +268,7 @@ namespace MonoDevelop.AddinAuthoring
 			this.notebook.SetTabLabel (this.table1, this.label9);
 			this.label9.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.nodeseteditorwidget = new global::MonoDevelop.AddinAuthoring.NodeSetEditorWidget ();
-			this.nodeseteditorwidget.Events = ((global::Gdk.EventMask)(256));
-			this.nodeseteditorwidget.Name = "nodeseteditorwidget";
-			this.nodeseteditorwidget.AllowEditing = true;
+			this.nodeseteditorwidget = null;
 			this.notebook.Add (this.nodeseteditorwidget);
 			global::Gtk.Notebook.NotebookChild w22 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.nodeseteditorwidget]));
 			w22.Position = 1;

@@ -21,8 +21,9 @@ using System.Text;
 using System.Globalization;
 using System.Diagnostics;
 using System.Threading;
+using Mono.PlayScript;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	/// <summary>
 	///    The compiler driver.
@@ -57,15 +58,26 @@ namespace Mono.CSharp
 				SeekableStreamReader reader = new SeekableStreamReader (input, ctx.Settings.Encoding);
 				var file = new CompilationSourceFile (module, sourceFile);
 
-				Tokenizer lexer = new Tokenizer (reader, file, session);
-				int token, tokens = 0, errors = 0;
+				if (sourceFile.FileType == SourceFileType.CSharp) {
+					Tokenizer lexer = new Tokenizer (reader, file, session);
+					int token, tokens = 0, errors = 0;
 
-				while ((token = lexer.token ()) != Token.EOF){
-					tokens++;
-					if (token == Token.ERROR)
-						errors++;
+					while ((token = lexer.token ()) != Token.EOF){
+						tokens++;
+						if (token == Token.ERROR)
+							errors++;
+					}
+				} else {
+					Mono.PlayScript.Tokenizer lexer = new Mono.PlayScript.Tokenizer (reader, file, session);
+					lexer.ParsingPlayScript = sourceFile.PsExtended;
+					int token, tokens = 0, errors = 0;
+	
+					while ((token = lexer.token ()) != Mono.PlayScript.Token.EOF){
+						tokens++;
+						if (token == Mono.PlayScript.Token.ERROR)
+							errors++;
+					}
 				}
-				Console.WriteLine ("Tokenized: " + tokens + " found " + errors + " errors");
 			}
 			
 			return;
@@ -80,7 +92,8 @@ namespace Mono.CSharp
 
 			var session = new ParserSession () {
 				UseJayGlobalArrays = true,
-				LocatedTokens = new Tokenizer.LocatedToken[15000]
+				LocatedTokens = new Tokenizer.LocatedToken[15000],
+				AsLocatedTokens = new Mono.PlayScript.Tokenizer.LocatedToken[15000]
 			};
 
 			for (int i = 0; i < sources.Count; ++i) {
@@ -161,16 +174,29 @@ namespace Mono.CSharp
 			input.Close ();
 		}
 
-		public static CSharpParser Parse (SeekableStreamReader reader, SourceFile sourceFile, ModuleContainer module, ParserSession session, Report report, int lineModifier = 0, int colModifier = 0)
+		public static object Parse (SeekableStreamReader reader, SourceFile sourceFile, ModuleContainer module, ParserSession session, Report report, int lineModifier = 0, int colModifier = 0)
 		{
 			var file = new CompilationSourceFile (module, sourceFile);
 			module.AddTypeContainer(file);
 
-			CSharpParser parser = new CSharpParser (reader, file, report, session);
-			parser.Lexer.Line += lineModifier;
-			parser.Lexer.Column += colModifier;
-			parser.Lexer.sbag = new SpecialsBag ();
-			parser.parse ();
+			object parser = null;
+			
+			if (sourceFile.FileType == SourceFileType.CSharp) {
+				CSharpParser csParser = new CSharpParser (reader, file, report, session);
+				csParser.Lexer.Line += lineModifier;
+				csParser.Lexer.Column += colModifier;
+				csParser.Lexer.sbag = new SpecialsBag ();
+				csParser.parse ();
+				parser = csParser;
+			} else {
+				PlayScriptParser psParser = new PlayScriptParser (reader, file, report, session);
+				psParser.Lexer.Line += lineModifier;
+				psParser.Lexer.Column += colModifier;
+				psParser.Lexer.sbag = new SpecialsBag ();
+				psParser.parse ();
+				parser = psParser;
+			}
+			
 			return parser;
 		}
 

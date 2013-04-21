@@ -29,7 +29,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	// It is used as a base class for all property based members
 	// This includes properties, indexers, and events

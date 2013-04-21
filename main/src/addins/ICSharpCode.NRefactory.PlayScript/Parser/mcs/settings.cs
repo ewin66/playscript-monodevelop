@@ -19,7 +19,7 @@ using System.Text;
 using System.Globalization;
 using System;
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	public enum LanguageVersion
 	{

@@ -20,7 +20,7 @@ using IKVM.Reflection.Emit;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp {
+namespace Mono.CSharpPs {
 
 	/// <summary>
 	///   This interface is implemented by expressions that can be assigned to.

@@ -18,7 +18,7 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Collections;
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	/// <summary>
 	///    Tokenizer for C# source code. 
@@ -3582,7 +3582,7 @@ namespace Mono.CSharp
 							continue;
 						}
 
-						if (c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\v' ) {
+						if (c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\v') {
 							sbag.PushCommentChar (c);
 							continue;
 						}

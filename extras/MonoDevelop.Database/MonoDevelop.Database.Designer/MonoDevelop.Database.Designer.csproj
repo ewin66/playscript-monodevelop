@@ -39,19 +39,14 @@
     <Reference Include="System" />
     <Reference Include="MonoDevelop.Core, Version=1.9.2.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="MonoDevelop.Ide, Version=1.9.2.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="NRefactory, Version=0.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <Package>monodevelop</Package>
     </Reference>
-    <Reference Include="Mono.Cecil, Version=0.6.8.8607, Culture=neutral">
-      <Package>monodevelop</Package>
-    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.6.8.8607, Culture=neutral" />
     <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -64,12 +59,8 @@
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Mono.TextEditor, Version=1.0.0.0, Culture=neutral">
-      <Package>monodevelop</Package>
-    </Reference>
-    <Reference Include="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f">
-      <Package>monodevelop</Package>
-    </Reference>
+    <Reference Include="Mono.TextEditor, Version=1.0.0.0, Culture=neutral" />
+    <Reference Include="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoDevelop.Database.Components\MonoDevelop.Database.Components.csproj">
@@ -136,7 +127,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <Deployment.LinuxDeployData generatePcFile="false" />
+        <Deployment.LinuxDeployData generatePcFile="False" />
         <GtkDesignInfo gettextClass="MonoDevelop.Database.AddinCatalog" />
       </Properties>
     </MonoDevelop>

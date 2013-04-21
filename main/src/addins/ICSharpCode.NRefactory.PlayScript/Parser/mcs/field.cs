@@ -26,7 +26,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
-namespace Mono.CSharp
+namespace Mono.CSharpPs
 {
 	public class FieldDeclarator
 	{
@@ -36,9 +36,19 @@ namespace Mono.CSharp
 			this.Initializer = initializer;
 		}
 
+		// PlayScript - field declarators have types
+		public FieldDeclarator (SimpleMemberName name, Expression initializer, FullNamedExpression type_expr)
+		{
+			this.Name = name;
+			this.TypeExpression = type_expr;
+			this.Initializer = initializer;
+		}
+
 		#region Properties
 
 		public SimpleMemberName Name { get; private set; }
+		public FullNamedExpression TypeExpression { get; private set; }
+		public TypeSpec Type { get; private set; }
 		public Expression Initializer { get; private set; }
 
 		#endregion
