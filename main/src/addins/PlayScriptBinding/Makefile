@@ -50,7 +50,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(top_srcdir)/xbuild.include ChangeLog
-subdir = src/addins/CSharpBinding
+subdir = src/addins/PlayScriptBinding
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -185,8 +185,8 @@ UNMANAGED_DEPENDENCIES_MONO_LIBS =
 UPDATE_DESKTOP_DB = 
 UPDATE_MIME_DB = 
 VERSION = 4.0.3
-abs_builddir = /Users/bcooley/projects/monodevelop-as3/main/src/addins/CSharpBinding
-abs_srcdir = /Users/bcooley/projects/monodevelop-as3/main/src/addins/CSharpBinding
+abs_builddir = /Users/bcooley/projects/monodevelop-as3/main/src/addins/PlayScriptBinding
+abs_srcdir = /Users/bcooley/projects/monodevelop-as3/main/src/addins/PlayScriptBinding
 abs_top_builddir = /Users/bcooley/projects/monodevelop-as3/main
 abs_top_srcdir = /Users/bcooley/projects/monodevelop-as3/main
 am__leading_dot = .
@@ -291,7 +291,7 @@ TESTFILES = \
 TESTDLLS = \
 	$(NUNIT_LIBS)
 
-TESTASSEMBLY = $(top_builddir)/build/bin/CSharpBinding.Test.dll
+TESTASSEMBLY = $(top_builddir)/build/bin/PlayScriptBinding.Test.dll
 CLEANFILES = $(PARSE) $(PARSE).mdb
 all: all-recursive
 
@@ -305,9 +305,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/xbuild.include $(am_
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/addins/CSharpBinding/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/addins/PlayScriptBinding/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/addins/CSharpBinding/Makefile
+	  $(AUTOMAKE) --foreign src/addins/PlayScriptBinding/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

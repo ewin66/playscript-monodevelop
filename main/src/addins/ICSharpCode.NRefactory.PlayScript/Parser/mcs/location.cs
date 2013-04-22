@@ -80,15 +80,12 @@ namespace Mono.CSharpPs
 			this.Name = name;
 			this.FullPathName = path;
 			var ext = Path.GetExtension (path);
-			if (ext == null) {
+			if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(ext) || ext.ToLower() == ".play" || ext.ToLower() == ".asx") {
 				FileType = SourceFileType.PlayScript;
 				PsExtended = true;
 			} else if (ext.ToLower() == ".as") {
 				FileType = SourceFileType.PlayScript;
 				PsExtended = false;
-			} else if (ext == null || ext.ToLower() == ".play" || ext.ToLower() == ".asx") {  // NOTE: Default to playscript when in EditorBinding
-				FileType = SourceFileType.PlayScript;
-				PsExtended = true;
 			} else {
 				FileType = SourceFileType.CSharp;
 			}

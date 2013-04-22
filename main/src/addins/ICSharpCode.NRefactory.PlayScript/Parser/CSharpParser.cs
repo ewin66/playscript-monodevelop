@@ -3888,7 +3888,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 		
 		SyntaxTree Parse(ITextSource program, string fileName, int initialLine, int initialColumn)
 		{
-			lock (parseLock) {
+//			lock (parseLock) {
 				errorReportPrinter = new ErrorReportPrinter ("");
 				var ctx = new CompilerContext (compilerSettings.ToMono(), errorReportPrinter);
 				ctx.Settings.TabSize = 1;
@@ -3900,7 +3900,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				session.LocationsBag = new LocationsBag ();
 				var report = new Report (ctx, errorReportPrinter);
 				CompilerCompilationUnit top;
-				if (fileName == null || fileName.EndsWith(".play") || fileName.EndsWith(".as")) {
+				if (String.IsNullOrEmpty(fileName) || fileName.EndsWith(".play") || fileName.EndsWith(".as")) {
 					var parser = (Mono.PlayScript.PlayScriptParser)Driver.Parse(reader, file, module, session, report, initialLine - 1, initialColumn - 1);
 					top = new CompilerCompilationUnit() {
 						ModuleCompiled = module,
@@ -3921,7 +3921,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				unit.Errors.AddRange (errorReportPrinter.Errors);
 				CompilerCallableEntryPoint.Reset ();
 				return unit;
-			}
+//			}
 		}
 
 		public IEnumerable<EntityDeclaration> ParseTypeMembers (string code)

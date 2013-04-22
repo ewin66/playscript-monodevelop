@@ -709,7 +709,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 					// Do not pop up completion on identifier identifier (should be handled by keyword completion).
 					tokenIndex = offset - 1;
 					token = GetPreviousToken(ref tokenIndex, false);
-					if (token == "class" || token == "interface" || token == "struct" || token == "enum" || token == "package") {
+					if (token == "class" || token == "interface" || token == "struct" || token == "enum" || token == "package" || token == "var" || token == "const") {
 						// after these always follows a name
 						return null;
 					}
