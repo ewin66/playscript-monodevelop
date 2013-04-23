@@ -20,7 +20,7 @@ cp -R ../CSharpBinding ../PlayScriptBinding/
 
 # Apply patch
 pushd ../../../..
-patch -p0 < ./main/src/addins/PlayScriptPatches/PlayScriptPatches/PlayScriptBinding.patch
+patch -p0 --merge < ./main/src/addins/PlayScriptPatches/PlayScriptBinding.patch
 popd
 
 # Restore project and plugin names
@@ -31,6 +31,9 @@ mv ../PlayScriptBinding/CSharpBinding.addin.xml ../PlayScriptBinding/PlayScriptB
 rm ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
 rm ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 
+# Restore missing files
+git checkout ../PlayScriptBinding/icons
+
 # ------------  NRefactory --------------
 
 mv ../ICSharpCode.NRefactory.PlayScript ../ICSharpCode.NRefactory.PlayScript_save
@@ -38,11 +41,15 @@ cp -R ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp ../ICSharpCode.
 
 # Make patch of NRefactory.CSharp
 pushd ../../../..
-patch -p0 < ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
+patch -p0 --merge < ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
 popd
 
 # Restore project names
 mv ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.CSharp.csproj ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj
+
+# Restore missing files
+git checkout ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.snk
+git checkout ../ICSharpCode.NRefactory.PlayScript/Parser/mcs/build-psparser.sh
 
 echo "Done applying patch files."
 
