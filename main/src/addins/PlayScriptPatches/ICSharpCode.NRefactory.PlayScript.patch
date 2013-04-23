@@ -39394,11 +39394,5 @@ diff -rupN ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/TypeSystem
  {
  	/// <summary>
  	/// Represents a scope that contains "using" statements.
-Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/bin/$(Configuration)/ICSharpCode.NRefactory.PlayScript.dll and ../ICSharpCode.NRefactory.PlayScript/bin/$(Configuration)/ICSharpCode.NRefactory.PlayScript.dll differ
-Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/bin/$(Configuration)/ICSharpCode.NRefactory.PlayScript.dll.mdb and ../ICSharpCode.NRefactory.PlayScript/bin/$(Configuration)/ICSharpCode.NRefactory.PlayScript.dll.mdb differ
-Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/bin/$(Configuration)/ICSharpCode.NRefactory.dll and ../ICSharpCode.NRefactory.PlayScript/bin/$(Configuration)/ICSharpCode.NRefactory.dll differ
-Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/bin/$(Configuration)/ICSharpCode.NRefactory.dll.mdb and ../ICSharpCode.NRefactory.PlayScript/bin/$(Configuration)/ICSharpCode.NRefactory.dll.mdb differ
-Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/bin/$(Configuration)/Mono.Cecil.dll and ../ICSharpCode.NRefactory.PlayScript/bin/$(Configuration)/Mono.Cecil.dll differ
-Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/bin/$(Configuration)/Mono.Cecil.dll.mdb and ../ICSharpCode.NRefactory.PlayScript/bin/$(Configuration)/Mono.Cecil.dll.mdb differ
 Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/obj/Debug/ICSharpCode.NRefactory.CSharp.dll and ../ICSharpCode.NRefactory.PlayScript/obj/Debug/ICSharpCode.NRefactory.CSharp.dll differ
 Binary files ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/obj/Debug/ICSharpCode.NRefactory.CSharp.dll.mdb and ../ICSharpCode.NRefactory.PlayScript/obj/Debug/ICSharpCode.NRefactory.CSharp.dll.mdb differ
