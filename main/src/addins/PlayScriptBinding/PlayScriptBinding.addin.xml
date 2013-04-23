@@ -6,14 +6,14 @@
        url         = "http://www.monodevelop.com/"
        description = "PlayScript Language Binding"
        category    = "Language bindings"
-       version     = "4.0.3">
+       version     = "4.0.4">
 	
 	<Dependencies>
-		<Addin id="Core" version="4.0.3"/>
-		<Addin id="Ide" version="4.0.3"/>
-		<Addin id="SourceEditor2" version="4.0.3"/>
-		<Addin id="Refactoring" version="4.0.3"/>
-		<Addin id="CSharpBinding" version="4.0.3"/>
+		<Addin id="Core" version="4.0.4"/>
+		<Addin id="Ide" version="4.0.4"/>
+		<Addin id="SourceEditor2" version="4.0.4"/>
+		<Addin id="Refactoring" version="4.0.4"/>
+		<Addin id="CSharpBinding" version="4.0.4"/>
 	</Dependencies>
 
 	<ConditionType id="MSBuildTargetIsAvailable" type="MonoDevelop.Projects.Formats.MSBuild.TargetsAvailableCondition" />
@@ -215,6 +215,11 @@
 		<Resolver class = "MonoDevelop.PlayScript.Resolver.TextEditorResolverProvider" mimeType="text/x-playscript" />
 	</Extension>
 
+	<Extension path = "/MonoDevelop/SourceEditor2/SyntaxModes">
+		<Templates resource="ActionScriptSyntaxMode.xml" />
+		<Templates resource="PlayScriptSyntaxMode.xml" />
+	</Extension>
+
 	<!-- Extension path = "/MonoDevelop/Ide/Commands/TextEditor">
 		<Command id = "MonoDevelop.PlayScript.Highlighting.MoveToUsagesCommand.PrevUsage"
 		         defaultHandler = "MonoDevelop.PlayScript.Highlighting.MoveToPrevUsageHandler"
@@ -279,7 +284,7 @@
 	        <Import assembly="MonoDevelop.PlayScriptBinding.Autotools.dll"/>
 	    </Runtime>
 		<Dependencies>
-			<Addin id="Autotools" version="4.0.3"/>
+			<Addin id="Autotools" version="4.0.4"/>
 		</Dependencies>
 		<Extension path = "/MonoDevelop/Autotools/SimpleSetups">
 			<Class class="CSharpBinding.Autotools.CSharpAutotoolsSetup" />
@@ -291,7 +296,7 @@
 			<Import assembly="MonoDevelop.CSharpBinding.AspNet.dll"/>
 		</Runtime>
 		<Dependencies>
-			<Addin id="AspNet" version="4.0.3"/>
+			<Addin id="AspNet" version="4.0.4"/>
 		</Dependencies>
 		<Extension path = "/MonoDevelop/Asp/CompletionBuilders">
 			<Class class = "MonoDevelop.CSharp.Completion.AspLanguageBuilder" />

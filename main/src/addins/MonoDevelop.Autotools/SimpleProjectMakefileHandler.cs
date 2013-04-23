@@ -285,9 +285,6 @@ namespace MonoDevelop.Autotools
 						case CompileTarget.Module:
 							target = "module";
 							break;
-						case CompileTarget.JavaScript:
-							target = "javascript";
-							break;
 						default:
 							throw new Exception( GettextCatalog.GetString ("Unknown target {0}", config.CompileTarget ) );
 					}

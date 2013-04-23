@@ -15,6 +15,8 @@ SUBDIRS = \
 	TextTemplating \
 	AspNet \
 	CSharpBinding \
+	ICSharpCode.NRefactory.PlayScript \
+	PlayScriptBinding \
 	ILAsmBinding \
 	NUnit \
 	MonoDeveloperExtensions \

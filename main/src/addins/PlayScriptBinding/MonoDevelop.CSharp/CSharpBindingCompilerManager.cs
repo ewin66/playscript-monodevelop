@@ -265,9 +265,6 @@ namespace MonoDevelop.PlayScript
 				case CompileTarget.Library:
 					sb.AppendLine ("/t:library");
 					break;
-				case CompileTarget.JavaScript:
-					sb.AppendLine ("/t:javascript");
-					break;
 			}
 			
 			foreach (ProjectFile finfo in projectItems.GetAll<ProjectFile> ()) {

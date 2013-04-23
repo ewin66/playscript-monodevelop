@@ -60,7 +60,6 @@ namespace MonoDevelop.PlayScript.Project
 			store.AppendValues (GettextCatalog.GetString ("Library"));
 			store.AppendValues (GettextCatalog.GetString ("Executable with GUI"));
 			store.AppendValues (GettextCatalog.GetString ("Module"));
-			store.AppendValues (GettextCatalog.GetString ("JavaScript"));
 			compileTargetCombo.Model = store;
 			CellRendererText cr = new CellRendererText ();
 			compileTargetCombo.PackStart (cr, true);

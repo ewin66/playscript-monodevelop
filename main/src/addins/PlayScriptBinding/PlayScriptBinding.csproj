@@ -218,6 +218,12 @@
     <EmbeddedResource Include="templates\AsEmptyInterface.xft.xml">
       <LogicalName>AsEmptyInterface.xft.xml</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="SyntaxMode\ActionScriptSyntaxMode.xml">
+      <LogicalName>ActionScriptSyntaxMode.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SyntaxMode\PlayScriptSyntaxMode.xml">
+      <LogicalName>PlayScriptSyntaxMode.xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -334,5 +340,6 @@
     <Folder Include="MonoDevelop.CSharp.Refactoring.CodeIssues\" />
     <Folder Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\" />
     <Folder Include="MonoDevelop.CSharp.Tooltips\" />
+    <Folder Include="SyntaxMode\" />
   </ItemGroup>
 </Project>

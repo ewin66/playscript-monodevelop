@@ -52,7 +52,6 @@
 		<ProjectTemplate id = "CSharpEmptyProject" resource = "EmptyProject.xpt.xml"/>
 		<ProjectTemplate id = "CSharpGtkSharp2Project" resource = "GtkSharp2Project.xpt.xml"/>
 		<ProjectTemplate id = "CSharpLibrary" resource = "Library.xpt.xml"/>
-		<ProjectTemplate id = "ActionScriptConsoleProject" resource = "AsConsoleProject.xpt.xml"/>
 		<Condition id="MSBuildTargetIsAvailable" target="$(MSBuildExtensionsPath)\Microsoft\Portable\v4.0\Microsoft.Portable.CSharp.targets">
 			<ProjectTemplate id = "CSharpPortableLibrary" resource = "PortableLibrary.xpt.xml" />
 		</Condition>
@@ -151,7 +150,7 @@
 	<Extension path = "/MonoDevelop/TypeSystem/CodeGenerators">
 		<Generator class="MonoDevelop.CSharp.Refactoring.CSharpCodeGenerator" mimeType = "text/x-csharp" />
 	</Extension>
-
+	
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets/Mono" >
 		<Policies resource="MonoCSharpPolicy.xml" />
 		<Policies resource="MonoNameConventionPolicy.xml" />

@@ -34,7 +34,8 @@ namespace MonoDevelop.AddinAuthoring
 			this.table1.ColumnSpacing = ((uint)(6));
 			this.table1.BorderWidth = ((uint)(9));
 			// Container child table1.Gtk.Table+TableChild
-			this.entryAppPath = null;
+			this.entryAppPath = new global::MonoDevelop.Components.FolderEntry ();
+			this.entryAppPath.Name = "entryAppPath";
 			this.table1.Add (this.entryAppPath);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.entryAppPath]));
 			w2.TopAttach = ((uint)(1));
@@ -55,7 +56,8 @@ namespace MonoDevelop.AddinAuthoring
 			w3.RightAttach = ((uint)(2));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.entryRegPath = null;
+			this.entryRegPath = new global::MonoDevelop.Components.FolderEntry ();
+			this.entryRegPath.Name = "entryRegPath";
 			this.table1.Add (this.entryRegPath);
 			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.entryRegPath]));
 			w4.TopAttach = ((uint)(2));

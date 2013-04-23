@@ -200,9 +200,6 @@
     <EmbeddedResource Include="templates\PortableLibrary.xpt.xml">
       <LogicalName>PortableLibrary.xpt.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="icons\ActionScript.FileIcon">
-      <LogicalName>ActionScript.FileIcon</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />

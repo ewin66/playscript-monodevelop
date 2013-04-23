@@ -292,6 +292,10 @@ src/addins/VersionControl/Makefile
 src/addins/CSharpBinding/Makefile
 src/addins/CSharpBinding/Autotools/Makefile
 src/addins/CSharpBinding/AspNet/Makefile
+src/addins/ICSharpCode.NRefactory.PlayScript/Makefile
+src/addins/PlayScriptBinding/Makefile
+src/addins/PlayScriptBinding/Autotools/Makefile
+src/addins/PlayScriptBinding/AspNet/Makefile
 src/addins/ILAsmBinding/Makefile
 src/addins/VBNetBinding/Makefile
 src/addins/prj2make-sharp-lib/Makefile

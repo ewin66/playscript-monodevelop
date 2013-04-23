@@ -397,7 +397,9 @@ namespace MonoDevelop.PlayScript.Highlighting
 			bool loadRules = _rules == null;
 
 			if (loadRules) {
-				var provider = new ResourceStreamProvider (typeof(ResourceStreamProvider).Assembly, typeof(ResourceStreamProvider).Assembly.GetManifestResourceNames ().First (s => s.Contains ("PlayScriptSyntaxMode")));
+				var thisAssembly = System.Reflection.Assembly.GetCallingAssembly ();
+				var resourceName = thisAssembly.GetManifestResourceNames ().First (s => s.Contains ("PlayScriptSyntaxMode"));
+				var provider = new ResourceStreamProvider (thisAssembly, resourceName);
 				using (var reader = provider.Open ()) {
 					SyntaxMode baseMode = SyntaxMode.Read (reader);
 					_rules = new List<Rule> (baseMode.Rules.Where (r => r.Name != "Comment"));
