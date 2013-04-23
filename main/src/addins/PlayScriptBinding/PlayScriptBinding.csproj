@@ -212,6 +212,12 @@
     <EmbeddedResource Include="templates\PsEmptyInterface.xft.xml">
       <LogicalName>PsEmptyInterface.xft.xml</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="templates\AsEmptyClass.xft.xml">
+      <LogicalName>AsEmptyClass.xft.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="templates\AsEmptyInterface.xft.xml">
+      <LogicalName>AsEmptyInterface.xft.xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />

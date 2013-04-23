@@ -519,7 +519,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				
 				if (c.TypeBaseExpressions != null) {
 					if (location != null && curLoc < location.Count)
-						newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.Colon), Roles.Colon);
+						newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.ClassKeyword), Roles.ClassKeyword);
 					
 					var commaLocations = LocationsBag.GetLocations (c.TypeBaseExpressions);
 					int i = 0;
@@ -568,7 +568,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				
 				if (s.TypeBaseExpressions != null) {
 					if (location != null && curLoc < location.Count)
-						newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.Colon), Roles.Colon);
+						newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.ClassKeyword), Roles.ClassKeyword);
 					var commaLocations = LocationsBag.GetLocations (s.TypeBaseExpressions);
 					int i = 0;
 					foreach (var baseTypes in s.TypeBaseExpressions) {
@@ -613,7 +613,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				
 				if (i.TypeBaseExpressions != null) {
 					if (location != null && curLoc < location.Count)
-						newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.Colon), Roles.Colon);
+						newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.ClassKeyword), Roles.ClassKeyword);
 					var commaLocations = LocationsBag.GetLocations (i.TypeBaseExpressions);
 					int j = 0;
 					foreach (var baseTypes in i.TypeBaseExpressions) {
@@ -1027,12 +1027,13 @@ namespace ICSharpCode.NRefactory.PlayScript
 				AddAttributeSection (newMethod, m);
 				var location = LocationsBag.GetMemberLocation (m);
 				AddModifiers (newMethod, location);
-				newMethod.AddChild (ConvertToType (m.TypeExpression), Roles.Type);
 				AddExplicitInterface (newMethod, m.MethodName);
 				newMethod.AddChild (Identifier.Create (m.MethodName.Name, Convert (m.Location)), Roles.Identifier);
 				
 				AddTypeParameters (newMethod, m.MemberName);
-				
+
+				newMethod.AddChild (ConvertToType (m.TypeExpression), Roles.Type);
+
 				if (location != null && location.Count > 0)
 					newMethod.AddChild (new CSharpTokenNode (Convert (location [0]), Roles.LPar), Roles.LPar);
 				AddParameter (newMethod, m.ParameterInfo);
@@ -3805,6 +3806,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 			}
 			PlayScriptParser.ConversionVisitor conversionVisitor = new ConversionVisitor (GenerateTypeSystemMode, top.LocationsBag);
 			top.ModuleCompiled.Accept(conversionVisitor);
+			conversionVisitor.Unit.FixOutOfOrderLocations(); // Reorder locations that are incorrect for PlayScript
 			InsertComments(top, conversionVisitor);
 			if (CompilationUnitCallback != null) {
 				CompilationUnitCallback(top);
@@ -3888,7 +3890,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 		
 		SyntaxTree Parse(ITextSource program, string fileName, int initialLine, int initialColumn)
 		{
-//			lock (parseLock) {
+			lock (parseLock) {
 				errorReportPrinter = new ErrorReportPrinter ("");
 				var ctx = new CompilerContext (compilerSettings.ToMono(), errorReportPrinter);
 				ctx.Settings.TabSize = 1;
@@ -3921,7 +3923,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				unit.Errors.AddRange (errorReportPrinter.Errors);
 				CompilerCallableEntryPoint.Reset ();
 				return unit;
-//			}
+			}
 		}
 
 		public IEnumerable<EntityDeclaration> ParseTypeMembers (string code)

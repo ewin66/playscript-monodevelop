@@ -531,42 +531,44 @@ namespace MonoDevelop.PlayScript.Refactoring
 					// See: Bug 1373 - overriding [Model] class methods shouldn't insert base.Methods
 					// TODO: Extend this to user defined code.
 					try {
+#if NOT_PLAYSCRIPT
 						// TODO: This doesn't work in PLAYSCRIPT!
-//						if (method.Region.FileName == null) {
-//							var asm = AssemblyDefinition.ReadAssembly (method.ParentAssembly.UnresolvedAssembly.Location);
-//							foreach (var type in asm.MainModule.Types) {
-//								if (type.FullName != method.DeclaringType.FullName)
-//									continue;
-//								foreach (var m  in type.Resolve ().Methods) {
-//									if (m.HasBody && m.Name == method.Name) {
-//										var context = new DecompilerContext (asm.MainModule);
-//										
-//										context.CurrentType = type;
-//				
-//										context.Settings = new DecompilerSettings () {
-//											AnonymousMethods = true,
-//											AutomaticEvents  = true,
-//											AutomaticProperties = true,
-//											ForEachStatement = true,
-//											LockStatement = true
-//										};
-//				
-//										var astBuilder = new AstBuilder (context);
-//										astBuilder.AddMethod (m);
-//										
-//										astBuilder.RunTransformations (o => false);
-//										
-//										var visitor = new ThrowsExceptionVisitor ();
-//										astBuilder.CompilationUnit.AcceptVisitor (visitor);
-//										skipBody = visitor.Throws;
-//										if (skipBody)
-//											break;
-//									}
-//								}
-//								if (skipBody)
-//									break;
-//							}
-//						}
+						if (method.Region.FileName == null) {
+							var asm = AssemblyDefinition.ReadAssembly (method.ParentAssembly.UnresolvedAssembly.Location);
+							foreach (var type in asm.MainModule.Types) {
+								if (type.FullName != method.DeclaringType.FullName)
+									continue;
+								foreach (var m  in type.Resolve ().Methods) {
+									if (m.HasBody && m.Name == method.Name) {
+										var context = new DecompilerContext (asm.MainModule);
+
+										context.CurrentType = type;
+				
+										context.Settings = new DecompilerSettings () {
+											AnonymousMethods = true,
+											AutomaticEvents  = true,
+											AutomaticProperties = true,
+											ForEachStatement = true,
+											LockStatement = true
+										};
+				
+										var astBuilder = new AstBuilder (context);
+										astBuilder.AddMethod (m);
+
+										astBuilder.RunTransformations (o => false);
+
+										var visitor = new ThrowsExceptionVisitor ();
+										astBuilder.CompilationUnit.AcceptVisitor (visitor);
+										skipBody = visitor.Throws;
+										if (skipBody)
+											break;
+									}
+								}
+								if (skipBody)
+									break;
+							}
+						}
+#endif
 					} catch (Exception) {
 					}
 					AppendIndent (result);

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Template Originator="Ben Cooley" Language="C#" Created="3/09/2001" LastModified="3/09/2013">
+<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
 	
 	<TemplateConfiguration>
 		<_Name>Empty PlayScript File</_Name>

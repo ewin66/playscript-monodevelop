@@ -2,15 +2,22 @@
 <Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
 	
 	<TemplateConfiguration>
-		<_Name>Empty ActionScript File</_Name>
-		<Icon>md-text-file-icon</Icon>
+		<_Name>Empty ActionScript Interface</_Name>
+		<Icon>md-interface-file</Icon>
 		<_Category>ActionScript</_Category>
 		<LanguageName>ActionScript</LanguageName>
-		<_Description>Creates an empty ActionScript file.</_Description>
+		<_Description>Creates an empty ActionScript interface file.</_Description>
 	</TemplateConfiguration>
 	
 	<TemplateFiles>
-		<File DefaultExtension=".as" DefaultName="EmptyFile" AddStandardHeader="True">
+		<File DefaultExtension=".as" DefaultName="MyClass" AddStandardHeader="True">
+<![CDATA[package ${Namespace}
+{
+	public interface ${Name}
+	{
+	
+	}
+}]]>		
 		</File>
 	</TemplateFiles>
 	

@@ -36,8 +36,10 @@
 
 	<Extension path = "/MonoDevelop/Ide/FileTemplates">
 		<FileTemplate id = "CSharpAssemblyInfo" resource = "AssemblyInfo.xft.xml"/>
-		<FileTemplate id = "PlayScriptEmptyFile" resource = "PsEmptyFile.xft.xml"/>
 		<FileTemplate id = "ActionScriptEmptyFile" resource = "AsEmptyFile.xft.xml"/>
+		<FileTemplate id = "ActionScriptEmptyClass" resource = "AsEmptyClass.xft.xml"/>
+		<FileTemplate id = "ActionScriptEmptyInterface" resource = "AsEmptyInterface.xft.xml"/>		
+		<FileTemplate id = "PlayScriptEmptyFile" resource = "PsEmptyFile.xft.xml"/>
 		<FileTemplate id = "PlayScriptEmptyClass" resource = "PsEmptyClass.xft.xml"/>
 		<FileTemplate id = "PlayScriptEmptyInterface" resource = "PsEmptyInterface.xft.xml"/>		
 	</Extension>
