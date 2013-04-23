@@ -19,7 +19,9 @@ mv ../PlayScriptBinding ../PlayScriptBinding_save
 cp -R ../CSharpBinding ../PlayScriptBinding/
 
 # Apply patch
-patch < PlayScriptBinding.patch
+pushd ../../../..
+patch -p0 < ./main/src/addins/PlayScriptPatches/PlayScriptPatches/PlayScriptBinding.patch
+popd
 
 # Restore project and plugin names
 mv ../PlayScriptBinding/CSharpBinding.csproj ../PlayScriptBinding/PlayScriptBinding.csproj
@@ -35,7 +37,9 @@ mv ../ICSharpCode.NRefactory.PlayScript ../ICSharpCode.NRefactory.PlayScript_sav
 cp -R ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp ../ICSharpCode.NRefactory.PlayScript/
 
 # Make patch of NRefactory.CSharp
-patch < ICSharpCode.NRefactory.PlayScript.patch
+pushd ../../../..
+patch -p0 < ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
+popd
 
 # Restore project names
 mv ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.CSharp.csproj ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj

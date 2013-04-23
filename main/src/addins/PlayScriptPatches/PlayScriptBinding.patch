@@ -1,6 +1,6 @@
-diff -rupN ../CSharpBinding/CSharpBinding.addin.xml ../PlayScriptBinding/CSharpBinding.addin.xml
---- ../CSharpBinding/CSharpBinding.addin.xml	2013-04-14 01:09:29.000000000 -0700
-+++ ../PlayScriptBinding/CSharpBinding.addin.xml	2013-04-22 22:02:58.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/CSharpBinding.addin.xml ./main/src/addins/PlayScriptBinding/CSharpBinding.addin.xml
+--- ./main/src/addins/CSharpBinding/CSharpBinding.addin.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/CSharpBinding.addin.xml	2013-04-22 23:29:06.000000000 -0700
 @@ -1,10 +1,10 @@
 -<Addin id          = "CSharpBinding"
 +<Addin id          = "PlayScriptBinding"
@@ -344,9 +344,9 @@ diff -rupN ../CSharpBinding/CSharpBinding.addin.xml ../PlayScriptBinding/CSharpB
 +	</Module -->
 +
  </Addin>
-diff -rupN ../CSharpBinding/CSharpBinding.csproj ../PlayScriptBinding/CSharpBinding.csproj
---- ../CSharpBinding/CSharpBinding.csproj	2013-04-14 01:06:24.000000000 -0700
-+++ ../PlayScriptBinding/CSharpBinding.csproj	2013-04-22 21:59:57.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/CSharpBinding.csproj ./main/src/addins/PlayScriptBinding/CSharpBinding.csproj
+--- ./main/src/addins/CSharpBinding/CSharpBinding.csproj	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/CSharpBinding.csproj	2013-04-22 23:29:06.000000000 -0700
 @@ -5,10 +5,10 @@
      <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
      <ProductVersion>9.0.21022</ProductVersion>
@@ -483,42 +483,9 @@ diff -rupN ../CSharpBinding/CSharpBinding.csproj ../PlayScriptBinding/CSharpBind
    </ItemGroup>
    <ItemGroup>
      <None Include="Makefile.am" />
-diff -rupN ../CSharpBinding/Makefile.in ../PlayScriptBinding/Makefile.in
---- ../CSharpBinding/Makefile.in	2013-03-29 16:30:06.000000000 -0700
-+++ ../PlayScriptBinding/Makefile.in	2013-04-20 20:00:51.000000000 -0700
-@@ -50,7 +50,7 @@ PRE_UNINSTALL = :
- POST_UNINSTALL = :
- DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
- 	$(top_srcdir)/xbuild.include ChangeLog
--subdir = src/addins/CSharpBinding
-+subdir = src/addins/PlayScriptBinding
- ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
- am__aclocal_m4_deps = $(top_srcdir)/configure.in
- am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
-@@ -291,7 +291,7 @@ TESTFILES = \
- TESTDLLS = \
- 	$(NUNIT_LIBS)
- 
--TESTASSEMBLY = $(top_builddir)/build/bin/CSharpBinding.Test.dll
-+TESTASSEMBLY = $(top_builddir)/build/bin/PlayScriptBinding.Test.dll
- CLEANFILES = $(PARSE) $(PARSE).mdb
- all: all-recursive
- 
-@@ -305,9 +305,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_
- 	      exit 1;; \
- 	  esac; \
- 	done; \
--	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/addins/CSharpBinding/Makefile'; \
-+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/addins/PlayScriptBinding/Makefile'; \
- 	$(am__cd) $(top_srcdir) && \
--	  $(AUTOMAKE) --foreign src/addins/CSharpBinding/Makefile
-+	  $(AUTOMAKE) --foreign src/addins/PlayScriptBinding/Makefile
- .PRECIOUS: Makefile
- Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
- 	@case '$?' in \
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs ../PlayScriptBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
---- ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs	2013-04-22 22:51:13.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs	2013-04-20 11:32:02.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs	2013-04-22 23:56:47.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs	2013-04-20 11:32:02.000000000 -0700
 @@ -40,43 +40,43 @@ using MonoDevelop.Projects;
  using MonoDevelop.Core;
  using MonoDevelop.Core.Instrumentation;
@@ -651,9 +618,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs ..
 -	}
 +
  }
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/AstAmbience.cs ../PlayScriptBinding/MonoDevelop.CSharp/AstAmbience.cs
---- ../CSharpBinding/MonoDevelop.CSharp/AstAmbience.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/AstAmbience.cs	2013-04-20 10:51:13.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/AstAmbience.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/AstAmbience.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/AstAmbience.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/AstAmbience.cs	2013-04-20 10:51:13.000000000 -0700
 @@ -24,19 +24,19 @@
  // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  // THE SOFTWARE.
@@ -677,9 +644,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/AstAmbience.cs ../PlayScriptBindi
  		{
  			this.options = options;
  		}
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/AstStockIcons.cs ../PlayScriptBinding/MonoDevelop.CSharp/AstStockIcons.cs
---- ../CSharpBinding/MonoDevelop.CSharp/AstStockIcons.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/AstStockIcons.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/AstStockIcons.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/AstStockIcons.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/AstStockIcons.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/AstStockIcons.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -28,9 +28,9 @@ using System;
  using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
@@ -692,9 +659,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/AstStockIcons.cs ../PlayScriptBin
  {
  	// Copied from StockIcons.cs and extended for the c# ast (c# AST shouldn't be in Ide)
  	public static class AstStockIcons
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpAmbience.cs ../PlayScriptBinding/MonoDevelop.CSharp/CSharpAmbience.cs
---- ../CSharpBinding/MonoDevelop.CSharp/CSharpAmbience.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/CSharpAmbience.cs	2013-04-20 15:20:20.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpAmbience.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpAmbience.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpAmbience.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpAmbience.cs	2013-04-20 15:20:20.000000000 -0700
 @@ -28,18 +28,18 @@ using System.Linq;
  using System.Collections.Generic;
  using System.Text;
@@ -783,9 +750,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpAmbience.cs ../PlayScriptBi
  //			if (policy.BeforeMethodCallParentheses)
  //				result.Append (settings.Markup (" "));
  				result.Append (settings.Markup ("("));
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs ../PlayScriptBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs
---- ../CSharpBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs	2013-04-14 01:11:14.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -35,13 +35,13 @@ using MonoDevelop.Projects;
  using MonoDevelop.Core;
  using MonoDevelop.Core.Execution;
@@ -802,9 +769,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpBindingCompilerManager.cs .
  {
  	static class CSharpBindingCompilerManager
  	{	
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -34,12 +34,12 @@ using System.IO;
  using System.CodeDom;
  using System.CodeDom.Compiler;
@@ -820,9 +787,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpEnhancedCodeProvider.cs ../
  {
  	[System.ComponentModel.DesignerCategory ("Code")]
  	public class CSharpEnhancedCodeProvider : CSharpCodeProvider
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../PlayScriptBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs
---- ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs	2013-04-14 01:36:42.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -40,12 +40,12 @@ using MonoDevelop.Projects;
  using MonoDevelop.Core;
  using MonoDevelop.Core.Instrumentation;
@@ -841,9 +808,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../PlayS
  {
  	public class CSharpLanguageBinding : IDotNetLanguageBinding
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs ../PlayScriptBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs
---- ../CSharpBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs	2013-04-20 10:54:14.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs	2013-04-20 10:54:14.000000000 -0700
 @@ -24,12 +24,12 @@
  // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  // THE SOFTWARE.
@@ -877,9 +844,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/ExpandSelectionHandler.cs ../Play
  			var unit = parser.Parse (doc.Editor);
  			if (unit == null)
  				return;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs ../PlayScriptBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs
---- ../CSharpBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -31,13 +31,13 @@ using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
  using MonoDevelop.Ide.Gui;
@@ -897,9 +864,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/PathedDocumentTextEditorExtension
  {
  	public class PathedDocumentTextEditorExtension : TextEditorExtension, IPathedDocument
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs ../PlayScriptBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
---- ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs	2013-04-22 22:51:13.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs	2013-04-20 11:31:58.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs	2013-04-22 23:56:47.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs	2013-04-20 11:31:58.000000000 -0700
 @@ -40,43 +40,43 @@ using MonoDevelop.Projects;
  using MonoDevelop.Core;
  using MonoDevelop.Core.Instrumentation;
@@ -1031,9 +998,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs ../P
 -		public static Counter ResolveTime = InstrumentationService.CreateCounter ("Resolve Time", "Timing");
 -	}
  }
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs ../PlayScriptBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs
---- ../CSharpBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -27,10 +27,10 @@ using System;
  using MonoDevelop.Ide.TypeSystem;
  using System.Text;
@@ -1057,9 +1024,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp/SignatureMarkupCreator.cs ../Play
  {
  	public class SignatureMarkupCreator
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAction.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -29,7 +29,7 @@ using System.Linq;
  using System.Text;
  using Gtk;
@@ -1069,9 +1036,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/AbstractGenerateAc
  using MonoDevelop.Refactoring;
  using MonoDevelop.Ide;
  using ICSharpCode.NRefactory.TypeSystem;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOptions.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -28,11 +28,11 @@ using MonoDevelop.Ide.Gui;
  using MonoDevelop.Refactoring;
  using MonoDevelop.Ide;
@@ -1105,9 +1072,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CodeGenerationOpti
  			return builder.ConvertType (fullType);
  		}
  		
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -26,7 +26,7 @@
  
  using Gtk;
@@ -1126,9 +1093,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/CreateConstructorG
  					Body = new BlockStatement ()
  				};
  				
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -26,7 +26,7 @@
  
  using Gtk;
@@ -1156,9 +1123,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/EqualityMembersGen
  				methodDeclaration.Body = new BlockStatement ();
  
  				binOp = null;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterfaceMembersGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -27,7 +27,7 @@ using Gtk;
  using System.Collections.Generic;
  using MonoDevelop.Core;
@@ -1177,9 +1144,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ImplementInterface
  						yield return t;
  					}
  				}
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -28,7 +28,7 @@ using Gtk;
  using System.Collections.Generic;
  using MonoDevelop.Core;
@@ -1189,9 +1156,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/OverrideMembersGen
  using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
  
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs	2013-03-14 23:28:11.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -26,7 +26,7 @@
  
  using System;
@@ -1201,9 +1168,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/PropertyGenerator.
  using MonoDevelop.Core;
  using MonoDevelop.Ide.Gui;
  using Gtk;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,7 +25,7 @@
  // THE SOFTWARE.
  using System;
@@ -1213,9 +1180,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/RaiseEventMethodGe
  using MonoDevelop.Core;
  using MonoDevelop.Ide.Gui;
  using Gtk;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,7 +25,7 @@
  // THE SOFTWARE.
  using System;
@@ -1225,9 +1192,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ReadonlyPropertyGe
  using MonoDevelop.Core;
  using MonoDevelop.Ide.Gui;
  using Gtk;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -29,7 +29,7 @@ using MonoDevelop.Components;
  using Gtk;
  using MonoDevelop.Ide.Gui;
@@ -1237,9 +1204,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/ToStringGenerator.
  using System.Text;
  using MonoDevelop.Core;
  using MonoDevelop.Refactoring;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -29,7 +29,7 @@ using MonoDevelop.Components;
  using Gtk;
  using MonoDevelop.Ide.Gui;
@@ -1249,9 +1216,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.CodeGeneration/WriteLineGenerator
  using System.Text;
  using MonoDevelop.Core;
  using MonoDevelop.Refactoring;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -33,12 +33,12 @@ using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
  using ICSharpCode.NRefactory.Completion;
@@ -1269,9 +1236,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/AbstractParameterDataP
  {
  	abstract class AbstractParameterDataProvider : ParameterDataProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,29 +25,29 @@
  // THE SOFTWARE.
  using System;
@@ -1310,9 +1277,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/ArrayTypeParameterData
  {
  	class ArrayTypeParameterDataProvider : AbstractParameterDataProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEditorExtension.cs	2013-04-20 12:51:09.000000000 -0700
 @@ -26,31 +26,31 @@
  
  using System;
@@ -1391,9 +1358,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/CSharpCompletionTextEd
  				return result;
  			}
  			
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -26,13 +26,13 @@
  using System;
  using ICSharpCode.NRefactory.TypeSystem;
@@ -1413,9 +1380,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/ConstructorParameterDa
  {
  	class ConstructorParameterDataProvider : MethodParameterDataProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -31,20 +31,20 @@ using System.Xml;
  using MonoDevelop.Core;
  using MonoDevelop.Ide.Gui;
@@ -1444,9 +1411,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/DelegateDataProvider.c
  {
  	class DelegateDataProvider : AbstractParameterDataProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/EventCreationCompletionData.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -30,13 +30,13 @@ using System.Linq;
  using MonoDevelop.Ide.CodeCompletion;
  using MonoDevelop.Ide.Gui;
@@ -1464,9 +1431,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/EventCreationCompletio
  {
  	public class EventCreationCompletionData : CompletionData
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -32,18 +32,18 @@ using System.Xml;
  
  using MonoDevelop.Ide.Gui;
@@ -1491,9 +1458,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/IndexerParameterDataPr
  {
  	class IndexerParameterDataProvider : AbstractParameterDataProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -34,19 +34,19 @@ using MonoDevelop.Ide.CodeCompletion;
  using MonoDevelop.Core;
  using MonoDevelop.Ide.Gui;
@@ -1552,9 +1519,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/MemberCompletionData.c
  		{
  			var tooltipInfo = new TooltipInformation ();
  			var resolver = file != null ? file.GetResolver (compilation, textEditorData.Caret.Location) : new CSharpResolver (compilation);
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/MethodParameterDataProvider.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -34,14 +34,14 @@ using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
  using ICSharpCode.NRefactory.Completion;
@@ -1584,9 +1551,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/MethodParameterDataPro
  		{
  			var tooltipInfo = new TooltipInformation ();
  			var resolver = file.GetResolver (compilation, textEditorData.Caret.Location);
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionData.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -31,12 +31,12 @@ using MonoDevelop.Ide.CodeCompletion;
  using MonoDevelop.Ide.Gui;
  using MonoDevelop.Ide.Gui.Content;
@@ -1602,9 +1569,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/NewOverrideCompletionD
  {
  	public class NewOverrideCompletionData : CompletionData
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -31,18 +31,18 @@ using System.Xml;
  using MonoDevelop.Core;
  using MonoDevelop.Ide.Gui;
@@ -1630,9 +1597,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/TemplateParameterDataP
  {
  	public class TemplateParameterDataProvider: IParameterDataProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs ../PlayScriptBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Completion/VariableCompletionData.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -29,7 +29,7 @@ using ICSharpCode.NRefactory.Completion;
  using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
@@ -1642,9 +1609,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Completion/VariableCompletionData
  {
  	public class VariableCompletionData : CompletionData, IVariableCompletionData
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs	2013-04-20 12:51:09.000000000 -0700
 @@ -28,20 +28,20 @@ using System.Collections.Generic;
  
  
@@ -1716,9 +1683,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormatter.cs ../
  			var textPolicy = policyParent.Get<TextStylePolicy> (mimeTypeChain);
  
  			return FormatText (policy, textPolicy, mimeTypeChain.First (), input, startOffset, endOffset);
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs	2013-03-14 23:28:11.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs	2013-04-20 12:52:00.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy.cs	2013-04-20 12:52:00.000000000 -0700
 @@ -1,5 +1,5 @@
  // 
 -// CSharpFormattingPolicy.cs
@@ -1825,9 +1792,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy
  				if (info.GetCustomAttributes (false).Any (o => o.GetType () == typeof(ItemPropertyAttribute))) {
  					object val = info.GetValue (this, null);
  					object otherVal = info.GetValue (other, null);
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanel.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -31,9 +31,9 @@ using System.Xml;
  using MonoDevelop.Ide.Gui.Dialogs;
  using System;
@@ -1855,9 +1822,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy
  		{
  			// return cloned policy
  			return panel.Policy;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicyPanelWidget.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -29,14 +29,14 @@ using MonoDevelop.Core;
  using MonoDevelop.Ide;
  using System.Collections.Generic;
@@ -1895,9 +1862,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingPolicy
  			buttonEdit.Clicked += HandleButtonEditClicked;
  			
  			var options = MonoDevelop.SourceEditor.DefaultSourceEditorOptions.Instance;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfileDialog.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -30,13 +30,13 @@ using MonoDevelop.Ide;
  using System.Reflection;
  using System.Collections.Generic;
@@ -1933,9 +1900,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProfil
  			if (info == null)
  				throw new Exception (name + " property not found");
  			return info;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs	2013-04-20 10:47:17.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProperties.cs	2013-04-20 10:47:17.000000000 -0700
 @@ -29,7 +29,7 @@ using System;
  
  using MonoDevelop.Core;
@@ -1945,9 +1912,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpFormattingProper
  {
  	public enum GotoLabelIndentStyle {
  		// Place goto labels in the leftmost column
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -31,10 +31,10 @@ using System.Text;
  
  using MonoDevelop.Ide.Gui.Content;
@@ -1976,9 +1943,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngine.cs 
  		{
  			if (policy == null)
  				throw new ArgumentNullException ("policy");
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStack.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -28,11 +28,11 @@
  using System;
  using System.Text;
@@ -1994,9 +1961,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentEngineStac
  {
  	public partial class CSharpIndentEngine : ICloneable {
  		public enum Inside {
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpaceManager.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -35,17 +35,17 @@ using MonoDevelop.Ide.Gui.Content;
  using MonoDevelop.Projects;
  using MonoDevelop.Ide.CodeCompletion;
@@ -2020,9 +1987,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpIndentVirtualSpa
  {
  	class IndentVirtualSpaceManager : Mono.TextEditor.IIndentationTracker
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndentation.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -33,15 +33,15 @@ using MonoDevelop.Ide.Gui.Content;
  using MonoDevelop.Projects;
  using MonoDevelop.Ide.CodeCompletion;
@@ -2058,9 +2025,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/CSharpTextEditorIndent
  			}
  		}
  
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/Indent.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/Indent.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/Indent.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/Indent.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/Indent.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/Indent.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/Indent.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/Indent.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -25,7 +25,7 @@
  // THE SOFTWARE.
  using System;
@@ -2070,9 +2037,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/Indent.cs ../PlayScrip
  {
  	public class Indent
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs	2013-04-20 12:45:54.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDialog.cs	2013-04-20 12:45:54.000000000 -0700
 @@ -27,7 +27,7 @@ using System;
  using System.Collections.Generic;
  using System.Linq;
@@ -2100,9 +2067,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/NewFormattingProfileDi
  		{
  			this.Build ();
  			this.policies = policies;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs	2013-04-20 12:51:09.000000000 -0700
 @@ -28,18 +28,18 @@ using MonoDevelop.Ide;
  using System;
  using System.Collections.Generic;
@@ -2147,9 +2114,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/OnTheFlyFormatter.cs .
  				
  				var formattingVisitor = new AstFormattingVisitor (policy.CreateOptions (), stubData.Document, document.Editor.CreateNRefactoryTextEditorOptions ()) {
  					HadErrors = hadErrors,
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
 @@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWAR
  THE SOFTWARE.
  -->
@@ -2167,9 +2134,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpP
 \ No newline at end of file
 +</PlayScriptFormattingPolicy>
 \ No newline at end of file
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml	2013-04-20 12:47:26.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml	2013-04-20 12:47:26.000000000 -0700
 @@ -27,7 +27,7 @@ THE SOFTWARE.
  -->
  
@@ -2187,9 +2154,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPoli
 \ No newline at end of file
 +</PlayScriptFormattingPolicy>
 \ No newline at end of file
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
 @@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWAR
  THE SOFTWARE.
  -->
@@ -2207,9 +2174,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolic
 \ No newline at end of file
 +</PlayScriptFormattingPolicy>
 \ No newline at end of file
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
 @@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWAR
  THE SOFTWARE.
  -->
@@ -2227,9 +2194,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPol
 \ No newline at end of file
 +</PlayScriptFormattingPolicy>
 \ No newline at end of file
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
 @@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWAR
  THE SOFTWARE.
  -->
@@ -2247,9 +2214,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopC
 \ No newline at end of file
 +</PlayScriptFormattingPolicy>
 \ No newline at end of file
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml
---- ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml	2013-04-20 12:51:09.000000000 -0700
 @@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWAR
  THE SOFTWARE.
  -->
@@ -2267,9 +2234,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCS
 \ No newline at end of file
 +</PlayScriptFormattingPolicy>
 \ No newline at end of file
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurroundingProvider.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -26,7 +26,7 @@
  using System;
  using Mono.TextEditor;
@@ -2279,9 +2246,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSelectionSurro
  {
  	public class CSharpSelectionSurroundingProvider : DefaultSelectionSurroundingProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs	2013-04-20 15:08:19.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs	2013-04-20 15:08:19.000000000 -0700
 @@ -33,25 +33,25 @@ using Mono.TextEditor.Highlighting;
  using Mono.TextEditor;
  using System.Xml;
@@ -2364,9 +2331,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/CSharpSyntaxMode.cs 
  				bool result;
  				if (expr != null && !expr.IsNull) {
  					var visitResult = expr.AcceptVisitor (new ConditinalExpressionEvaluator (doc, Defines), null);
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExtension.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -28,20 +28,20 @@ using MonoDevelop.Ide.Gui.Content;
  using Mono.TextEditor;
  using System.Collections.Generic;
@@ -2402,9 +2369,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/HighlightUsagesExten
  			if (resolveResult is MemberResolveResult) {
  				finder.SetSearchedMembers (new [] { ((MemberResolveResult)resolveResult).Member });
  			} else if (resolveResult is TypeResolveResult) {
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -30,7 +30,7 @@ using MonoDevelop.Ide;
  using MonoDevelop.Ide.Gui.Content;
  using Mono.TextEditor;
@@ -2414,9 +2381,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Highlighting/MoveToUsagesHandler.
  {
  	public enum MoveToUsagesCommand {
  		PrevUsage,
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs ../PlayScriptBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -28,9 +28,9 @@ using System.Collections.Generic;
  using MonoDevelop.Ide.TypeSystem;
  using ICSharpCode.NRefactory;
@@ -2429,9 +2396,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Parser/CSharpFoldingParser.cs ../
  {
  	public unsafe class CSharpFoldingParser : IFoldingParser
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs	2013-04-20 11:11:05.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs	2013-04-20 11:11:05.000000000 -0700
 @@ -25,24 +25,24 @@
  // THE SOFTWARE.
  using System;
@@ -2475,9 +2442,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Parser/TypeSystemProvider.cs ../P
  	///		compilerArguments.TabSize = 1;
  
  			if (project == null || MonoDevelop.Ide.IdeApp.Workspace == null) {
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs ../PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -32,7 +32,7 @@ using System.ComponentModel;
  using MonoDevelop.Projects;
  using MonoDevelop.Core.Serialization;
@@ -2487,9 +2454,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpCompilerParameters.
  {
  	public enum LangVersion {
  		Default = 0,
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs ../PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -28,7 +28,7 @@ using System;
  using MonoDevelop.Core.Serialization;
  using MonoDevelop.Projects;
@@ -2499,9 +2466,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpProjectParameters.c
  {
  	public class CSharpProjectParameters: ProjectParameters
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs ../PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -36,7 +36,7 @@ using System.Text;
  using MonoDevelop.Projects.Extensions;
  using MonoDevelop.Projects.Formats.MSBuild;
@@ -2511,9 +2478,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CSharpResourceIdBuilder.c
  {
  	class CSharpResourceIdBuilder : MSBuildResourceHandler
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs ../PlayScriptBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs	2013-03-14 23:27:13.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -31,7 +31,7 @@ using MonoDevelop.Projects;
  using Gtk;
  using MonoDevelop.Ide.Gui.Dialogs;
@@ -2523,9 +2490,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CodeGenerationPanel.cs ..
  {
  	partial class CodeGenerationPanelWidget : Gtk.Bin 
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs ../PlayScriptBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -38,7 +38,7 @@ using MonoDevelop.Ide;
  using ICSharpCode.NRefactory.TypeSystem;
  using MonoDevelop.Ide.TypeSystem;
@@ -2535,9 +2502,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Project/CompilerOptionsPanelWidge
  {
  	
  	public partial class CompilerOptionsPanelWidget : Gtk.Bin
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs	2013-04-22 14:54:48.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.cs	2013-04-22 14:54:48.000000000 -0700
 @@ -24,18 +24,18 @@
  // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  // THE SOFTWARE.
@@ -2691,9 +2658,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpCodeGenerator.c
  			return builder.ConvertType (fullType);			
  		}
  		
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs	2013-04-20 10:57:34.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder.cs	2013-04-20 10:57:34.000000000 -0700
 @@ -29,25 +29,25 @@ using System.Collections.Generic;
  
  using MonoDevelop.Core;
@@ -2735,9 +2702,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring/CSharpReferenceFinder
  					if (unit == null)
  						continue;
  					
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,11 +25,11 @@
  // THE SOFTWARE.
  using System;
@@ -2764,9 +2731,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring/HelperMethods.cs ../P
  				TabsToSpaces = doc.TabsToSpaces,
  				TabSize = doc.Options.TabSize,
  				IndentSize = doc.Options.IndentationSize,
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/MoveTypeToFile.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -24,7 +24,7 @@
  // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  // THE SOFTWARE.
@@ -2785,9 +2752,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/Actions/M
  {
  	public class MoveTypeToFile : MonoDevelop.CodeActions.CodeActionProvider
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextActionExtensions.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,11 +25,11 @@
  // THE SOFTWARE.
  using System;
@@ -2813,9 +2780,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/ContextAc
  		}
  	}
  }
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringContext.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,28 +25,28 @@
  // THE SOFTWARE.
  
@@ -2861,9 +2828,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefacto
  			get {
  				return Document.Editor.CreateNRefactoryTextEditorOptions ();
  			}
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefactoringScript.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,22 +25,22 @@
  // THE SOFTWARE.
  using System;
@@ -2892,9 +2859,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/MDRefacto
  {
  	public class MDRefactoringScript : DocumentScript
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeAction.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -26,20 +26,20 @@
  
  using System;
@@ -2921,9 +2888,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactor
  		{
  			this.IdString = id;
  			this.Title = title;
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs	2013-04-20 11:37:22.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionProvider.cs	2013-04-20 11:37:22.000000000 -0700
 @@ -26,15 +26,15 @@
  
  using System;
@@ -2952,9 +2919,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactor
  			BoundToIssue = attr.BoundToIssue;
  		}
  
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactoryCodeActionSource.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -27,20 +27,20 @@ using System;
  using MonoDevelop.CodeActions;
  using System.Collections.Generic;
@@ -2981,9 +2948,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeActions/NRefactor
  			}
  		}
  		#endregion
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryCodeIssueSource.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -27,20 +27,20 @@ using System;
  using MonoDevelop.CodeIssues;
  using System.Collections.Generic;
@@ -3010,9 +2977,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactory
  			}
  		}
  		#endregion
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs	2013-04-20 11:37:03.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactoryIssueProvider.cs	2013-04-20 11:37:03.000000000 -0700
 @@ -27,18 +27,18 @@
  using System;
  using System.Linq;
@@ -3057,9 +3024,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NRefactory
  		}
  
  		public override IEnumerable<CodeIssue> GetIssues (Document document, object ctx, CancellationToken cancellationToken)
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionEditRuleDialog.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -24,14 +24,14 @@
  // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  // THE SOFTWARE.
@@ -3078,9 +3045,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInsp
  {
  	public partial class NameConventionEditRuleDialog : Gtk.Dialog
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanel.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -28,7 +28,7 @@ using MonoDevelop.Ide.Gui.Dialogs;
  using Gtk;
  using MonoDevelop.Core;
@@ -3090,9 +3057,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInsp
  {
  	class NameConventionPanel : PolicyOptionsPanel<NameConventionPolicy>
  	{
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPanelWidget.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -25,12 +25,12 @@
  // THE SOFTWARE.
  using System;
@@ -3108,9 +3075,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInsp
  {
  	[System.ComponentModel.ToolboxItem(true)]
  	partial class NameConventionPanelWidget : Gtk.Bin
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionPolicy.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -28,10 +28,10 @@ using System.Linq;
  using System.Collections.Generic;
  using MonoDevelop.Projects.Policies;
@@ -3157,9 +3124,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInsp
  		{
  			return new NamingConventionService (this);
  		}
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/NameConventionRule.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -28,12 +28,12 @@ using System.Text;
  using MonoDevelop.Projects.Policies;
  using MonoDevelop.Core.Serialization;
@@ -3241,9 +3208,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInsp
  		{
  			return wrappedRule;
  		}
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs ../PlayScriptBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs	2013-04-20 12:51:09.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs	2013-04-20 12:51:09.000000000 -0700
 @@ -40,16 +40,16 @@ using MonoDevelop.Ide.Gui.Content;
  using MonoDevelop.Ide.CodeTemplates;
  using MonoDevelop.Ide.CodeCompletion;
@@ -3311,9 +3278,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Resolver/HelperMethods.cs ../Play
  			return codePolicy.CreateOptions ();
  		}
  		
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -30,20 +30,20 @@ using Mono.TextEditor;
  using System.Text;
  using MonoDevelop.Ide.Gui;
@@ -3352,9 +3319,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Resolver/TextEditorResolverProvid
  		}
  
  		public string CreateTooltip (MonoDevelop.Ide.Gui.Document doc, int offset, ResolveResult result, string errorInformations, Gdk.ModifierType modifierState)
-diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs ../PlayScriptBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs
---- ../CSharpBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs	2013-03-14 23:31:54.000000000 -0700
-+++ ../PlayScriptBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs	2013-04-20 10:51:08.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs
+--- ./main/src/addins/CSharpBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvider.cs	2013-04-20 10:51:08.000000000 -0700
 @@ -29,20 +29,20 @@ using Mono.TextEditor;
  using MonoDevelop.Ide.TypeSystem;
  using ICSharpCode.NRefactory.Semantics;
@@ -3391,9 +3358,9 @@ diff -rupN ../CSharpBinding/MonoDevelop.CSharp.Tooltips/LanguageItemTooltipProvi
  			{
  				this.Unit = unit;
  				this.Result = result;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3416,9 +3383,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormatti
  			this.vbox1 = new global::Gtk.VBox ();
  			this.vbox1.Name = "vbox1";
  			this.vbox1.Spacing = 6;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3451,9 +3418,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.CSharpFormatti
  			global::Gtk.HButtonBox w39 = this.ActionArea;
  			w39.Name = "dialog1_ActionArea";
  			w39.Spacing = 10;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3487,9 +3454,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Formatting.NewFormattingP
  			global::Gtk.HButtonBox w7 = this.ActionArea;
  			w7.Name = "dialog1_ActionArea";
  			w7.Spacing = 10;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs	2013-03-14 23:27:13.000000000 -0700
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3512,9 +3479,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CodeGenerationPan
  			this.vbox62 = new global::Gtk.VBox ();
  			this.vbox62.Name = "vbox62";
  			this.vbox62.Spacing = 12;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs	2012-11-19 22:23:17.000000000 -0800
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3537,9 +3504,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Project.CompilerOptionsPa
  			this.vbox1 = new global::Gtk.VBox ();
  			this.vbox1.Name = "vbox1";
  			this.vbox1.Spacing = 6;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3579,9 +3546,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.Na
  			global::Gtk.HButtonBox w33 = this.ActionArea;
  			w33.Name = "dialog1_ActionArea";
  			w33.Spacing = 10;
-diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs
---- ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs
+--- ./main/src/addins/CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs	2013-04-20 10:47:18.000000000 -0700
 @@ -1,6 +1,6 @@
  
  // This file has been generated by the GUI designer. Do not modify.
@@ -3604,10 +3571,9 @@ diff -rupN ../CSharpBinding/gtk-gui/MonoDevelop.CSharp.Refactoring.CodeIssues.Na
  			this.hbox3 = new global::Gtk.HBox ();
  			this.hbox3.Name = "hbox3";
  			this.hbox3.Spacing = 6;
-Binary files ../CSharpBinding/icons/playscript-project-16.png and ../PlayScriptBinding/icons/playscript-project-16.png differ
-diff -rupN ../CSharpBinding/templates/AsConsoleProject.xpt.xml ../PlayScriptBinding/templates/AsConsoleProject.xpt.xml
---- ../CSharpBinding/templates/AsConsoleProject.xpt.xml	2013-04-04 17:36:12.000000000 -0700
-+++ ../PlayScriptBinding/templates/AsConsoleProject.xpt.xml	2013-04-14 02:26:32.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/AsConsoleProject.xpt.xml ./main/src/addins/PlayScriptBinding/templates/AsConsoleProject.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/AsConsoleProject.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/AsConsoleProject.xpt.xml	2013-04-14 02:26:32.000000000 -0700
 @@ -7,8 +7,8 @@
  	<TemplateConfiguration>
  		<_Name>ActionScript Console Project</_Name>
@@ -3641,9 +3607,9 @@ diff -rupN ../CSharpBinding/templates/AsConsoleProject.xpt.xml ../PlayScriptBind
  			<FileTemplateReference TemplateID="CSharpAssemblyInfo" name="AssemblyInfo.cs" />
  			</Files>
  		</Project>
-diff -rupN ../CSharpBinding/templates/AsEmptyClass.xft.xml ../PlayScriptBinding/templates/AsEmptyClass.xft.xml
---- ../CSharpBinding/templates/AsEmptyClass.xft.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/AsEmptyClass.xft.xml	2013-04-22 22:01:30.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/AsEmptyClass.xft.xml ./main/src/addins/PlayScriptBinding/templates/AsEmptyClass.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/AsEmptyClass.xft.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/AsEmptyClass.xft.xml	2013-04-22 22:01:30.000000000 -0700
 @@ -0,0 +1,26 @@
 +<?xml version="1.0"?>
 +<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
@@ -3671,9 +3637,9 @@ diff -rupN ../CSharpBinding/templates/AsEmptyClass.xft.xml ../PlayScriptBinding/
 +	<FileOptions/>
 +	
 +</Template>
-diff -rupN ../CSharpBinding/templates/AsEmptyFile.xft.xml ../PlayScriptBinding/templates/AsEmptyFile.xft.xml
---- ../CSharpBinding/templates/AsEmptyFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/AsEmptyFile.xft.xml	2013-04-22 22:03:38.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/AsEmptyFile.xft.xml ./main/src/addins/PlayScriptBinding/templates/AsEmptyFile.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/AsEmptyFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/AsEmptyFile.xft.xml	2013-04-22 22:03:38.000000000 -0700
 @@ -0,0 +1,19 @@
 +<?xml version="1.0"?>
 +<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
@@ -3694,9 +3660,9 @@ diff -rupN ../CSharpBinding/templates/AsEmptyFile.xft.xml ../PlayScriptBinding/t
 +	<FileOptions/>
 +	
 +</Template>
-diff -rupN ../CSharpBinding/templates/AsEmptyInterface.xft.xml ../PlayScriptBinding/templates/AsEmptyInterface.xft.xml
---- ../CSharpBinding/templates/AsEmptyInterface.xft.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/AsEmptyInterface.xft.xml	2013-04-22 22:00:49.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/AsEmptyInterface.xft.xml ./main/src/addins/PlayScriptBinding/templates/AsEmptyInterface.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/AsEmptyInterface.xft.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/AsEmptyInterface.xft.xml	2013-04-22 22:00:49.000000000 -0700
 @@ -0,0 +1,26 @@
 +<?xml version="1.0"?>
 +<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
@@ -3724,9 +3690,9 @@ diff -rupN ../CSharpBinding/templates/AsEmptyInterface.xft.xml ../PlayScriptBind
 +	<FileOptions/>
 +	
 +</Template>
-diff -rupN ../CSharpBinding/templates/ConsoleProject.xpt.xml ../PlayScriptBinding/templates/ConsoleProject.xpt.xml
---- ../CSharpBinding/templates/ConsoleProject.xpt.xml	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/templates/ConsoleProject.xpt.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/ConsoleProject.xpt.xml ./main/src/addins/PlayScriptBinding/templates/ConsoleProject.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/ConsoleProject.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/ConsoleProject.xpt.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,48 +0,0 @@
 -<?xml version="1.0"?>
 -<Template originator   = "Mike Krueger"
@@ -3776,9 +3742,9 @@ diff -rupN ../CSharpBinding/templates/ConsoleProject.xpt.xml ../PlayScriptBindin
 -		</Project>
 -	</Combine>
 -</Template>
-diff -rupN ../CSharpBinding/templates/EmptyActionScriptFile.xft.xml ../PlayScriptBinding/templates/EmptyActionScriptFile.xft.xml
---- ../CSharpBinding/templates/EmptyActionScriptFile.xft.xml	2013-04-04 16:46:44.000000000 -0700
-+++ ../PlayScriptBinding/templates/EmptyActionScriptFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/EmptyActionScriptFile.xft.xml ./main/src/addins/PlayScriptBinding/templates/EmptyActionScriptFile.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/EmptyActionScriptFile.xft.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/EmptyActionScriptFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,19 +0,0 @@
 -<?xml version="1.0"?>
 -<Template Originator="Ben Cooley" Language="C#" Created="3/09/2001" LastModified="3/09/2013">
@@ -3799,9 +3765,9 @@ diff -rupN ../CSharpBinding/templates/EmptyActionScriptFile.xft.xml ../PlayScrip
 -	<FileOptions/>
 -	
 -</Template>
-diff -rupN ../CSharpBinding/templates/EmptyCSharpFile.xft.xml ../PlayScriptBinding/templates/EmptyCSharpFile.xft.xml
---- ../CSharpBinding/templates/EmptyCSharpFile.xft.xml	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/templates/EmptyCSharpFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/EmptyCSharpFile.xft.xml ./main/src/addins/PlayScriptBinding/templates/EmptyCSharpFile.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/EmptyCSharpFile.xft.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/EmptyCSharpFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,19 +0,0 @@
 -<?xml version="1.0"?>
 -<Template Originator="Mike Krueger" Language="C#" Created="3/09/2001" LastModified="3/09/2001">
@@ -3822,9 +3788,9 @@ diff -rupN ../CSharpBinding/templates/EmptyCSharpFile.xft.xml ../PlayScriptBindi
 -	<FileOptions/>
 -	
 -</Template>
-diff -rupN ../CSharpBinding/templates/EmptyPlayScriptFile.xft.xml ../PlayScriptBinding/templates/EmptyPlayScriptFile.xft.xml
---- ../CSharpBinding/templates/EmptyPlayScriptFile.xft.xml	2013-04-04 16:46:47.000000000 -0700
-+++ ../PlayScriptBinding/templates/EmptyPlayScriptFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/EmptyPlayScriptFile.xft.xml ./main/src/addins/PlayScriptBinding/templates/EmptyPlayScriptFile.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/EmptyPlayScriptFile.xft.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/EmptyPlayScriptFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,19 +0,0 @@
 -<?xml version="1.0"?>
 -<Template Originator="Ben Cooley" Language="C#" Created="3/09/2001" LastModified="3/09/2013">
@@ -3845,9 +3811,9 @@ diff -rupN ../CSharpBinding/templates/EmptyPlayScriptFile.xft.xml ../PlayScriptB
 -	<FileOptions/>
 -	
 -</Template>
-diff -rupN ../CSharpBinding/templates/EmptyProject.xpt.xml ../PlayScriptBinding/templates/EmptyProject.xpt.xml
---- ../CSharpBinding/templates/EmptyProject.xpt.xml	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/templates/EmptyProject.xpt.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/EmptyProject.xpt.xml ./main/src/addins/PlayScriptBinding/templates/EmptyProject.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/EmptyProject.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/EmptyProject.xpt.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,18 +0,0 @@
 -<?xml version="1.0"?>
 -<Template originator   = "Mike Krueger"
@@ -3867,9 +3833,9 @@ diff -rupN ../CSharpBinding/templates/EmptyProject.xpt.xml ../PlayScriptBinding/
 -		<Project name = "${ProjectName}" directory = "."/>
 -	</Combine>
 -</Template>
-diff -rupN ../CSharpBinding/templates/GtkSharp2Project.xpt.xml ../PlayScriptBinding/templates/GtkSharp2Project.xpt.xml
---- ../CSharpBinding/templates/GtkSharp2Project.xpt.xml	2013-03-14 23:31:22.000000000 -0700
-+++ ../PlayScriptBinding/templates/GtkSharp2Project.xpt.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/GtkSharp2Project.xpt.xml ./main/src/addins/PlayScriptBinding/templates/GtkSharp2Project.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/GtkSharp2Project.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/GtkSharp2Project.xpt.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,102 +0,0 @@
 -<?xml version="1.0"?>
 -<Template originator   = "Ben Motmans"
@@ -3973,9 +3939,9 @@ diff -rupN ../CSharpBinding/templates/GtkSharp2Project.xpt.xml ../PlayScriptBind
 -		</Project>
 -	</Combine>
 -</Template>
-diff -rupN ../CSharpBinding/templates/Library.xpt.xml ../PlayScriptBinding/templates/Library.xpt.xml
---- ../CSharpBinding/templates/Library.xpt.xml	2012-09-28 16:27:12.000000000 -0700
-+++ ../PlayScriptBinding/templates/Library.xpt.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/Library.xpt.xml ./main/src/addins/PlayScriptBinding/templates/Library.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/Library.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/Library.xpt.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,37 +0,0 @@
 -<?xml version="1.0"?>
 -<Template originator   = "Mike Krueger"
@@ -4014,9 +3980,9 @@ diff -rupN ../CSharpBinding/templates/Library.xpt.xml ../PlayScriptBinding/templ
 -		</Project>
 -	</Combine>
 -</Template>
-diff -rupN ../CSharpBinding/templates/PortableLibrary.xpt.xml ../PlayScriptBinding/templates/PortableLibrary.xpt.xml
---- ../CSharpBinding/templates/PortableLibrary.xpt.xml	2013-04-14 02:16:35.000000000 -0700
-+++ ../PlayScriptBinding/templates/PortableLibrary.xpt.xml	1969-12-31 16:00:00.000000000 -0800
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PortableLibrary.xpt.xml ./main/src/addins/PlayScriptBinding/templates/PortableLibrary.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/PortableLibrary.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/PortableLibrary.xpt.xml	1969-12-31 16:00:00.000000000 -0800
 @@ -1,39 +0,0 @@
 -<?xml version="1.0"?>
 -<Template originator   = "Jeffrey Stedfast"
@@ -4057,9 +4023,9 @@ diff -rupN ../CSharpBinding/templates/PortableLibrary.xpt.xml ../PlayScriptBindi
 -		</Project>
 -	</Combine>
 -</Template>
-diff -rupN ../CSharpBinding/templates/PsConsoleProject.xpt.xml ../PlayScriptBinding/templates/PsConsoleProject.xpt.xml
---- ../CSharpBinding/templates/PsConsoleProject.xpt.xml	2013-04-04 17:37:09.000000000 -0700
-+++ ../PlayScriptBinding/templates/PsConsoleProject.xpt.xml	2013-04-14 02:26:16.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PsConsoleProject.xpt.xml ./main/src/addins/PlayScriptBinding/templates/PsConsoleProject.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/PsConsoleProject.xpt.xml	2013-04-22 23:50:43.000000000 -0700
++++ ./main/src/addins/PlayScriptBinding/templates/PsConsoleProject.xpt.xml	2013-04-14 02:26:16.000000000 -0700
 @@ -7,8 +7,8 @@
  	<TemplateConfiguration>
  		<_Name>PlayScript Console Project</_Name>
@@ -4093,9 +4059,9 @@ diff -rupN ../CSharpBinding/templates/PsConsoleProject.xpt.xml ../PlayScriptBind
  			<FileTemplateReference TemplateID="CSharpAssemblyInfo" name="AssemblyInfo.cs" />
  			</Files>
  		</Project>
-diff -rupN ../CSharpBinding/templates/PsEmptyClass.xft.xml ../PlayScriptBinding/templates/PsEmptyClass.xft.xml
---- ../CSharpBinding/templates/PsEmptyClass.xft.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/PsEmptyClass.xft.xml	2013-04-22 22:04:19.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PsEmptyClass.xft.xml ./main/src/addins/PlayScriptBinding/templates/PsEmptyClass.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/PsEmptyClass.xft.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/PsEmptyClass.xft.xml	2013-04-22 22:04:19.000000000 -0700
 @@ -0,0 +1,26 @@
 +<?xml version="1.0"?>
 +<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
@@ -4123,9 +4089,9 @@ diff -rupN ../CSharpBinding/templates/PsEmptyClass.xft.xml ../PlayScriptBinding/
 +	<FileOptions/>
 +	
 +</Template>
-diff -rupN ../CSharpBinding/templates/PsEmptyFile.xft.xml ../PlayScriptBinding/templates/PsEmptyFile.xft.xml
---- ../CSharpBinding/templates/PsEmptyFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/PsEmptyFile.xft.xml	2013-04-22 22:04:15.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PsEmptyFile.xft.xml ./main/src/addins/PlayScriptBinding/templates/PsEmptyFile.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/PsEmptyFile.xft.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/PsEmptyFile.xft.xml	2013-04-22 22:04:15.000000000 -0700
 @@ -0,0 +1,19 @@
 +<?xml version="1.0"?>
 +<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
@@ -4146,9 +4112,9 @@ diff -rupN ../CSharpBinding/templates/PsEmptyFile.xft.xml ../PlayScriptBinding/t
 +	<FileOptions/>
 +	
 +</Template>
-diff -rupN ../CSharpBinding/templates/PsEmptyInterface.xft.xml ../PlayScriptBinding/templates/PsEmptyInterface.xft.xml
---- ../CSharpBinding/templates/PsEmptyInterface.xft.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/PsEmptyInterface.xft.xml	2013-04-22 22:01:44.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PsEmptyInterface.xft.xml ./main/src/addins/PlayScriptBinding/templates/PsEmptyInterface.xft.xml
+--- ./main/src/addins/CSharpBinding/templates/PsEmptyInterface.xft.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/PsEmptyInterface.xft.xml	2013-04-22 22:01:44.000000000 -0700
 @@ -0,0 +1,26 @@
 +<?xml version="1.0"?>
 +<Template Originator="Ben Cooley" Language="PlayScript" Created="3/09/2001" LastModified="3/09/2013">
@@ -4176,9 +4142,9 @@ diff -rupN ../CSharpBinding/templates/PsEmptyInterface.xft.xml ../PlayScriptBind
 +	<FileOptions/>
 +	
 +</Template>
-diff -rupN ../CSharpBinding/templates/PsEmptyProject.xpt.xml ../PlayScriptBinding/templates/PsEmptyProject.xpt.xml
---- ../CSharpBinding/templates/PsEmptyProject.xpt.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/PsEmptyProject.xpt.xml	2013-04-13 19:39:43.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PsEmptyProject.xpt.xml ./main/src/addins/PlayScriptBinding/templates/PsEmptyProject.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/PsEmptyProject.xpt.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/PsEmptyProject.xpt.xml	2013-04-13 19:39:43.000000000 -0700
 @@ -0,0 +1,18 @@
 +<?xml version="1.0"?>
 +<Template originator   = "Mike Krueger"
@@ -4198,9 +4164,9 @@ diff -rupN ../CSharpBinding/templates/PsEmptyProject.xpt.xml ../PlayScriptBindin
 +		<Project name = "${ProjectName}" directory = "."/>
 +	</Combine>
 +</Template>
-diff -rupN ../CSharpBinding/templates/PsLibrary.xpt.xml ../PlayScriptBinding/templates/PsLibrary.xpt.xml
---- ../CSharpBinding/templates/PsLibrary.xpt.xml	1969-12-31 16:00:00.000000000 -0800
-+++ ../PlayScriptBinding/templates/PsLibrary.xpt.xml	2013-04-13 19:41:37.000000000 -0700
+diff -rupN -x .DS_Store -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/templates/PsLibrary.xpt.xml ./main/src/addins/PlayScriptBinding/templates/PsLibrary.xpt.xml
+--- ./main/src/addins/CSharpBinding/templates/PsLibrary.xpt.xml	1969-12-31 16:00:00.000000000 -0800
++++ ./main/src/addins/PlayScriptBinding/templates/PsLibrary.xpt.xml	2013-04-13 19:41:37.000000000 -0700
 @@ -0,0 +1,37 @@
 +<?xml version="1.0"?>
 +<Template originator   = "Mike Krueger"

@@ -5,7 +5,6 @@ echo "Creating patch files PlayScriptBinding.patch and ICSharpCode.NRefactory.Pl
 rm PlayScriptBinding.patch
 rm ICSharpCode.NRefactory.PlayScript.patch
 
-rm ../CSharpBinding/.DS_Store
 rm -rf ../CSharpBinding/obj
 rm -rf ../CSharpBinding/Makefile
 rm -rf ../CSharpBinding/AspNet/obj
@@ -13,7 +12,6 @@ rm -rf ../CSharpBinding/AspNet/Makefile
 rm -rf ../CSharpBinding/Autotools/obj
 rm -rf ../CSharpBinding/Autotools/Makefile
 
-rm ../PlayScriptBinding/.DS_Store
 rm -rf ../PlayScriptBinding/obj
 rm -rf ../PlayScriptBinding/Makefile
 rm -rf ../PlayScriptBinding/AspNet/obj
@@ -30,7 +28,9 @@ cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding
 cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 
 # Generate patch
-diff -rupN ../CSharpBinding/ ../PlayScriptBinding/ > PlayScriptBinding.patch
+pushd ../../../..
+diff -rupN -x '.DS_Store' -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/ ./main/src/addins/PlayScriptBinding/ > ./main/src/addins/PlayScriptPatches/PlayScriptBinding.patch
+popd
 
 # Restore project and plugin names
 mv ../PlayScriptBinding/CSharpBinding.csproj ../PlayScriptBinding/PlayScriptBinding.csproj
@@ -46,7 +46,9 @@ rm ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 mv ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.CSharp.csproj
 
 # Make patch of NRefactory.CSharp
-diff -rupN ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/ ../ICSharpCode.NRefactory.PlayScript/ > ICSharpCode.NRefactory.PlayScript.patch
+pushd ../../../..
+diff -rupN -x '.DS_Store' -x '*.snk' ./main/external/nrefactory/ICSharpCode.NRefactory.CSharp/ ./main/src/addins/ICSharpCode.NRefactory.PlayScript/ > ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
+popd
 
 # Restore project names
 mv ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.CSharp.csproj ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj
