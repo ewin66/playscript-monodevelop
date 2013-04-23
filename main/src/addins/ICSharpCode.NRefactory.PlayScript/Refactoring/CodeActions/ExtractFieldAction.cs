@@ -29,6 +29,7 @@ using System.Linq;
 using ICSharpCode.NRefactory.PatternMatching;
 using Mono.CSharpPs;
 
+
 namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 {
 	[ContextAction("Extract field", Description = "Extracts a field from a local variable declaration.")]

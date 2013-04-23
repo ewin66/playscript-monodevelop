@@ -28,6 +28,7 @@ cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding
 cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 
 # Generate patch
+find ../PlaySCriptBinding -exec touch {} \;
 pushd ../../../..
 diff -rupN -x '.DS_Store' -x '*.png' -x '*.FileIcon' -x '*.in' ./main/src/addins/CSharpBinding/ ./main/src/addins/PlayScriptBinding/ > ./main/src/addins/PlayScriptPatches/PlayScriptBinding.patch
 popd
@@ -46,6 +47,7 @@ rm ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 mv ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj ../ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.CSharp.csproj
 
 # Make patch of NRefactory.CSharp
+find ../ICSharpCode.NRefactory.PlayScript -exec touch {} \;
 pushd ../../../..
 diff -rupN -x '.DS_Store' -x '*.snk' ./main/external/nrefactory/ICSharpCode.NRefactory.CSharp/ ./main/src/addins/ICSharpCode.NRefactory.PlayScript/ > ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
 popd

@@ -20,8 +20,13 @@ cp -R ../CSharpBinding ../PlayScriptBinding/
 
 # Apply patch
 pushd ../../../..
-patch -p0 --merge < ./main/src/addins/PlayScriptPatches/PlayScriptBinding.patch
+patch -p0 -u < ./main/src/addins/PlayScriptPatches/PlayScriptBinding.patch
 popd
+
+# For some reason this patch is always applied reverse, just swap the folders.
+mv ../CSharpBinding ../CSharpBinding_xxx
+mv ../PlayScriptBinding ../CSharpBinding
+mv ../CSharpBinding_xxx ../PlayScriptBinding
 
 # Restore project and plugin names
 mv ../PlayScriptBinding/CSharpBinding.csproj ../PlayScriptBinding/PlayScriptBinding.csproj
@@ -36,12 +41,15 @@ git checkout ../PlayScriptBinding/icons
 
 # ------------  NRefactory --------------
 
+rm -rf ../CSharpBinding/Autotools/Makefile
+rm -rf ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp/obj
+
 mv ../ICSharpCode.NRefactory.PlayScript ../ICSharpCode.NRefactory.PlayScript_save
 cp -R ../../../external/nrefactory/ICSharpCode.NRefactory.CSharp ../ICSharpCode.NRefactory.PlayScript/
 
 # Make patch of NRefactory.CSharp
 pushd ../../../..
-patch -p0 --merge < ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
+patch -p0 -u < ./main/src/addins/PlayScriptPatches/ICSharpCode.NRefactory.PlayScript.patch
 popd
 
 # Restore project names
