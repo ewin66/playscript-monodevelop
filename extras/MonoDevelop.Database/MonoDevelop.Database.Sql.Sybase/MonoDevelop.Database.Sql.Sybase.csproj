@@ -62,7 +62,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <Deployment.LinuxDeployData generatePcFile="false" />
+        <Deployment.LinuxDeployData generatePcFile="False" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
