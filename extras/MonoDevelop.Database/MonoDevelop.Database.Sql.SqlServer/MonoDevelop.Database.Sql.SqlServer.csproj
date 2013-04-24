@@ -77,9 +77,9 @@
     <Reference Include="MonoDevelop.Ide, Version=2.2.0.0, Culture=neutral" />
     <Reference Include="NRefactory, Version=2.1.1.0, Culture=neutral, PublicKeyToken=efe927acf176eea2" />
     <Reference Include="Mono.Cecil, Version=0.6.9.0, Culture=neutral" />
-    <Reference Include="Mono.Debugger.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <Reference Include="Mono.Debugging.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f" />
     <Reference Include="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f" />
+    <Reference Include="Mono.Debugger.Soft" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoDevelop.Database.Sql\MonoDevelop.Database.Sql.csproj">

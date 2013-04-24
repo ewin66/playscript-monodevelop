@@ -58,5 +58,6 @@
     <ProjectReference type="Package" localcopy="True" refto="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f" />
     <ProjectReference type="Package" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="../build/MonoDevelop.Profiling.dll" />
   </References>
 </Project>

@@ -66,7 +66,7 @@
     <Reference Include="MonoDevelop.Debugger.Soft, Version=2.2.0.0, Culture=neutral" />
     <Reference Include="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f" />
     <Reference Include="Mono.Debugging.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f" />
-    <Reference Include="Mono.Debugger.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <Reference Include="Mono.Debugger.Soft" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
