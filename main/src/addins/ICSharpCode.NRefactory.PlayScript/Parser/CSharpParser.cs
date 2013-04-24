@@ -3903,6 +3903,8 @@ namespace ICSharpCode.NRefactory.PlayScript
 				var report = new Report (ctx, errorReportPrinter);
 				CompilerCompilationUnit top;
 				if (String.IsNullOrEmpty(fileName) || fileName.EndsWith(".play") || fileName.EndsWith(".as")) {
+					if (String.IsNullOrEmpty(fileName) || fileName.EndsWith(".play"))
+						file.PsExtended = true; // Assume playscript unless we have an actual file ext.
 					var parser = (Mono.PlayScript.PlayScriptParser)Driver.Parse(reader, file, module, session, report, initialLine - 1, initialColumn - 1);
 					top = new CompilerCompilationUnit() {
 						ModuleCompiled = module,
@@ -4031,6 +4033,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				ParserSession session = new ParserSession ();
 				session.LocationsBag = new LocationsBag ();
 				var parser = new Mono.PlayScript.PlayScriptParser (reader, source_file, report, session);
+				parser.parsing_playscript = (source_file.SourceFile != null) ? source_file.SourceFile.PsExtended : true;
 				parser.Lexer.Line += initialLocation.Line - 1;
 				parser.Lexer.Column += initialLocation.Column - 1;
 				parser.Lexer.putback_char = Mono.PlayScript.Tokenizer.DocumentationXref;

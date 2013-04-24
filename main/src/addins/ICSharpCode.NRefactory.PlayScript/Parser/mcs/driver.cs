@@ -190,6 +190,7 @@ namespace Mono.CSharpPs
 				parser = csParser;
 			} else {
 				PlayScriptParser psParser = new PlayScriptParser (reader, file, report, session);
+				psParser.parsing_playscript = sourceFile.PsExtended;
 				psParser.Lexer.Line += lineModifier;
 				psParser.Lexer.Column += colModifier;
 				psParser.Lexer.sbag = new SpecialsBag ();

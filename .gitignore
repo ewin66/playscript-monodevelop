@@ -87,6 +87,7 @@ main/external/Makefile
 /main/src/addins/PlayScriptBinding/AspNet/Makefile
 /main/src/addins/PlayScriptBinding/Autotools/Makefile
 /main/src/addins/PlayScriptBinding/Makefile
+/main/src/addins/ICSharpCode.NRefactory.PlayScript/Makefile
 /main/src/addins/ICSharpCode.NRefactory.PlayScript/bin
 /main/src/addins/ChangeLogAddIn/Makefile
 /main/src/addins/Deployment/Makefile

@@ -93,7 +93,7 @@ namespace MonoDevelop.PlayScript
 			try {
 				compilerName = GetCompilerName (runtime, configuration.TargetFramework);
 			} catch (Exception e) {
-				string message = "Could not obtain a C# compiler";
+				string message = "Could not obtain a PlayScript compiler";
 				monitor.ReportError (message, e);
 				return null;
 			}
@@ -224,7 +224,7 @@ namespace MonoDevelop.PlayScript
 				//HACK: to ignore the platform flag for Mono <= 2.4, because gmcs didn't support it
 				if (runtime.RuntimeId == "Mono" && runtime.AssemblyContext.GetAssemblyLocation ("Mono.Debugger.Soft", null) == null) {
 					LoggingService.LogWarning ("Mono runtime '" + runtime.DisplayName + 
-					                           "' appears to be too old to support the 'platform' C# compiler flag.");
+					                           "' appears to be too old to support the 'platform' PlayScript compiler flag.");
 				} else {
 					sb.AppendLine ("/platform:" + compilerParameters.PlatformTarget);
 				}
@@ -339,7 +339,7 @@ namespace MonoDevelop.PlayScript
 				} catch (IOException) {
 				}
 				result.AddError ("The compiler appears to have crashed. Check the build output pad for details.");
-				LoggingService.LogError ("C# compiler crashed. Response file '{0}', stdout file '{1}', stderr file '{2}'",
+				LoggingService.LogError ("PlayScript compiler crashed. Response file '{0}', stdout file '{1}', stderr file '{2}'",
 				                         responseFileName, output, error);
 			} else {
 				FileService.DeleteFile (responseFileName);
@@ -355,7 +355,7 @@ namespace MonoDevelop.PlayScript
 			if (csc != null)
 				return csc;
 			else {
-				string message = GettextCatalog.GetString ("C# compiler not found for {0}.", fx.Name);
+				string message = GettextCatalog.GetString ("PlayScript compiler not found for {0}.", fx.Name);
 				LoggingService.LogError (message);
 				throw new Exception (message);
 			}
