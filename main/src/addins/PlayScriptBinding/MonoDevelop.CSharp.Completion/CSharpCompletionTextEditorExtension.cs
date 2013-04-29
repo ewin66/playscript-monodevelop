@@ -460,7 +460,7 @@ namespace MonoDevelop.PlayScript.Completion
 //			var symbols = new Dictionary<string, string> ();
 //			var cp = new ProjectDomCompletionDataList ();
 //			foreach (DotNetProjectConfiguration conf in Document.Project.Configurations) {
-//				var cparams = conf.CompilationParameters as CSharpCompilerParameters;
+//				var cparams = conf.CompilationParameters as PlayScriptCompilerParameters;
 //				if (cparams != null) {
 //					string[] syms = cparams.DefineSymbols.Split (';');
 //					foreach (string s in syms) {
@@ -858,7 +858,7 @@ namespace MonoDevelop.PlayScript.Completion
 				if (project == null)
 					yield break;
 				var configuration = project.GetConfiguration (MonoDevelop.Ide.IdeApp.Workspace.ActiveConfiguration) as DotNetProjectConfiguration;
-				var par = configuration != null ? configuration.CompilationParameters as CSharpCompilerParameters : null;
+				var par = configuration != null ? configuration.CompilationParameters as PlayScriptCompilerParameters : null;
 				if (par == null)
 					yield break;
 				foreach (var define in par.DefineSymbols.Split (';', ',', ' ', '\t').Where (s => !string.IsNullOrWhiteSpace (s)))

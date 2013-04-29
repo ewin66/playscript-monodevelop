@@ -339,7 +339,7 @@ namespace MonoDevelop.PlayScript.Parser
 			}
 
 			var configuration = project.GetConfiguration (MonoDevelop.Ide.IdeApp.Workspace.ActiveConfiguration) as DotNetProjectConfiguration;
-			var par = configuration != null ? configuration.CompilationParameters as CSharpCompilerParameters : null;
+			var par = configuration != null ? configuration.CompilationParameters as PlayScriptCompilerParameters : null;
 			
 			if (par == null)
 				return compilerArguments;

@@ -1,5 +1,5 @@
 <SerializationMap>
-	<DataItem class = "MonoDevelop.PlayScript.Project.CSharpCompilerParameters">
+	<DataItem class = "MonoDevelop.PlayScript.Project.PlayScriptCompilerParameters">
 		<LiteralProperty name="compiler" value="Mcs" />
 		<ItemProperty member="warninglevel" name = "warninglevel"/>
 		<ItemProperty member="noWarnings" name="nowarn" defaultValue=""/>

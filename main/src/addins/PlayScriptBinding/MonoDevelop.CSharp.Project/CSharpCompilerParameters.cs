@@ -46,7 +46,7 @@ namespace MonoDevelop.PlayScript.Project
 	/// <summary>
 	/// This class handles project specific compiler parameters
 	/// </summary>
-	public class CSharpCompilerParameters: ConfigurationParameters
+	public class PlayScriptCompilerParameters: ConfigurationParameters
 	{
 		// Configuration parameters
 		
@@ -113,7 +113,7 @@ namespace MonoDevelop.PlayScript.Project
 			
 			// Backwards compatibility. Move parameters to the project parameters object
 			if (ParentConfiguration != null && ParentConfiguration.ProjectParameters != null) {
-				CSharpProjectParameters cparams = (CSharpProjectParameters) ParentConfiguration.ProjectParameters;
+				PlayScriptProjectParameters cparams = (PlayScriptProjectParameters) ParentConfiguration.ProjectParameters;
 				if (win32Icon != null) {
 					cparams.Win32Icon = win32Icon;
 					win32Icon = null;

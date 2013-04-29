@@ -27,8 +27,8 @@
 			<Options ExternalConsole="True"/>
 			<References>
 				<Reference type="Package" refto="System" />
-				<Reference type="Package" refto="pscorlib" />
-				<Reference type="Package" refto="PlayScript.Dynamic" />
+				<Reference type="Gac" refto="pscorlib" />
+				<Reference type="Gac" refto="PlayScript.Dynamic" />
 			</References>
 			<Files>
 				<File name="Main.play" AddStandardHeader="True">

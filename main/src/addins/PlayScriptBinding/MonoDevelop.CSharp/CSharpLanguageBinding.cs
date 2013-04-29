@@ -79,7 +79,7 @@ namespace MonoDevelop.PlayScript
 		
 		public ConfigurationParameters CreateCompilationParameters (XmlElement projectOptions)
 		{
-			CSharpCompilerParameters pars = new CSharpCompilerParameters ();
+			PlayScriptCompilerParameters pars = new PlayScriptCompilerParameters ();
 			if (projectOptions != null) {
 				string platform = projectOptions.GetAttribute ("Platform");
 				if (SupportedPlatforms.Contains (platform))
@@ -96,7 +96,7 @@ namespace MonoDevelop.PlayScript
 	
 		public ProjectParameters CreateProjectParameters (XmlElement projectOptions)
 		{
-			return new CSharpProjectParameters ();
+			return new PlayScriptProjectParameters ();
 		}
 		
 		public string SingleLineCommentTag { get { return "//"; } }

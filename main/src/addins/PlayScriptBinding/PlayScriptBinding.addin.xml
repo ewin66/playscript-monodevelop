@@ -93,8 +93,8 @@
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/SerializableClasses">
-		<DataType class = "MonoDevelop.PlayScript.Project.CSharpCompilerParameters" />
-		<DataType class = "MonoDevelop.PlayScript.Project.CSharpProjectParameters" />
+		<DataType class = "MonoDevelop.PlayScript.Project.PlayScriptCompilerParameters" />
+		<DataType class = "MonoDevelop.PlayScript.Project.PlayScriptProjectParameters" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/TextEditorExtensions">
@@ -220,7 +220,7 @@
 		<Templates resource="PlayScriptSyntaxMode.xml" />
 	</Extension>
 
-	<!-- Extension path = "/MonoDevelop/Ide/Commands/TextEditor">
+	<Extension path = "/MonoDevelop/Ide/Commands/TextEditor">
 		<Command id = "MonoDevelop.PlayScript.Highlighting.MoveToUsagesCommand.PrevUsage"
 		         defaultHandler = "MonoDevelop.PlayScript.Highlighting.MoveToPrevUsageHandler"
 		         shortcut = "Ctrl|Shift|Up"
@@ -243,9 +243,9 @@
 		         shortcut = "Alt|Shift|Down"
 		         macShortcut = "Alt|Shift|Down"
 		         _label = "_Shrink selection"/>
-	</Extension -->
+	</Extension>
 
-	<!-- Extension path = "/MonoDevelop/Refactoring/CodeGenerators">
+	<Extension path = "/MonoDevelop/Refactoring/CodeGenerators">
 		<Class class = "MonoDevelop.CodeGeneration.CreateConstructorGenerator" />
 		<Class class = "MonoDevelop.CodeGeneration.ReadonlyPropertyGenerator" />
 		<Class class = "MonoDevelop.CodeGeneration.PropertyGenerator" />
@@ -255,25 +255,25 @@
 		<Class class = "MonoDevelop.CodeGeneration.RaiseEventMethodGenerator" />
 		<Class class = "MonoDevelop.CodeGeneration.EqualityMembersGenerator" />
 		<Class class = "MonoDevelop.CodeGeneration.WriteLineGenerator" />
-	</Extension -->
+	</Extension>
 
-	<!-- Extension path = "/MonoDevelop/Refactoring/CodeActionSource">
+	<Extension path = "/MonoDevelop/Refactoring/CodeActionSource">
 		<Source class ="MonoDevelop.PlayScript.Refactoring.CodeActions.NRefactoryCodeActionSource"/>
-	</Extension -->
+	</Extension>
 
-	<!-- Extension path = "/MonoDevelop/Refactoring/CodeIssueSource">
+	<Extension path = "/MonoDevelop/Refactoring/CodeIssueSource">
 		<Source class ="MonoDevelop.PlayScript.Refactoring.CodeIssues.NRefactoryCodeIssueSource"/>
-	</Extension -->
+	</Extension>
 
-	<!-- Extension path = "/MonoDevelop/ProjectModel/Gui/DefaultPolicyPanels/SourceCode">
+	<Extension path = "/MonoDevelop/ProjectModel/Gui/DefaultPolicyPanels/SourceCode">
 		<Section id="NameConventions" _label="Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
-	</Extension -->
-	<!-- Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/SourceCode">
+	</Extension>
+	<Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/SourceCode">
 		<Section id="NameConventions" _label="Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
-	</Extension -->
-	<!-- Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/SourceCode">
+	</Extension>
+	<Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/SourceCode">
 		<Section id="NameConventions" _label="Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
-	</Extension -->
+	</Extension>
 
 	<Extension path = "/MonoDevelop/SourceEditor2/TooltipProviders">
 		<Class id="LanguageItem" class="MonoDevelop.SourceEditor.LanguageItemTooltipProvider" />

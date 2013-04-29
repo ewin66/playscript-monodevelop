@@ -36,7 +36,7 @@ TESTFILES =  \
 	Parser/SharpDevelopTree/Method.cs \
 	Parser/SharpDevelopTree/ReturnType.cs \
 	Parser/TypeVisitor.cs \
-	Project/CSharpCompilerParameters.cs \
+	Project/PlayScriptCompilerParameters.cs \
 	MonoDevelop.CSharp.Inspection/Inspectors/RedundantThisInspector.cs
 
 TESTDLLS = \

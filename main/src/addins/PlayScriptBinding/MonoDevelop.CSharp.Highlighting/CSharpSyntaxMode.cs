@@ -717,7 +717,7 @@ namespace MonoDevelop.PlayScript.Highlighting
 					if (project != null) {
 						var configuration = project.GetConfiguration (IdeApp.Workspace.ActiveConfiguration) as DotNetProjectConfiguration;
 						if (configuration != null) {
-							var cparams = configuration.CompilationParameters as CSharpCompilerParameters;
+							var cparams = configuration.CompilationParameters as PlayScriptCompilerParameters;
 							if (cparams != null) {
 								string[] syms = cparams.DefineSymbols.Split (';', ',', ' ', '\t');
 								foreach (string s in syms) {

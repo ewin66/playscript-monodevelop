@@ -30,7 +30,7 @@ using MonoDevelop.Projects;
 
 namespace MonoDevelop.PlayScript.Project
 {
-	public class CSharpProjectParameters: ProjectParameters
+	public class PlayScriptProjectParameters: ProjectParameters
 	{
 		[ItemProperty ("StartupObject", DefaultValue = "")]
 		string mainclass = string.Empty;

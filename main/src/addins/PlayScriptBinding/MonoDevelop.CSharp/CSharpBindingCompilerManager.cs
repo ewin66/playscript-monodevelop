@@ -56,8 +56,8 @@ namespace MonoDevelop.PlayScript
 
 		public static BuildResult Compile (ProjectItemCollection projectItems, DotNetProjectConfiguration configuration, ConfigurationSelector configSelector, IProgressMonitor monitor)
 		{
-			var compilerParameters = (CSharpCompilerParameters)configuration.CompilationParameters ?? new CSharpCompilerParameters ();
-			var projectParameters = (CSharpProjectParameters)configuration.ProjectParameters ?? new CSharpProjectParameters ();
+			var compilerParameters = (PlayScriptCompilerParameters)configuration.CompilationParameters ?? new PlayScriptCompilerParameters ();
+			var projectParameters = (PlayScriptProjectParameters)configuration.ProjectParameters ?? new PlayScriptProjectParameters ();
 			
 			FilePath outputName = configuration.CompiledOutputName;
 			string responseFileName = Path.GetTempFileName ();
@@ -182,7 +182,7 @@ namespace MonoDevelop.PlayScript
 			}
 
 			if (compilerParameters.LangVersion != LangVersion.Default) {
-				var langVersionString = CSharpCompilerParameters.TryLangVersionToString (compilerParameters.LangVersion);
+				var langVersionString = PlayScriptCompilerParameters.TryLangVersionToString (compilerParameters.LangVersion);
 				if (langVersionString == null) {
 					string message = "Invalid LangVersion enum value '" + compilerParameters.LangVersion.ToString () + "'";
 					monitor.ReportError (message, null);
@@ -348,10 +348,68 @@ namespace MonoDevelop.PlayScript
 			}
 			return result;
 		}
-		
+
+		static string GetExternalCompilerPath()
+		{
+			string compPath;
+			string asmPath =  System.IO.Path.GetDirectoryName((new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
+
+			if (System.Environment.OSVersion.Platform == PlatformID.Unix || 
+				System.Environment.OSVersion.Platform == PlatformID.MacOSX) {
+
+				// Installed as a framework, etc.
+				compPath = "/usr/bin/playc";
+				if (File.Exists (compPath)) {
+					return compPath;
+				}
+
+				// Installed in the user's home folder
+				compPath = Environment.GetEnvironmentVariable ("HOME") + "/PlayScript/bin/playc";
+				if (File.Exists (compPath)) {
+					return compPath;
+				}
+
+				// The compiler bundled with the plugin
+				compPath = System.IO.Path.Combine (asmPath + "/playc");
+				if (File.Exists (compPath)) {
+					return compPath;
+				}
+			
+			} else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
+			           System.Environment.OSVersion.Platform == PlatformID.Win32Windows) {
+
+				string progFilePath;
+
+				if (8 == IntPtr.Size 
+					|| (!String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("PROCESSOR_ARCHITEW6432")))) {
+					progFilePath = System.Runtime.Environment.GetEnvironmentVariable ("ProgramFiles(x86)");
+				} else {
+					progFilePath = System.Runtime.Environment.GetEnvironmentVariable("ProgramFiles");
+				}
+
+				// Installed in Program Files (x86)
+				compPath = progFilePath + "\\PlayScript\\bin\\playc.exe";
+				if (File.Exists (compPath)) {
+					return compPath;
+				}
+
+				// The compiler bundled with the plugin
+				compPath = System.IO.Path.Combine (asmPath + "\\playc.exe");
+				if (File.Exists (compPath)) {
+					return compPath;
+				}
+
+			}
+
+			return null;
+		}
+
 		static string GetCompilerName (TargetRuntime runtime, TargetFramework fx)
 		{
-			string csc = runtime.GetToolPath (fx, "csc");
+			string csc = GetExternalCompilerPath ();
+			if (csc == null) {
+				csc = runtime.GetToolPath (fx, "csc");
+			}
 			if (csc != null)
 				return csc;
 			else {

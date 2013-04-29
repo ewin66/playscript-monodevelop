@@ -13,6 +13,12 @@
 	</TemplateConfiguration>
 	
 	<Combine name = "${ProjectName}" directory = ".">
-		<Project name = "${ProjectName}" directory = "."/>
+		<Project name = "${ProjectName}" directory = ".">
+			<References>
+				<Reference type="Package" refto="System" />
+				<Reference type="Gac" refto="pscorlib" />
+				<Reference type="Gac" refto="PlayScript.Dynamic" />
+			</References>
+		</Project>
 	</Combine>
 </Template>
