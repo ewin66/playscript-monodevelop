@@ -224,6 +224,12 @@
     <EmbeddedResource Include="SyntaxMode\PlayScriptSyntaxMode.xml">
       <LogicalName>PlayScriptSyntaxMode.xml</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="templates\AsEmptyProject.xpt.xml">
+      <LogicalName>AsEmptyProject.xpt.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="templates\AsLibrary.xpt.xml">
+      <LogicalName>AsLibrary.xpt.xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -241,8 +247,6 @@
     <Compile Include="MonoDevelop.CSharp.Project\CSharpResourceIdBuilder.cs" />
     <Compile Include="MonoDevelop.CSharp.Project\CodeGenerationPanel.cs" />
     <Compile Include="MonoDevelop.CSharp.Project\CompilerOptionsPanelWidget.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs" />
     <Compile Include="MonoDevelop.CSharp\CSharpBindingCompilerManager.cs" />
     <Compile Include="MonoDevelop.CSharp\CSharpEnhancedCodeProvider.cs" />
     <Compile Include="MonoDevelop.CSharp\CSharpLanguageBinding.cs" />
@@ -252,11 +256,8 @@
     <Compile Include="MonoDevelop.CSharp.Highlighting\HighlightUsagesExtension.cs" />
     <Compile Include="MonoDevelop.CSharp.Highlighting\MoveToUsagesHandler.cs" />
     <Compile Include="MonoDevelop.CSharp.Formatting\CSharpFormattingPolicyPanelWidget.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget.cs" />
     <Compile Include="MonoDevelop.CSharp.Formatting\NewFormattingProfileDialog.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs" />
     <Compile Include="MonoDevelop.CSharp.Formatting\CSharpFormattingProfileDialog.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog.cs" />
     <Compile Include="MonoDevelop.CSharp.Resolver\HelperMethods.cs" />
     <Compile Include="MonoDevelop.CSharp\ExpandSelectionHandler.cs" />
     <Compile Include="MonoDevelop.CSharp.Parser\TypeSystemProvider.cs" />
@@ -289,7 +290,6 @@
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\PropertyGenerator.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\ToStringGenerator.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\WriteLineGenerator.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CodeGeneration.GenerateCodeWindow.cs" />
     <Compile Include="MonoDevelop.CSharp.Formatting\CSharpIndentVirtualSpaceManager.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\ReadonlyPropertyGenerator.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\RaiseEventMethodGenerator.cs" />
@@ -303,8 +303,6 @@
     <Compile Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\NameConventionEditRuleDialog.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\NameConventionPanel.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\NameConventionPanelWidget.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs" />
-    <Compile Include="gtk-gui\MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\NameConventionPolicy.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring.CodeActions\NRefactoryCodeActionProvider.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NRefactoryIssueProvider.cs" />
@@ -319,6 +317,14 @@
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\ImplementInterfaceMembersGenerator.cs" />
     <Compile Include="MonoDevelop.CSharp\ActionScriptLanguageBinding.cs" />
     <Compile Include="MonoDevelop.CSharp\PlayScriptLanguageBinding.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Project.CodeGenerationPanelWidget.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Project.CompilerOptionsPanelWidget.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanelWidget.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Formatting.NewFormattingProfileDialog.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Formatting.CSharpFormattingProfileDialog.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanelWidget.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.CodeGeneration.GenerateCodeWindow.cs" />
+    <Compile Include="gtk-gui\MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile.am" />
